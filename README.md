@@ -12,6 +12,7 @@ Log in to the IBM Cloud Container Registry
 
 ### Log in to the Openshift Container Platform
 Use the command line provided by your cluster. The command line containing key token is available in the Openshift console.
+
 `oc login --token=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx --server=https://c103-e.us-south.containers.cloud.ibm.com:31319`
 
 ## Use PVC to share files over an init container
