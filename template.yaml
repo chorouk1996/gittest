@@ -1,0 +1,57 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+labels:
+  template: fabric-template
+metadata:
+  name: tpl-fabric
+objects:
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: fabric-dc
+  spec:
+    strategy:
+      type: Recreate
+    replicas: 1
+    template:
+      metadata:
+        labels:
+          name: fabric
+      spec:
+        volumes:
+        - name: fabricfiles
+          persistentVolumeClaim:
+            claimName: fabric-pvc
+        initContainers:
+        - name: app-init
+          image: image-registry.openshift-image-registry.svc:5000/choroukamahri/fabric-alpine:latest
+          volumeMounts:
+          - mountPath: /fabric
+            name: fabricfiles
+          selector:
+            name: fabric
+        containers:
+          - name: fabrictools
+            image: hyperledger/fabric-tools:2.2.0
+            imagePullPolicy: Always
+            command: ["sh", "-c", "sleep 48h"]
+            env:
+            - name: TZ
+              value: "America/Sao_Paulo"
+            - name: FABRIC_CFG_PATH
+              value: "/fabric"
+            volumeMounts:
+              - mountPath: /fabric
+                name: fabricfiles
+- kind: PersistentVolumeClaim
+  apiVersion: v1
+  metadata:
+    name: fabric-pvc
+  spec:
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi
+
+
