@@ -55,11 +55,11 @@ Tag the image in order to operate on image streams
 `oc tagus.icr.io/bouygues-bloc-1600085663464/fabric-alpine:latest ${PROJECT}/fabric-alpine:latest --reference-policy=local`
 
 ## Deployer le template 
-# Apply template
+### Apply template
 
 `oc apply -f template.yaml`
 
-# Process and create template entities
+### Process and create template entities
 `oc process sample-app-template tpl-fabric | oc create -f -`
 
 ## Génération de la PKI (public key infrastructure)
