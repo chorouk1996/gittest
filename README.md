@@ -1,4 +1,4 @@
-# Génération de la PKI (public key infrastructure) 
+# Génération de la PKI (public key infrastructure) + Generation du genesis block et des transactions d'initialisation du réseau Exchange Network
 
 ## Log in
 
@@ -62,7 +62,7 @@ Tag the image in order to operate on image streams
 ### Process and create template entities
 `oc process  tpl-fabric | oc create -f -`
 
-## Génération de la PKI (public key infrastructure)
+## Génération de la PKI (public key infrastructure) + Generation du genesis block et des transactions d'initialisation du réseau Exchange Network
 
 La génération de la PKI et du Genesis block ainsi que l'initialisation du réseau sont faite automatiquement lors du lancement du POD (config/commands.sh)
   
