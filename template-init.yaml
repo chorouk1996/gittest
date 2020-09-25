@@ -47,7 +47,7 @@ objects:
     name: fabric-pvc
   spec:
     accessModes:
-      - ReadWriteOnce
+      - ReadWriteMany
     resources:
       requests:
         storage: 10Gi

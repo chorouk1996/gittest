@@ -26,4 +26,5 @@ configtxgen -profile BanksCoChannel -outputCreateChannelTx ./channel-artifacts/c
 configtxgen -profile BanksCoChannel -outputAnchorPeersUpdate ./channel-artifacts/Bank1MSPanchors.tx -channelID bankscochannel -asOrg Bank1MSP 
 configtxgen -profile BanksCoChannel -outputAnchorPeersUpdate ./channel-artifacts/Bank2MSPanchors.tx -channelID bankscochannel -asOrg Bank2MSP 
 
-sleep 24h 
+exit 0;
+
