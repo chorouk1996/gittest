@@ -39,10 +39,10 @@ Add a role to pull image in the project
 ## Deployer le template 
 ### Apply template
 
-`oc apply -f template.yaml`
+`oc apply -f templateOrderer.yaml`
 
 ### Process and create template entities
-`oc process  tpl-fabric | oc create -f -`
+`oc process  tpl-orderer | oc create -f -`
 
 ## Template Orderer
 
