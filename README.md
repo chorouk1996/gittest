@@ -1,5 +1,3 @@
-
-
 Tag the image in order to operate on image streams
 
 ```sh
@@ -9,7 +7,7 @@ oc tag us.icr.io/bouygues-bloc-1600085663464/fabric-peer:latest brahimchihaoui/f
 ## Deployer le template 
 ### Apply template
 ```sh 
-oc
+oc apply -f peer-template.yaml
 ```
 ### Process and create template entities
 
