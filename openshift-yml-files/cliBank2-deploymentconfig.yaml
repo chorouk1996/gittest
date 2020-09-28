@@ -1,0 +1,108 @@
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    kompose.cmd: kompose --provider openshift --file docker-compose-cli.yaml convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: cliBank2
+  name: cliBank2
+spec:
+  replicas: 1
+  selector:
+    io.kompose.service: cliBank2
+  strategy:
+    resources: {}
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: cliBank2
+    spec:
+      containers:
+      - env:
+        - name: CHANNEL_NAME
+          value: bankscochannel
+        - name: CORE_PEER_ADDRESS
+          value: peer0.bank2.banksco.com:7051
+        - name: CORE_PEER_ID
+          value: cliBank2
+        - name: CORE_PEER_LOCALMSPID
+          value: Bank2MSP
+        - name: CORE_PEER_MSPCONFIGPATH
+          value: /opt/exchangentw/crypto/peerOrganizations/bank2.banksco.com/users/Admin@bank2.banksco.com/msp
+        - name: CORE_PEER_TLS_CERT_FILE
+          value: /opt/exchangentw/crypto/peerOrganizations/bank2.banksco.com/peers/peer0.bank2.banksco.com/tls/server.crt
+        - name: CORE_PEER_TLS_ENABLED
+          value: "true"
+        - name: CORE_PEER_TLS_KEY_FILE
+          value: /opt/exchangentw/crypto/peerOrganizations/bank2.banksco.com/peers/peer0.bank2.banksco.com/tls/server.key
+        - name: CORE_PEER_TLS_ROOTCERT_FILE
+          value: /opt/exchangentw/crypto/peerOrganizations/bank2.banksco.com/peers/peer0.bank2.banksco.com/tls/ca.crt
+        - name: CORE_VM_ENDPOINT
+          value: unix:///host/var/run/docker.sock
+        - name: FABRIC_LOGGING_SPEC
+          value: INFO
+        - name: GOPATH
+          value: /opt/gopath
+        - name: ORDERER_TLS_CA
+          value: /opt/exchangentw/crypto/ordererOrganizations/banksco.com/orderers/orderer.banksco.com/msp/tlscacerts/tlsca.banksco.com-cert.pem
+        - name: PEER0_BANK1_PRADDR
+          value: peer0.bank1.banksco.com:7051
+        - name: PEER0_BANK1_TLS_CA
+          value: /opt/exchangentw/crypto/peerOrganizations/bank1.banksco.com/peers/peer0.bank1.banksco.com/tls/ca.crt
+        - name: PEER0_BANK2_PRADDR
+          value: peer0.bank2.banksco.com:7051
+        - name: PEER0_BANK2_TLS_CA
+          value: /opt/exchangentw/crypto/peerOrganizations/bank2.banksco.com/peers/peer0.bank2.banksco.com/tls/ca.crt
+        - name: PEER1_BANK1_PRADDR
+          value: peer1.bank1.banksco.com:7051
+        - name: PEER1_BANK1_TLS_CA
+          value: /opt/exchangentw/crypto/peerOrganizations/bank1.banksco.com/peers/peer1.bank1.banksco.com/tls/ca.crt
+        - name: PEER1_BANK2_PRADDR
+          value: peer1.bank2.banksco.com:7051
+        - name: PEER1_BANK2_TLS_CA
+          value: /opt/exchangentw/crypto/peerOrganizations/bank2.banksco.com/peers/peer1.bank2.banksco.com/tls/ca.crt
+        image: ' '
+        name: cliBank2
+        resources: {}
+        tty: true
+        volumeMounts:
+        - mountPath: /host/var/run/
+          name: cliBank2-claim0
+        - mountPath: /opt/gopath
+          name: cliBank2-claim1
+        - mountPath: /opt/exchangentw/crypto
+          name: cliBank2-claim2
+        - mountPath: /opt/exchangentw/channel-artifacts
+          name: cliBank2-claim3
+        workingDir: /opt/exchangentw/
+      hostname: cliBank2
+      restartPolicy: Always
+      volumes:
+      - name: cliBank2-claim0
+        persistentVolumeClaim:
+          claimName: cliBank2-claim0
+      - name: cliBank2-claim1
+        persistentVolumeClaim:
+          claimName: cliBank2-claim1
+      - name: cliBank2-claim2
+        persistentVolumeClaim:
+          claimName: cliBank2-claim2
+      - name: cliBank2-claim3
+        persistentVolumeClaim:
+          claimName: cliBank2-claim3
+  test: false
+  triggers:
+  - type: ConfigChange
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - cliBank2
+      from:
+        kind: ImageStreamTag
+        name: cliBank2:2.2.0
+    type: ImageChange
+status: {}

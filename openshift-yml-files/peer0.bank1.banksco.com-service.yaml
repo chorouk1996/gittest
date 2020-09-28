@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose --provider openshift --file docker-compose-cli.yaml convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: peer0.bank1.banksco.com
+  name: peer0.bank1.banksco.com
+spec:
+  ports:
+  - name: "7051"
+    port: 7051
+    targetPort: 7051
+  - name: "7053"
+    port: 7053
+    targetPort: 7053
+  selector:
+    io.kompose.service: peer0.bank1.banksco.com
+status:
+  loadBalancer: {}
