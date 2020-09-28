@@ -46,6 +46,5 @@ Add a role to pull image in the project
 
 ## Template Orderer
 
-le template contient le deployment config pour deployer un pod qui contient un conteneur de type Orderer et les variables d'environement necessaire pour le bon fonctionnement , ainsi qu'un service pour y'acceder ,
-
-une fois déployer le serveur démarre
+le template contient la configuration de déploiement pour déployer un pod qui contient un conteneur de type Orderer et les variables d'environnement nécessaires au bon fonctionnement, ainsi qu'un service pour y accéder,
+une fois le déploiement est fait , le serveur démarre
