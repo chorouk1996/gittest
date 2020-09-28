@@ -2,16 +2,17 @@
 
 bouygues poc
 
-###########################
-I. TASK : 
-###########################
-task name : "Extend PVC"
-https://eu-de.git.cloud.ibm.com/gbs-rh/devops/refimps/g4sam1/bouygues-bloc/bouygues-blockchain/bouygues-poc/-/issues/7
+<!-- ########################## -->
+# I. TASK : 
+<!-- ########################## -->
+task name : "Extend PVC" 
+[lien](https://eu-de.git.cloud.ibm.com/gbs-rh/devops/refimps/g4sam1/bouygues-bloc/bouygues-blockchain/bouygues-poc/-/issues/7 )
 
 
-###########################
-METHOD #1 : GRAPHIQUE : 
-###########################
+
+<!-- ########################## -->
+# METHOD 1 : GRAPHIQUE : 
+<!-- ########################## -->
 I. FOR PVC CREATION : 
 ----------------------
 	1) RHOCP > menu "Projects" > select project "adrienmarchal-iscfrance-fr" (= namespace)
@@ -29,45 +30,45 @@ II. TO EXPAND A PVC :
 
 III. EDIT PVC LABELS : 
 ------------------------
-NOTE : Labels help you organize and select resources. Adding labels below will let you query for objects that have similar, overlapping or dissimilar labels.
+    NOTE : Labels help you organize and select resources. Adding labels below will let you query for objects that have similar, overlapping or dissimilar labels.  
 	=> RHOCP > menu "Storage" > "Persistent Volume Claims" > clic "..." at the end of the line on the PVC to entend > "Edit Labels"
 
 IV. EDIT PVC ANNOTATIONS : 
 ------------------------
-NOTE : this is a key/values list
+    NOTE : this is a key/values list  
 	=> RHOCP > menu "Storage" > "Persistent Volume Claims" > clic "..." at the end of the line on the PVC to entend > "Edit Annotations"
 
 
-#####################################################
-METHOD #2 IN COMMAND LINE (OC COMMANDS for "PVC") : 
-#####################################################
+<!-- ############################################## -->
+# METHOD 2 IN COMMAND LINE (OC COMMANDS for "PVC") : 
+<!-- ############################################## -->
 [28/09/2020 : work in progress]
 
 
 
 
-###########################
-SOURCES : 
-###########################
-MAIN MENU : 
+<!-- ########################## -->
+# SOURCES : 
+<!-- ########################## -->
+- MAIN MENU : 
     * https://docs.openshift.com/container-platform/4.5/welcome/index.html > menu "Storage" on left
     * https://access.redhat.com/documentation/en-us/red_hat_openshift_container_storage/4.5/?extIdCarryOver=true&sc_cid=701f2000001OH74AAG
 
-Red Hat OpenShift Container Storage : 
+- Red Hat OpenShift Container Storage : 
 	* https://docs.openshift.com/container-platform/4.5/storage/persistent_storage/persistent-storage-ocs.html#red-hat-openshift-container-storage
 	* https://access.redhat.com/documentation/en-us/red_hat_openshift_container_storage/4.5/html/managing_openshift_container_storage/overview > select "PDF"
 
 
-set a PVC : 
+- set a PVC : 
     * https://access.redhat.com/documentation/en-us/red_hat_openshift_container_storage/4.5/html/managing_openshift_container_storage/managing-persistent-volume-claims_rhocs
 
-expand persistent volumes : 
+- expand persistent volumes : 
     * https://docs.openshift.com/container-platform/4.5/storage/expanding-persistent-volumes.html#expanding-persistent-volumes
 
 
-###########################
-ACRONYMS / DEFINITIONS : 
-###########################
-PVC : Persistent Volume Claims
+<!-- ########################## -->
+# ACRONYMS / DEFINITIONS : 
+<!-- ########################## -->
+PVC : Persistent Volume Claims  
 CSI : Container Storage Interface
 
