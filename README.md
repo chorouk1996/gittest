@@ -1,32 +1,32 @@
-# Transform docker-compose format .yml files to openshift format .yml files
+# Install Hyper-V on Windows 10, and create an Ubuntu virtual machine
 
-The input files are those placed in the folder `docker-compose-yml-files`.
-They are transformed to openshift format .yml files, and then placed in the folder `openshift-yml-files`.
+## Install Hyper-V on Windows 10
+There are many ways to install Hyper-V on Windows 10, the way we describe here is a simple activation by PowerShell command line, without any source image.
+Hyper-V is built into Windows as an optional feature -- there is no Hyper-V download.
 
+### Prerequisites
+   * Windows 10 Enterprise, Pro, or Education
+   * 64-bit Processor with Second Level Address Translation (SLAT).
+   * CPU support for VM Monitor Mode Extension (VT-c on Intel CPUs).
+   * Minimum of 4 GB memory.
 
-## Steps
+### Enable Hyper-V using PowerShell
+1. Open a PowerShell console as Administrator.
+2. Run the following command line
+```
+$ Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All
+```
 
-1. Place the source files in the destination directory of the openshift format .yaml files.
+## Create an Ubuntu virtual machine
+1. Open Hyper-V Quick Create from the start menu (Windows button).
+   ![alt](https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/quick-start/media/quick-create-start-menu.png)
    
-2. Modify the value of the version attribute (from 2.1 to 2) in the following files:
-   1. /base/docker-compose-base.yaml
-   2. /base/peer-base.yaml
-   3. docker-compose-cli.yaml
-   
-3. Move the peer-base.yaml file in the same directory as the docker-compose-cli.yaml file.
+2. Select an operating system or choose your own by using a local installation source.
+   ![alt](https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/quick-start/media/vmgallery.png)
 
-4. Run this command
-```
-$ kompose --provider openshift --file docker_compose_file.yaml convert
-```
-Example: 
-```
-$ kompose --provider openshift --file docker-compose-cli.yaml  convert
-```
-This command will generate multiple .yaml files in openshift format.
+3. Select the option `Create Virtual Machine`
+the Quick Create tool will take care of the rest.
 
-5. Move the openshift format generated files in the folder  `openshift-yml-files`.
 
 ## Sources
-
-https://kubernetes.io/fr/docs/tasks/configure-pod-container/translate-compose-kubernetes/
+https://docs.microsoft.com/fr-fr/virtualization/hyper-v-on-windows/quick-start/enable-hyper-v
