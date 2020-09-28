@@ -24,8 +24,9 @@ $ Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All
 2. Select an operating system or choose your own by using a local installation source.
    ![alt](https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/quick-start/media/vmgallery.png)
 
-3. Select the option `Create Virtual Machine`
-the Quick Create tool will take care of the rest.
+3. Select the option `Create Virtual Machine`.
+   
+The Quick Create tool will take care of the rest.
 
 
 ## Sources
