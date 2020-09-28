@@ -13,6 +13,9 @@ task name : "Extend PVC"
 <!-- ########################## -->
 # METHOD 1 : GRAPHIQUE : 
 <!-- ########################## -->
+
+[See full procedure here](https://access.redhat.com/documentation/en-us/red_hat_openshift_container_storage/4.5/html/managing_openshift_container_storage/managing-persistent-volume-claims_rhocs)  
+
 I. FOR PVC CREATION : 
 ----------------------
 	1) RHOCP > menu "Projects" > select project "adrienmarchal-iscfrance-fr" (= namespace)
