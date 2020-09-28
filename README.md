@@ -16,11 +16,12 @@ They are transformed to openshift format .yml files, and then placed in the fold
 3. Move the peer-base.yaml file in the same directory as the docker-compose-cli.yaml file.
 
 4. Run this command
-   ```
-$ kompose --provider openshift --file `docker_compose_file.yaml` convert
 ```
-Example: ```
-$ kompose --provider openshift --file docker-compose-cli.yaml convert
+$ kompose --provider openshift --file docker_compose_file.yaml convert
+```
+Example: 
+```
+$ kompose --provider openshift --file docker-compose-cli.yaml  convert
 ```
 This command will generate multiple .yaml files in openshift format.
 
