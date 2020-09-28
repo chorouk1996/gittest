@@ -47,10 +47,11 @@ objects:
     name: fabric-pvc
   spec:
     accessModes:
-      - ReadWriteOnce
+      - ReadWriteMany
     resources:
       requests:
-        storage: ${VOLUME_SIZE} 
+        storage: ${VOLUME_SIZE}
+    storageClassName: ${STORAGE_CLASS}     
 - apiVersion: v1
   kind: ImageStream
   metadata:
