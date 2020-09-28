@@ -25,3 +25,7 @@ $ kompose --provider openshift --file docker-compose-cli.yaml convert
 This command will generate multiple .yaml files in openshift format.
 
 5. Move the openshift format generated files in the folder  `openshift-yml-files`.
+
+## Sources
+
+https://kubernetes.io/fr/docs/tasks/configure-pod-container/translate-compose-kubernetes/
