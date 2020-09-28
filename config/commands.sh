@@ -1,6 +1,5 @@
 #!/bin/sh
-
-
+cd ../fabric
 cryptogen generate --config=./crypto-config.yaml
 cp -R crypto-config/ordererOrganizations/banksco.com/users/Admin@banksco.com/msp/signcerts/* crypto-config/ordererOrganizations/banksco.com/msp/admincerts/
 cp -R crypto-config/ordererOrganizations/banksco.com/users/Admin@banksco.com/msp/signcerts/* crypto-config/ordererOrganizations/banksco.com/users/Admin@banksco.com/msp/admincerts/
@@ -26,5 +25,5 @@ configtxgen -profile BanksCoChannel -outputCreateChannelTx ./channel-artifacts/c
 configtxgen -profile BanksCoChannel -outputAnchorPeersUpdate ./channel-artifacts/Bank1MSPanchors.tx -channelID bankscochannel -asOrg Bank1MSP 
 configtxgen -profile BanksCoChannel -outputAnchorPeersUpdate ./channel-artifacts/Bank2MSPanchors.tx -channelID bankscochannel -asOrg Bank2MSP 
 
-exit 0;
+sleep 24h 
 
