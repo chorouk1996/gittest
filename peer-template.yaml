@@ -19,12 +19,12 @@ objects:
           name: peer
       spec:
         volumes:
-          - name: fabricfiles
-            persistentVolumeClaim:
+        - name: fabricfiles
+          persistentVolumeClaim:
             claimName: fabric-pvc
         containers:
           - name: peer-banksco-com
-            image: image-registry.openshift-image-registry.svc:5000/${PROJECT}/fabric-peer:latest
+            image: hyperledger/fabric-peer:2.2.0
             imagePullPolicy: Always
             command: ["sh","-c","peer node start"]
             env:
