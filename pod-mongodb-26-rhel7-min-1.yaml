@@ -1,0 +1,33 @@
+﻿kind: Pod
+apiVersion: v1
+metadata:
+  name: pod-mongodb-26-rhel7-min-1
+  namespace: adrienmarchal-iscfrance-fr
+spec:
+  restartPolicy: Never
+  securityContext:
+    fsGroup: 1001070000
+  containers:
+    - resources: {}
+      name: mongodb-26-rhel7
+      env:
+        - name: MONGODB_ADMIN_PASSWORD
+          value: admin
+        - name: MONGODB_DATABASE
+          value: amarmdb
+        - name: MONGODB_PASSWORD
+          value: dbapassword
+        - name: MONGODB_USER
+          value: dba
+      ports:
+        - containerPort: 27017
+          protocol: TCP
+      volumeMounts:
+        - name: mongodb-26-rhel7-volume-1
+          mountPath: /var/lib/mongodb/data
+      image: >-
+        registry.access.redhat.com/rhscl/mongodb-26-rhel7@sha256:f00afec20e276facbb081afd178bf5743891bca1f533538b032d2a9e2a831cc4
+  volumes:
+    - name: mongodb-26-rhel7-volume-1
+      persistentVolumeClaim: 
+        claimName: amar-mongodb-pvc-yml-1
