@@ -3,7 +3,7 @@
 
 you must have run the init Template located in  generating PKI branch (template-init.yaml) before processing . This generate fabric-pvc , the Volume is  needed by others objects 
 
-Tag the image in order to operate on image streams
+### Tag the image in order to operate on image streams
 
 ```sh
 oc tag us.icr.io/bouygues-bloc-1600085663464/fabric-peer:latest brahimchihaoui/fabric-peer:latest --reference-policy=local
