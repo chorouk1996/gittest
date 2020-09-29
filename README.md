@@ -28,6 +28,10 @@ $ Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All
    
 The Quick Create tool will take care of the rest.
 
+4. In your ubuntu virtual machine, open a terminal and run the command
+```
+$ sudo snap install docker
+```
 
 ## Sources
 https://docs.microsoft.com/fr-fr/virtualization/hyper-v-on-windows/quick-start/enable-hyper-v
