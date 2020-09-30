@@ -36,6 +36,9 @@ Add a role to pull image in the project
 
 `oc policy add-role-to-user system:image-puller system:serviceaccount:${PROJECT}:default  --namespace=${PROJECT}`
 
+Add a rule to write  in the volume 
+
+`oc adm policy add-scc-to-user anyuid -z default`
 
 #### Create the image locally
 Build the image from the Dockerfile
