@@ -36,6 +36,7 @@ Add a role to pull image in the project
 
 `oc policy add-role-to-user system:image-puller system:serviceaccount:${PROJECT}:default  --namespace=${PROJECT}`
 
+
 #### Create the image locally
 Build the image from the Dockerfile
 
