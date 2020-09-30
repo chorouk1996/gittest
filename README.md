@@ -30,9 +30,9 @@ $ Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All
 The Quick Create tool will take care of the rest.
    
 
-1. Click on the button `connect`, and fill your data in the form
+4. Click on the button `connect`, and fill your data in the form
    
-2. The system will ask you to connect as user of your ubuntu virtual machine. Then enter your password and press `Enter`.
+5. The system will ask you to connect as user of your ubuntu virtual machine. Then enter your password and press `Enter`.
    
 Your virtuall machine is ready for use.
    
@@ -41,7 +41,7 @@ Your virtuall machine is ready for use.
 1. In your ubuntu virtual machine, press your right-click mouse button and select `open in terminal`
    
 
-2. Run the following command, and press `Enter`
+2. Run the following command in your terminal, and press `Enter`
 ```
 $ sudo snap install docker
 ```
@@ -65,6 +65,8 @@ You are ready to use `Docker` on ubuntu.
 
 Your ubuntu virtual machine is ready for use
   
+
+
 
 
 
