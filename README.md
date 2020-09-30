@@ -56,14 +56,17 @@ Push the image to the the container registry
 
 Tag the image in order to operate on image streams
 
-`oc tagus.icr.io/bouygues-bloc-1600085663464/fabric-alpine:latest ${PROJECT}/fabric-alpine:latest --reference-policy=local`
+`oc tag us.icr.io/bouygues-bloc-1600085663464/fabric-alpine:latest ${PROJECT}/fabric-alpine:latest --reference-policy=local`
 
 ## Deployer le template 
 ### Apply template
 
-`oc apply -f template.yaml`
+`oc apply -f template-init.yaml`
 
 ### Process and create template entities
+
+il faut changer les parametres sur le param.env en fonction de  l'environement
+
 `oc process  tpl-fabric  --param-file=param.env | oc create -f -`
 
 ## Génération de la PKI (public key infrastructure) + Generation du genesis block et des transactions d'initialisation du réseau Exchange Network
