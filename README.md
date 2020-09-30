@@ -46,7 +46,7 @@ Your virtuall machine is ready for use.
 $ sudo snap install docker
 ```
   
-1. Enter your password, and press `Enter`
+3. Enter your password, and press `Enter`
    
 
 You are ready to use `Docker` on ubuntu.
