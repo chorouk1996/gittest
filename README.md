@@ -45,8 +45,53 @@ IV. EDIT PVC ANNOTATIONS :
 <!-- ############################################## -->
 # METHOD 2 IN COMMAND LINE (OC COMMANDS for "PVC") : 
 <!-- ############################################## -->
-[28/09/2020 : work in progress]
+For reference, cf basic CLI operation : https://docs.openshift.com/enterprise/3.0/cli_reference/basic_cli_operations.html  
 
+1) connection :  
+    a) login : `oc login --token=<token> --server=<serverName>`  
+        Note : As reminder, login procedure is explained in the very bottom of [this wiki](https://github.ibm.com/OpenshiftEverywhere-POCs-FR/global-knewledge/wiki/Tools)  
+        To sum up : go to RHOCP > open the dropdown menu of our login (top-right corner) > select "Copy Login Command" > "Display Token"  
+    b) connect to project : `oc project ${project}`  
+    c) specify user-role : `oc policy add-role-to-user system:image-puller system:serviceaccount:${project}:default --namespace=${project}`  
+
+2) CREATE POD WITH MONGODB INSIDE :  
+    a) `docker pull registry.access.redhat.com/openshift3/mongodb-24-rhel7`  
+    b)  
+```sh
+oc new-app \
+    -e MONGODB_USER=<username> \
+    -e MONGODB_PASSWORD=<password> \
+    -e MONGODB_DATABASE=<database_name> \
+    -e MONGODB_ADMIN_PASSWORD=<admin_password> \
+    -e MONGODB_ADMIN_PASSWORD \
+    registry.access.redhat.com/rhscl/mongodb-26-rhel7
+```  
+    c) `oc status` & `oc get pods` & `oc logs <podName>` for health check  
+
+3) ADD DATA INSIDE CONTAINER :  
+    a) enter the MongoDB Container : `oc rsh <podName>`  
+    b) connect to db : `mongo -u <username> -p <password> --authenticationDatabase <dbname>`  
+    c) select db : `use <dbName>`  
+    d) get general infos on db content : `show collections`  
+    e) create collection : `db.createCollection("<collectionName>")`  
+	NOTE : get general infos on collection content :  
+		* `db.getCollection("<collectionName>").find()` or `db.<collectionName>.find()`/`db.<collectionName>.find({})` or `db.<collectionName>.find().pretty()`  
+		* `db.<collectionName>.count()`  
+		* `db.<collectionName>.getIndexes()`  
+    f) insert data : `db.<collectionName>.insert({ x : 1 })`  
+    g) quit : `exit`  
+
+
+<!-- ############################################## -->
+# METHOD 3 with YAML files : 
+<!-- ############################################## -->
+1) PVC  
+    a) creation : `oc apply -f mongodb-amar-pvc.yaml`
+    b) get creation status : `oc describe pvc <pvcName>`
+2) POD  
+    a) creation : `oc apply -f pod-mongodb-26-rhel7-min-1.yaml`  
+    b) get creation status : `oc get pods` then `oc describe pod <podName>` then `oc logs <podName>` for health check and other investigations  
+    
 
 
 
@@ -92,8 +137,8 @@ IV. EDIT PVC ANNOTATIONS :
 <!-- ########################## -->
 # ACRONYMS / DEFINITIONS : 
 <!-- ########################## -->
-CSI : Container Storage Interface
-IOPS : Input Output per Second
-PV : persistant volume
-PVC : Persistent Volume Claims 
+CSI : Container Storage Interface  
+IOPS : Input Output per Second  
+PV : persistant volume  
+PVC : Persistent Volume Claims  
 
