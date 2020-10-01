@@ -67,11 +67,33 @@ IV. EDIT PVC ANNOTATIONS :
 
 - expand persistent volumes : 
     * https://docs.openshift.com/container-platform/4.5/storage/expanding-persistent-volumes.html#expanding-persistent-volumes
+	=> check result : `oc describe pvc <pvc_name>`
 
+
+- Kubernetes associated documentation : 
+	* https://docs.openshift.com/container-platform/4.1/storage/understanding-persistent-storage.html
+	* https://kubernetes.io/fr/docs/concepts/storage/persistent-volumes/
+	* https://kubernetes.io/blog/2018/07/12/resizing-persistent-volumes-using-kubernetes/
+
+- StorageClass IBM : 
+	* https://cloud.ibm.com/docs/containers?topic=containers-kube_concepts
+	* https://cloud.ibm.com/docs/containers?topic=containers-block_storage
+	* https://cloud.ibm.com/docs/containers?topic=containers-file_storage
+	* https://cloud.ibm.com/docs/FileStorage?topic=FileStorage-about#provisioning-with-endurance-tiers
+	* https://cloud.ibm.com/docs/containers?topic=containers-file_storage#file_change_storage_configuration
+	* https://cloud.ibm.com/docs/containers?topic=containers-storage_planning#choose_storage_solution  
+	=> Characteristics :  
+		- **[bronze, silver, gold]** : "endurance" storage type ; depends on IOPS needed
+		- **[retain, delete]** : for "retain", if a PVC is deleted, the associated PV is not deleted.
+		- **[file, block]** : stockage option ; Block storage is with AccessMode type "ReadWriteOnce" ; "bloc" can be resized ; "file" can not be resized
+		- **[endurance, performance]** : "performance" is available for "custom" storage (different from bronze, silver or gold).
+		- **[ReadWriteMany, ReadOnlyMany, ReadWriteOnce]** : "ReadWriteOnce" for PVC that can be mounted in Read/Write by ONLY ONE POD ; "ReadWriteMany" for PVC that can be mounted in Read/Write by SEVERAL PODS ; "ReadOnlyMany" for PVC that can be mounted in Read Only by SEVERAL PODS
 
 <!-- ########################## -->
 # ACRONYMS / DEFINITIONS : 
 <!-- ########################## -->
-PVC : Persistent Volume Claims  
 CSI : Container Storage Interface
+IOPS : Input Output per Second
+PV : persistant volume
+PVC : Persistent Volume Claims 
 
