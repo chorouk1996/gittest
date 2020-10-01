@@ -4,6 +4,13 @@ bouygues poc
 
 
 <!-- ########################## -->
+# I. TASK : 
+<!-- ########################## -->
+task name : "Extend PVC" 
+[lien](https://eu-de.git.cloud.ibm.com/gbs-rh/devops/refimps/g4sam1/bouygues-bloc/bouygues-blockchain/bouygues-poc/-/issues/7 )
+
+
+<!-- ########################## -->
 # PRE-REQUISITES : 
 <!-- ########################## -->
 Chosen storageClass must have the following characteristics :  
@@ -11,14 +18,6 @@ Chosen storageClass must have the following characteristics :
 	- "type": Endurance (also, best choice would be "silver" in my own point of view)  
 	- "reclaimPolicy" set to "Retain"  
 Note that "Block" storage is only with AccessMode type "ReadWriteOnce".  
-
-
-<!-- ########################## -->
-# I. TASK : 
-<!-- ########################## -->
-task name : "Extend PVC" 
-[lien](https://eu-de.git.cloud.ibm.com/gbs-rh/devops/refimps/g4sam1/bouygues-bloc/bouygues-blockchain/bouygues-poc/-/issues/7 )
-
 
 
 <!-- ########################## -->
@@ -104,6 +103,38 @@ oc new-app \
     b) get creation status : `oc get pods` then `oc describe pod <podName>` then `oc logs <podName>` for health check and other investigations  
     
 
+<!-- ########################## -->
+# Encountered problems and Troubleshoots : 
+<!-- ########################## -->
+a) Following command FAILS! : 
+```sh
+oc new-app -e \
+    MONGODB_USER=<username>,MONGODB_PASSWORD=<password>,MONGODB_DATABASE=<database_name>,MONGODB_ADMIN_PASSWORD=<admin_password>,MONGODB_ADMIN_PASSWORD \
+    registry.access.redhat.com/rhscl/mongodb-26-rhel7
+```  
+Solution : for each parameter, we must add "-e".  
+
+b) in case of "CrashLoopBackOff" : simply deleting the pod (`oc delete pod <podName> -n <projectName> --grace-period=0 --force`) does not work : a new pod is created each time...   
+Solution : we have to delete the associated DeploymentConfig! :  
+	METHOD 1 : open dropdown next to "Administrator" (top left) > select "Developper" > "topology" > select the targeted pod > open dropdown on "Actions" (top right) > "Delete Deployment Config"  
+	METHOD 2 : RHOCP > Workloads > DeploymentConfigs > "..." in front of the one to be deleted > "Delete Deployment Config"  
+
+c) We have the following error message : 
+```sh  
+ERROR: Couldn't write into /var/lib/mongodb/data  
+		  CAUSE: current user doesn't have permissions for writing to /var/lib/mongodb/data directory  
+```  
+Solution : add to the YAML file in section "spec:" :  
+```sh  
+securityContext:
+    fsGroup: 1001070000  
+```  
+
+d) Trying to DECREASE PVC, we got the error `Forbidden: field can not be less than previous value" for field "spec.resources.requests.storage` :  
+Solution : None. This is a normal behaviour in order not to accidentally delete some data.  
+
+e) Trying to EXPAND a PVC, we have the error `persistentvolumeclaims "XXX" is forbidden: only dynamically provisioned pvc can be resized and the storageclass that provisions the pvc must support resize`  
+Solution : Select an other storageClass where "allowVolumeExpansion" attribute is set AND set to "true".  
 
 
 <!-- ########################## -->
