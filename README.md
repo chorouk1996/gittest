@@ -86,8 +86,8 @@ oc new-app \
 # METHOD 3 with YAML files : 
 <!-- ############################################## -->
 1) PVC  
-    a) creation : `oc apply -f mongodb-amar-pvc.yaml`
-    b) get creation status : `oc describe pvc <pvcName>`
+    a) creation : `oc apply -f mongodb-amar-pvc.yaml`  
+    b) get creation status : `oc describe pvc <pvcName>`  
 2) POD  
     a) creation : `oc apply -f pod-mongodb-26-rhel7-min-1.yaml`  
     b) get creation status : `oc get pods` then `oc describe pod <podName>` then `oc logs <podName>` for health check and other investigations  
