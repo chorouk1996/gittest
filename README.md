@@ -2,6 +2,17 @@
 
 bouygues poc
 
+
+<!-- ########################## -->
+# PRE-REQUISITES : 
+<!-- ########################## -->
+Chosen storageClass must have the following characteristics :  
+	- "allowVolumeExpansion" present AND set to "true" (which means selecting a "ibmc-block-<XXX>" storageClass)  
+	- "type": Endurance (also, best choice would be "silver" in my own point of view)  
+	- "reclaimPolicy" set to "Retain"  
+Note that "Block" storage is only with AccessMode type "ReadWriteOnce".  
+
+
 <!-- ########################## -->
 # I. TASK : 
 <!-- ########################## -->
