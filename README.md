@@ -8,18 +8,15 @@ you must have run the init Template located in  generating PKI branch (template-
 ## Deployer le template 
 ### Apply template
 ```sh 
-oc apply -f template-clibank.yaml
+oc apply -f template-clibank1.yaml
+oc apply -f template-clibank2.yaml
 ```
 ### Process and create template entities
 
 ```sh
-oc process  tpl-clibank   -p NUM=1 | oc create -f -
-``` 
+oc process  tpl-clibank1  | oc create -f -
+oc process  tpl-clibank2  | oc create -f -
 
-OR 
-
-```sh
-oc process   tpl-clibank --param-file=param.env | oc create -f -
 ``` 
 
  
