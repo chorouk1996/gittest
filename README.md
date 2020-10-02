@@ -101,7 +101,18 @@ oc new-app \
 2) POD  
     a) creation : `oc apply -f pod-mongodb-26-rhel7-min-1.yaml`  
     b) get creation status : `oc get pods` then `oc describe pod <podName>` then `oc logs <podName>` for health check and other investigations  
-    
+3) use of templates :  
+```sh  
+oc process -f template-mongodb.yaml \  
+    -p MONGODB_ADMIN_PASSWORD=<value1> \  
+    -p MONGODB_DATABASE=<value2> \  
+    -p MONGODB_PASSWORD=<value3> \  
+    -p MONGODB_USER=<value4> \  
+    -p VOLUME_SIZE=<value5> \  
+    -p STORAGE_CLASS=<value6> \  
+	| oc create -f -  
+```
+
 
 <!-- ########################## -->
 # Encountered problems and Troubleshoots : 
