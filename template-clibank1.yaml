@@ -16,7 +16,7 @@ objects:
     template:
       metadata:
         labels:
-          name: fabric
+          name: clibank1
       spec:
         volumes:
           - name: fabricfiles
