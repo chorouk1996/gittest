@@ -66,7 +66,7 @@ objects:
               - mountPath: /fabric
                 name: fabricfiles
             ports:
-              - containerPort: 7052
+              - containerPort: 8052
                 protocol: TCP
 
 - apiVersion: v1
