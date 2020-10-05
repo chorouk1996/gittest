@@ -1,7 +1,7 @@
 ### Prerequisite
 
 Before proceeding to this step, make sure that the PKI ((Public Key Infrastructure) are generated, otherwise start by generating them:
-[link to the feature-generationPKI-initNetwork.](./feature-generationPKI-initNetwork/README.md)
+[./feature-generationPKI-initNetwork/README.md](https://eu-de.git.cloud.ibm.com/gbs-rh/devops/refimps/g4sam1/bouygues-bloc/bouygues-blockchain/bouygues-poc/-/blob/feature-generationPKI-initNetwork/README.md)
 
 ### Apply template
 ```sh 
