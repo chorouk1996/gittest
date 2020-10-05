@@ -13,6 +13,8 @@ objects:
     strategy:
       type: Recreate
     replicas: 1
+    selector:
+      name: orderer
     template:
       metadata:
         labels:
@@ -50,10 +52,6 @@ objects:
               value: "/fabric/crypto-config/ordererOrganizations/banksco.com/orderers/orderer.banksco.com/tls/server.crt"
             - name: ORDERER_GENERAL_TLS_ROOTCAS
               value: "/fabric/crypto-config/ordererOrganizations/banksco.com/orderers/orderer.banksco.com/tls/ca.crt"
-            - name: ORDERER_GENERAL_TLS_CLIENTAUTHREQUIRED
-              value: "true"
-            - name : ORDERER_GENERAL_TLS_CLIENTROOTCAS
-              value: "[/fabric/crypto-config/peerOrganizations/bank1.banksco.com/tlsca/tlsca.bank1.banksco.com-cert.pem,/fabric/crypto-config/peerOrganizations/bank2.banksco.com/tlsca/tlsca.bank2.banksco.com-cert.pem]" 
             volumeMounts:
               - mountPath: /fabric
                 name: fabricfiles
@@ -63,7 +61,7 @@ objects:
 - apiVersion: v1
   kind: Service
   metadata:
-    name: orderer-svc
+    name: orderer
   spec:
     ports:
     - name: orderer
