@@ -146,6 +146,12 @@ Solution : None. This is a normal behaviour in order not to accidentally delete 
 
 e) Trying to EXPAND a PVC, we have the error `persistentvolumeclaims "XXX" is forbidden: only dynamically provisioned pvc can be resized and the storageclass that provisions the pvc must support resize`  
 Solution : Select an other storageClass where "allowVolumeExpansion" attribute is set AND set to "true".  
+    - Note :  
+    * if trying to expand a PVC size until PV initial capacity (having its storageClass where "allowVolumeExpansion"="true") : everything works fine  
+    * if trying to expand the size of that PVC that exceeds PV capacity : the 2 following comments can be made :  
+        => on PVC side, annotation "volume.kubernetes.io/storage-resizer: ibm.io/ibmc-block" is added in YAML due to PV capacity exceeded.  
+        => on PV side, "spec.capacity.storage" field is set with the claimed expanded size.  
+        (ex : PVC initially claimed at 15Gi, for an initial PV capacity of 20Gi. If PVC is claimed for extention to 25Gi, "spec.capacity.storage" field of the corresponding PV is set to 25Gi.)  
 
 
 <!-- ########################## -->
