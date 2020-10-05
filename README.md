@@ -1,3 +1,0 @@
-# bouygues-poc
-
-bouygues poc
