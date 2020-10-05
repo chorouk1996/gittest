@@ -14,10 +14,10 @@ oc process all-peers-template | oc create -f -
 ``` 
 
 ### IMPORTANT
-Le template all-peers-template declenche une erreur liée au ports, j'ai essayé de la contourner en faisant un forword à l'image de ce qui est fait dans les yaml de docker-compose mais ça n'a pas abouti.
+Le template all-peers-one-pod-template declenche une erreur liée au ports, j'ai essayé de la contourner en faisant un forword à l'image de ce qui est fait dans les fichiers yaml de docker-compose mais ça n'a pas abouti.
 ![all-peers-template error](./doc/app-peers-template-error.png) 
 
-Pour débuger J'ai crée un simple template avec deux containers avec les mêmes paramètres que ceux implementés dans les fichiers yaml de docker-compose :
+Pour débuger J'ai crée un simple template avec deux containers et les mêmes paramètres que ceux implementés dans les fichiers yaml de docker-compose :
 
 ```sh
               - name: CORE_PEER_ADDRESS
@@ -38,6 +38,6 @@ Pour débuger J'ai crée un simple template avec deux containers avec les mêmes
               - name: CORE_VM_ENDPOINT
                 value: unix:///host/var/run/docker.sock
 ``` 
-mais ça n'a pas marché non plus et cette fois l'erreur est différente :
+mais ça n'a pas marché non plus :
 
 ![all-peers-template error](./doc/tow-peers-template-error.png) 

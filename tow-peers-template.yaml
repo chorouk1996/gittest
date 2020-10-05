@@ -8,7 +8,7 @@ objects:
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
-    name: fabricpeerdc
+    name: fabric2peersdc
   spec:
     strategy:
       type: Recreate
@@ -16,7 +16,7 @@ objects:
     template:
       metadata:
         labels:
-          name: peer
+          name: peers
       spec:
         volumes:
         - name: fabricfiles
@@ -28,10 +28,6 @@ objects:
             imagePullPolicy: Always
             command: ["sh","-c","peer node start"]
             env:
-              - name: CORE_PEER_ADDRESS
-                value: peer0.bank1.banksco.com:7051
-              - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
-                value: peer0.bank1.banksco.com:7051
               - name: CORE_PEER_GOSSIP_ORGLEADER
                 value: "false"
               - name: CORE_PEER_GOSSIP_USELEADERELECTION
@@ -66,12 +62,6 @@ objects:
             imagePullPolicy: Always
             command: ["sh","-c","peer node start"]
             env:
-              - name: CORE_PEER_ADDRESS
-                value: peer1.bank1.banksco.com:7051
-              - name: CORE_PEER_GOSSIP_BOOTSTRAP
-                value: peer0.bank1.banksco.com:7051
-              - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
-                value: peer1.bank1.banksco.com:7051
               - name: CORE_PEER_GOSSIP_ORGLEADER
                 value: "false"
               - name: CORE_PEER_GOSSIP_USELEADERELECTION
@@ -98,8 +88,8 @@ objects:
               - mountPath: /fabric
                 name: fabricfiles
             ports:
-              - containerPort: 7051
-              - containerPort: 7053
+              - containerPort: 7056
+              - containerPort: 7058
 - apiVersion: v1
   kind: Service
   metadata:
@@ -121,4 +111,4 @@ objects:
       port: 7058
       targetPort: 7053
     selector:
-      name: peer
+      name: peers
