@@ -37,7 +37,7 @@ objects:
             - name: CORE_PEER_ID
               value: "cliBank1"
             - name: CORE_PEER_ADDRESS
-              value: "peer0.Bank1.banksco.com:7051"
+              value: "peer1-svc:7051"
             - name: CORE_PEER_LOCALMSPID
               value: "Bank1MSP"
             - name: CORE_PEER_TLS_ENABLED
@@ -57,16 +57,16 @@ objects:
             - name: PEER0_BANK1_TLS_CA
               value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer0.bank1.banksco.com/tls/ca.crt"
             - name: PEER0_BANK1_PRADDR
-              value: "peer0.bank1.banksco.com:7051"
+              value: "peer1-svc:7051"
             - name: PEER1_BANK1_TLS_CA
               value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer1.bank1.banksco.com/tls/ca.crt"
             - name: PEER1_BANK1_PRADDR
-              value: "peer1.bank1.banksco.com:7051"           
+              value: "peer2-svc:7051:7051"           
             volumeMounts:
               - mountPath: /fabric
                 name: fabricfiles
             ports:
-              - containerPort: 8052
+              - containerPort: 7051
                 protocol: TCP
 
 - apiVersion: v1
@@ -78,9 +78,9 @@ objects:
   spec:
     ports:
     - name: clibank
-      port: 8052
+      port: 7051
       protocol: TCP
-      targetPort: 8052
+      targetPort: 7051
     selector:
       name: clibank1
 
