@@ -29,24 +29,21 @@ objects:
             command: ["sh","-c","peer node start"]
             env:
               - name: CORE_PEER_ADDRESS
-                value: peer1.bank1.banksco.com:7051
-              - name: CORE_PEER_GOSSIP_BOOTSTRAP
                 value: peer0.bank1.banksco.com:7051
               - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
-                value: peer1.bank1.banksco.com:7051
+                value: peer0.bank1.banksco.com:7051
               - name: CORE_PEER_GOSSIP_ORGLEADER
                 value: "false"
               - name: CORE_PEER_GOSSIP_USELEADERELECTION
                 value: "true"
               - name: CORE_PEER_ID
-                value: peer1.bank1.banksco.com
+                value: peer0.bank1.banksco.com
               - name: CORE_PEER_LOCALMSPID
                 value: Bank1MSP
-
-              - name: CORE_VM_ENDPOINT
-                value: unix:///host/var/run/docker.sock
-              - name: FABRIC_LOGGING_SPEC
-                value: "DEBUG"
+              - name: CORE_PEER_PROFILE_ENABLED
+                value: "true"
+              - name: CORE_PEER_TLS_ENABLED
+                value: "true"
               - name: FABRIC_LOGGING_SPEC
                 value: "DEBUG"
               - name: CORE_PEER_TLS_CLIENTAUTHREQUIRED
@@ -70,15 +67,17 @@ objects:
             command: ["sh","-c","peer node start"]
             env:
               - name: CORE_PEER_ADDRESS
+                value: peer1.bank1.banksco.com:7051
+              - name: CORE_PEER_GOSSIP_BOOTSTRAP
                 value: peer0.bank1.banksco.com:7051
               - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
-                value: peer0.bank1.banksco.com:7051
+                value: peer1.bank1.banksco.com:7051
               - name: CORE_PEER_GOSSIP_ORGLEADER
                 value: "false"
               - name: CORE_PEER_GOSSIP_USELEADERELECTION
                 value: "true"
               - name: CORE_PEER_ID
-                value: peer0.bank1.banksco.com
+                value: peer1.bank1.banksco.com
               - name: CORE_PEER_LOCALMSPID
                 value: Bank1MSP
               - name: CORE_PEER_PROFILE_ENABLED
@@ -86,8 +85,7 @@ objects:
               - name: CORE_VM_ENDPOINT
                 value: unix:///host/var/run/docker.sock
               - name: FABRIC_LOGGING_SPEC
-                value: "DEBUG"
-          
+                value: "DEBUG"      
               - name: CORE_PEER_TLS_CLIENTAUTHREQUIRED
                 value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer1.bank1.banksco.com/msp"
               - name: CORE_PEER_TLS_CERT_FILE
