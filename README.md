@@ -1,6 +1,6 @@
 ### Prerequisite
 
-before proceeding to this step, make sure that the PKI ((Public Key Infrastructure) are generated, otherwise start by generating them:
+Before proceeding to this step, make sure that the PKI ((Public Key Infrastructure) are generated, otherwise start by generating them:
 [link to the feature-generationPKI-initNetwork.](./feature-generationPKI-initNetwork/README.md)
 
 ### Apply template
