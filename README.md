@@ -5,7 +5,7 @@ Before proceeding to this step, make sure that the PKI ((Public Key Infrastructu
 
 ### Apply template
 ```sh 
-oc apply -f all-peers-template.yaml
+oc apply -f all-peers-onetemplate.yaml
 ```
 ### Process and create template entities
 
