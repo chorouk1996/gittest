@@ -16,7 +16,7 @@ objects:
     template:
       metadata:
         labels:
-          name: peer0bank1
+          name: peer0
       spec:
         volumes:
         - name: fabricfiles
@@ -28,18 +28,22 @@ objects:
             imagePullPolicy: Always
             command: ["sh","-c","peer node start"]
             env:
+              - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
+                value: "peer0:7051"
               - name: CORE_PEER_GOSSIP_ORGLEADER
                 value: "false"
               - name: CORE_PEER_GOSSIP_USELEADERELECTION
                 value: "true"
+              - name: CORE_PEER_ID
+                value: "peer0"
+              - name: FABRIC_LOGGING_SPEC
+                value: "DEBUG"
+              - name: CORE_PEER_LOCALMSPID
+                value: "Bank1MSP"
               - name: CORE_PEER_PROFILE_ENABLED
                 value: "true"
               - name: CORE_PEER_TLS_ENABLED
-                value: "true"
-              - name: FABRIC_LOGGING_SPEC
-                value: "DEBUG"
-              - name: CORE_PEER_TLS_CLIENTAUTHREQUIRED
-                value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer0.bank1.banksco.com/msp"
+                value: "true"                
               - name: CORE_PEER_TLS_CERT_FILE
                 value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer0.bank1.banksco.com/tls/server.crt"
               - name: CORE_PEER_TLS_KEY_FILE
@@ -56,14 +60,14 @@ objects:
   metadata:
     annotations: null
     labels: null
-    name: peer0bank1-svc
+    name: peer0
   spec:
     ports:
     - name: "7051"
       port: 7051
       targetPort: 7051
     selector:
-      name: peer0bank1
+      name: peer0
 
 - apiVersion: v1
   kind: DeploymentConfig
@@ -76,7 +80,7 @@ objects:
     template:
       metadata:
         labels:
-          name: peer1bank1
+          name: peer1
       spec:
         volumes:
         - name: fabricfiles
@@ -88,18 +92,24 @@ objects:
             imagePullPolicy: Always
             command: ["sh","-c","peer node start"]
             env:
+              - name: CCORE_PEER_GOSSIP_BOOTSTRAP
+                value: "peer0:7051"
+              - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
+                value: "peer1:7051"
               - name: CORE_PEER_GOSSIP_ORGLEADER
                 value: "false"
               - name: CORE_PEER_GOSSIP_USELEADERELECTION
                 value: "true"
+              - name: CORE_PEER_ID
+                value: "peer1"
+              - name: FABRIC_LOGGING_SPEC
+                value: "DEBUG"
+              - name: CORE_PEER_LOCALMSPID
+                value: "Bank1MSP"
               - name: CORE_PEER_PROFILE_ENABLED
                 value: "true"
               - name: CORE_PEER_TLS_ENABLED
-                value: "true"
-              - name: FABRIC_LOGGING_SPEC
-                value: "DEBUG"
-              - name: CORE_PEER_TLS_CLIENTAUTHREQUIRED
-                value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer1.bank1.banksco.com/msp"
+                value: "true"                
               - name: CORE_PEER_TLS_CERT_FILE
                 value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer1.bank1.banksco.com/tls/server.crt"
               - name: CORE_PEER_TLS_KEY_FILE
@@ -116,14 +126,14 @@ objects:
   metadata:
     annotations: null
     labels: null
-    name: peer1bank1-svc
+    name: peer1
   spec:
     ports:
     - name: "7051"
       port: 7051
       targetPort: 7051
     selector:
-      name: peer1bank1
+      name: peer1
 
 - apiVersion: v1
   kind: DeploymentConfig
@@ -136,7 +146,7 @@ objects:
     template:
       metadata:
         labels:
-          name: peer0bank2
+          name: peer2
       spec:
         volumes:
         - name: fabricfiles
@@ -148,18 +158,24 @@ objects:
             imagePullPolicy: Always
             command: ["sh","-c","peer node start"]
             env:
+              - name: CORE_PEER_GOSSIP_BOOTSTRAP
+                value: "peer2:7051"
+              - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
+                value: "peer2:7051"
               - name: CORE_PEER_GOSSIP_ORGLEADER
                 value: "false"
               - name: CORE_PEER_GOSSIP_USELEADERELECTION
                 value: "true"
+              - name: CORE_PEER_ID
+                value: "peer2"
+              - name: FABRIC_LOGGING_SPEC
+                value: "DEBUG"
+              - name: CORE_PEER_LOCALMSPID
+                value: "Bank2MSP"
               - name: CORE_PEER_PROFILE_ENABLED
                 value: "true"
               - name: CORE_PEER_TLS_ENABLED
-                value: "true"
-              - name: FABRIC_LOGGING_SPEC
-                value: "DEBUG"
-              - name: CORE_PEER_TLS_CLIENTAUTHREQUIRED
-                value: "/fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer0.bank2.banksco.com/msp"
+                value: "true"                
               - name: CORE_PEER_TLS_CERT_FILE
                 value: "/fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer0.bank2.banksco.com/tls/server.crt"
               - name: CORE_PEER_TLS_KEY_FILE
@@ -170,20 +186,20 @@ objects:
               - mountPath: /fabric
                 name: fabricfiles
             ports:
-              - containerPort: 7051
+              - containerPort:bbb
 - apiVersion: v1
   kind: Service
   metadata:
     annotations: null
     labels: null
-    name: peer0bank2-svc
+    name: peer2
   spec:
     ports:
     - name: "7051"
       port: 7051
       targetPort: 7051
     selector:
-      name: peer0bank2
+      name: peer2
 
 - apiVersion: v1
   kind: DeploymentConfig
@@ -196,7 +212,7 @@ objects:
     template:
       metadata:
         labels:
-          name: peer1bank2
+          name: peer3
       spec:
         volumes:
         - name: fabricfiles
@@ -208,18 +224,24 @@ objects:
             imagePullPolicy: Always
             command: ["sh","-c","peer node start"]
             env:
+              - name: CORE_PEER_GOSSIP_BOOTSTRAP
+                value: "peer3:7051"
+              - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
+                value: "peer3:7051"
               - name: CORE_PEER_GOSSIP_ORGLEADER
                 value: "false"
               - name: CORE_PEER_GOSSIP_USELEADERELECTION
                 value: "true"
+              - name: CORE_PEER_ID
+                value: "peer3"
+              - name: FABRIC_LOGGING_SPEC
+                value: "DEBUG"
+              - name: CORE_PEER_LOCALMSPID
+                value: "Bank2MSP"
               - name: CORE_PEER_PROFILE_ENABLED
                 value: "true"
               - name: CORE_PEER_TLS_ENABLED
-                value: "true"
-              - name: FABRIC_LOGGING_SPEC
-                value: "DEBUG"
-              - name: CORE_PEER_TLS_CLIENTAUTHREQUIRED
-                value: "/fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer1.bank2.banksco.com/msp"
+                value: "true" 
               - name: CORE_PEER_TLS_CERT_FILE
                 value: "/fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer1.bank2.banksco.com/tls/server.crt"
               - name: CORE_PEER_TLS_KEY_FILE
@@ -237,11 +259,11 @@ objects:
   metadata:
     annotations: null
     labels: null
-    name: peer1-bank2-svc
+    name: peer3
   spec:
     ports:
     - name: "7051"
       port: 7051
       targetPort: 7051
     selector:
-      name: peer1bank2
+      name: peer3
