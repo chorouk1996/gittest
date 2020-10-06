@@ -10,7 +10,7 @@ oc apply -f all-peers-onetemplate.yaml
 ### Process and create template entities
 
 ```sh
-oc process all-peers-template | oc create -f -
+oc process all-peers-onetemplate | oc create -f -
 ``` 
 ### RESULT
 ![all-peers-template error](./doc/all_peers.png) 
