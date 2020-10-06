@@ -150,7 +150,7 @@ Solution : Select an other storageClass where "allowVolumeExpansion" attribute i
     * if trying to expand a PVC size until PV initial capacity (having its storageClass where "allowVolumeExpansion"="true") : everything works fine  
     * if trying to expand the size of that PVC that exceeds PV capacity : the 2 following observations can be made :  
         => on PVC side, annotation "volume.kubernetes.io/storage-resizer: ibm.io/ibmc-block" is added in YAML due to PV capacity exceeded.  
-        A condition of type "FileSystemResizePending" is also added in the PVC saying : "Waiting for user to (re-)start a pod to finish file system resize of volume on node."
+        A condition of type "FileSystemResizePending" is also added in the PVC saying : "Waiting for user to (re-)start a pod to finish file system resize of volume on node."  
         => on PV side, "spec.capacity.storage" field is set with the claimed expanded size.  
         (ex : PVC initially claimed at 15Gi, for an initial PV capacity of 20Gi. If PVC is claimed for extention to 25Gi, "spec.capacity.storage" field of the corresponding PV is set to 25Gi.)  
 
