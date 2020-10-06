@@ -148,7 +148,7 @@ e) Trying to EXPAND a PVC, we have the error `persistentvolumeclaims "XXX" is fo
 Solution : Select an other storageClass where "allowVolumeExpansion" attribute is set AND set to "true".  
     - Note :  
     * if trying to expand a PVC size until PV initial capacity (having its storageClass where "allowVolumeExpansion"="true") : everything works fine  
-    * if trying to expand the size of that PVC that exceeds PV capacity : the 2 following observations can be made :  
+    * if trying to expand the size of that PVC that exceeds PV capacity : it works but 2 observations can be made :  
         => on PVC side, annotation "volume.kubernetes.io/storage-resizer: ibm.io/ibmc-block" is added in YAML due to PV capacity exceeded.  
         A condition of type "FileSystemResizePending" is also added in the PVC saying : "Waiting for user to (re-)start a pod to finish file system resize of volume on node."  
         => on PV side, "spec.capacity.storage" field is set with the claimed expanded size.  
