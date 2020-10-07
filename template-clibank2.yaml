@@ -37,7 +37,7 @@ objects:
             - name: CORE_PEER_ID
               value: "cliBank2"
             - name: CORE_PEER_ADDRESS
-              value: "peer0.Bank2.banksco.com:7051"
+              value: "peer2:7051"
             - name: CORE_PEER_LOCALMSPID
               value: "Bank2MSP"
             - name: CORE_PEER_TLS_ENABLED
