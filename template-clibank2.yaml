@@ -26,7 +26,7 @@ objects:
           - name: clibank2
             image: hyperledger/fabric-tools:2.2.0
             imagePullPolicy: Always
-            command: ["sh", "-c","sleep 24h"]
+            command: ["sh", "-c","cd ../fabric &&  chmod +x ../fabric/channelclibank2.sh && ../fabric/channelclibank2.sh && sleep 24h"]
             env:
             - name: GOPATH
               value: "/opt/gopath"
