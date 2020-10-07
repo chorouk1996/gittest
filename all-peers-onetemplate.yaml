@@ -40,6 +40,8 @@ objects:
                 value: "DEBUG"
               - name: CORE_PEER_LOCALMSPID
                 value: "Bank1MSP"
+              - name: CORE_PEER_MSPCONFIGPATH
+                value: /fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer0.bank1.banksco.com/msp/
               - name: CORE_PEER_PROFILE_ENABLED
                 value: "true"
               - name: CORE_PEER_TLS_ENABLED
@@ -106,6 +108,8 @@ objects:
                 value: "DEBUG"
               - name: CORE_PEER_LOCALMSPID
                 value: "Bank1MSP"
+              - name: CORE_PEER_MSPCONFIGPATH
+                value: /fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer1.bank1.banksco.com/msp/                
               - name: CORE_PEER_PROFILE_ENABLED
                 value: "true"
               - name: CORE_PEER_TLS_ENABLED
@@ -172,6 +176,8 @@ objects:
                 value: "DEBUG"
               - name: CORE_PEER_LOCALMSPID
                 value: "Bank2MSP"
+              - name: CORE_PEER_MSPCONFIGPATH
+                value: /fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer0.bank2.banksco.com/msp/               
               - name: CORE_PEER_PROFILE_ENABLED
                 value: "true"
               - name: CORE_PEER_TLS_ENABLED
@@ -238,6 +244,8 @@ objects:
                 value: "DEBUG"
               - name: CORE_PEER_LOCALMSPID
                 value: "Bank2MSP"
+              - name: CORE_PEER_MSPCONFIGPATH
+                value: /fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer1.bank2.banksco.com/msp/              
               - name: CORE_PEER_PROFILE_ENABLED
                 value: "true"
               - name: CORE_PEER_TLS_ENABLED
