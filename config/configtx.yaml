@@ -88,7 +88,7 @@ Organizations:
             # AnchorPeers defines the location of peers which can be used
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
-            - Host: peer0.bank2.banksco.com
+            - Host: peer2.bank2.banksco.com
               Port: 7051
 
 ################################################################################

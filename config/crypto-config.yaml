@@ -92,7 +92,7 @@ PeerOrgs:
         Locality: Paris
     Template:
       Count: 2
-      Start: 5
+      Start: 2
 
     Users:
       Count: 1
