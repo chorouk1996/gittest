@@ -6,7 +6,7 @@ COPY base /sources/base
 RUN chmod +x /sources/entrypoint.sh
 RUN mkdir -p /fabric-secret
 RUN tar xvf /sources/config/oc.tar
-RUN export PATH=$PATH:/sources/config/oc
+RUN mv oc /usr/local/bin
 ENTRYPOINT [ "/sources/entrypoint.sh" ]
 
 
