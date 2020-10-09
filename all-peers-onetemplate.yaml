@@ -22,6 +22,9 @@ objects:
         - name: fabricfiles
           persistentVolumeClaim:
             claimName: fabric-pvc
+        - name: peer0file
+          persistentVolumeClaim:
+            claimName: peer0-pvc
         containers:
           - name: peer0-bank1-banksco-com
             image: hyperledger/fabric-peer:2.2.0
@@ -55,6 +58,8 @@ objects:
             volumeMounts:
               - mountPath: /fabric
                 name: fabricfiles
+              - mountPath: /var/hyperledger/production/
+                name: peer0file
             ports:
               - containerPort: 7051
 - apiVersion: v1
@@ -70,6 +75,17 @@ objects:
       targetPort: 7051
     selector:
       name: peer0
+- kind: PersistentVolumeClaim
+  apiVersion: v1
+  metadata:
+    name: peer0-pvc
+  spec:
+    accessModes:
+      - ReadWriteOnly
+    resources:
+      requests:
+        storage: 1Gi
+    storageClassName: ibmc-block-gold 
 
 - apiVersion: v1
   kind: DeploymentConfig
@@ -88,6 +104,9 @@ objects:
         - name: fabricfiles
           persistentVolumeClaim:
             claimName: fabric-pvc
+        - name: peer1file
+          persistentVolumeClaim:
+            claimName: peer1-pvc
         containers:
           - name: peer1-bank1-banksco-com
             image: hyperledger/fabric-peer:2.2.0
@@ -123,6 +142,8 @@ objects:
             volumeMounts:
               - mountPath: /fabric
                 name: fabricfiles
+              - mountPath: /var/hyperledger/production/
+                name: peer1file
             ports:
               - containerPort: 7051
 - apiVersion: v1
@@ -138,6 +159,17 @@ objects:
       targetPort: 7051
     selector:
       name: peer1
+- kind: PersistentVolumeClaim
+  apiVersion: v1
+  metadata:
+    name: peer1-pvc
+  spec:
+    accessModes:
+      - ReadWriteOnly
+    resources:
+      requests:
+        storage: 1Gi
+    storageClassName: ibmc-block-gold 
 
 - apiVersion: v1
   kind: DeploymentConfig
@@ -156,6 +188,9 @@ objects:
         - name: fabricfiles
           persistentVolumeClaim:
             claimName: fabric-pvc
+        - name: peer2file
+          persistentVolumeClaim:
+            claimName: peer2-pvc
         containers:
           - name: peer0-bank2-banksco-com
             image: hyperledger/fabric-peer:2.2.0
@@ -191,6 +226,8 @@ objects:
             volumeMounts:
               - mountPath: /fabric
                 name: fabricfiles
+              - mountPath: /var/hyperledger/production/
+                name: peer2file
             ports:
               - containerPort: 7051
 - apiVersion: v1
@@ -206,6 +243,18 @@ objects:
       targetPort: 7051
     selector:
       name: peer2
+- kind: PersistentVolumeClaim
+  apiVersion: v1
+  metadata:
+    name: peer2-pvc
+  spec:
+    accessModes:
+      - ReadWriteOnly
+    resources:
+      requests:
+        storage: 1Gi
+    storageClassName: ibmc-block-gold 
+
 
 - apiVersion: v1
   kind: DeploymentConfig
@@ -224,6 +273,9 @@ objects:
         - name: fabricfiles
           persistentVolumeClaim:
             claimName: fabric-pvc
+        - name: peer3file
+          persistentVolumeClaim:
+            claimName: peer3-pvc
         containers:
           - name: peer1-bank2-banksco-com
             image: hyperledger/fabric-peer:2.2.0
@@ -259,9 +311,10 @@ objects:
             volumeMounts:
               - mountPath: /fabric
                 name: fabricfiles
+              - mountPath: /var/hyperledger/production/
+                name: peer3file
             ports:
               - containerPort: 7051
-
 - apiVersion: v1
   kind: Service
   metadata:
@@ -275,3 +328,15 @@ objects:
       targetPort: 7051
     selector:
       name: peer3
+- kind: PersistentVolumeClaim
+  apiVersion: v1
+  metadata:
+    name: peer3-pvc
+  spec:
+    accessModes:
+      - ReadWriteOnly
+    resources:
+      requests:
+        storage: 1Gi
+    storageClassName: ibmc-block-gold 
+
