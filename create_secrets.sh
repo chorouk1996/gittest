@@ -61,10 +61,10 @@ function generateOrg2Secret(){
   oc create secret generic secret-blockchain-org2-solution2 \
 	--from-file=peerorg.orgdomain1.ca.priv=${ROOTPATH_ORG2}/ca/priv_sk \
 	--from-file=peerorg.orgdomain1.tlsca.priv=${ROOTPATH_ORG2}/tlsca/priv_sk \
-	--from-file=peerorg.orgdomain1.peers.${PEER0}.msp.keystore.priv=${ROOTPATH_ORG2}/peers/${PEER0}.${ORG2_DOMAIN}/msp/keystore/priv_sk \
-	--from-file=peerorg.orgdomain1.peers.${PEER0}.tls.serverkey=${ROOTPATH_ORG2}/peers/${PEER0}.${ORG2_DOMAIN}/tls/server.key \
-	--from-file=peerorg.orgdomain1.peers.${PEER1}.msp.keystore.priv=${ROOTPATH_ORG2}/peers/${PEER1}.${ORG2_DOMAIN}/msp/keystore/priv_sk \
-	--from-file=peerorg.orgdomain1.peers.${PEER1}.tls.serverkey=${ROOTPATH_ORG2}/peers/${PEER1}.${ORG2_DOMAIN}/tls/server.key \
+	--from-file=peerorg.orgdomain1.peers.${PEER2}.msp.keystore.priv=${ROOTPATH_ORG2}/peers/${PEER2}.${ORG2_DOMAIN}/msp/keystore/priv_sk \
+	--from-file=peerorg.orgdomain1.peers.${PEER2}.tls.serverkey=${ROOTPATH_ORG2}/peers/${PEER2}.${ORG2_DOMAIN}/tls/server.key \
+	--from-file=peerorg.orgdomain1.peers.${PEER3}.msp.keystore.priv=${ROOTPATH_ORG2}/peers/${PEER3}.${ORG2_DOMAIN}/msp/keystore/priv_sk \
+	--from-file=peerorg.orgdomain1.peers.${PEER3}.tls.serverkey=${ROOTPATH_ORG2}/peers/${PEER3}.${ORG2_DOMAIN}/tls/server.key \
 	--from-file=peerorg.orgdomain1.users.admin.msp.keystore.priv=${ROOTPATH_ORG2}/users/Admin@${ORG2_DOMAIN}/msp/keystore/priv_sk \
 	--from-file=peerorg.orgdomain1.users.admin.tls.clientkey=${ROOTPATH_ORG2}/users/Admin@${ORG2_DOMAIN}/tls/client.key \
 	--from-file=peerorg.orgdomain1.users.${USER1}.msp.keystore.priv=${ROOTPATH_ORG2}/users/${USER1_UP}@${ORG2_DOMAIN}/msp/keystore/priv_sk \
