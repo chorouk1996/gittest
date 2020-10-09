@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd ../fabric-secret
+cd /fabric-secret
 
 if [ -d "crypto-config" ]; then
   rm -Rf crypto-config
