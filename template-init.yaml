@@ -1,0 +1,88 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+labels:
+  template: fabric-template
+metadata:
+  name: tpl-fabric
+objects:
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: fabric-dc
+  spec:
+    strategy:
+      type: Recreate
+    replicas: 1
+    template:
+      metadata:
+        labels:
+          name: fabric
+      spec:
+        volumes:
+        - name: fabricfiles
+          persistentVolumeClaim:
+            claimName: fabric-pvc
+        initContainers:
+        - name: app-init
+          image: image-registry.openshift-image-registry.svc:5000/${PROJECT}/fabric-alpine:latest
+          volumeMounts:
+          - mountPath: /fabric
+            name: fabricfiles
+          selector:
+            name: fabric
+        containers:
+          - name: fabrictools
+            image: hyperledger/fabric-tools:2.2.0
+            imagePullPolicy: Always
+            command: ["sh", "-c","cd ../fabric &&  chmod +x ../fabric/commands.sh && ../fabric/commands.sh"]
+            env:
+            - name: FABRIC_CFG_PATH
+              value: "/fabric"
+            volumeMounts:
+              - mountPath: /fabric
+                name: fabricfiles
+- kind: PersistentVolumeClaim
+  apiVersion: v1
+  metadata:
+    name: fabric-pvc
+  spec:
+    accessModes:
+      - ReadWriteMany
+    resources:
+      requests:
+        storage: ${VOLUME_SIZE}
+    storageClassName: ${STORAGE_CLASS}     
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: fabric-alpine
+  spec:
+    lookupPolicy:
+      local: false
+    tags:
+      - name: latest
+        annotations: null
+        from:
+          kind: DockerImage
+          name: 'us.icr.io/${NAMESPACE}/fabric-alpine:latest'
+        generation: 2
+        importPolicy: {}
+        referencePolicy:
+          type: Local
+parameters:
+- description: Value for project
+  displayName: project
+  name: PROJECT
+  required: true
+- description: le size du storage
+  displayName: le size du storage
+  name: VOLUME_SIZE
+  required: true
+- description: storage Class Name
+  displayName: storageClassName
+  name: STORAGE_CLASS
+  required: true
+- description: namespace
+  displayName: NameSpace
+  name: NAMESPACE
+  required: true
