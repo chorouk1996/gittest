@@ -31,7 +31,8 @@ Note : The base image is built on "alpine" OS and contains :
 
 1) login in openshift : `oc login --token=<generatedToken> --server=https://c103-e.us-south.containers.cloud.ibm.com:31319`
 
-Note : 
+Note : As reminder, login procedure is explained in the very bottom of this wiki (https://github.ibm.com/OpenshiftEverywhere-POCs-FR/global-knewledge/wiki/Tools)  
+To sum up : go to RHOCP > open the dropdown menu of our login (top-right corner) > select "Copy Login Command" > "Display Token"  
 
 2) Tag the image in order to operate on image streams : `oc tag us.icr.io/bouygues-bloc-1600085663464/fabric-secret-alpine:latest ${PROJECT}/fabric-secret-alpine:latest --reference-policy=local`
 
