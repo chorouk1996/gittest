@@ -81,7 +81,7 @@ objects:
     name: peer0-pvc
   spec:
     accessModes:
-      - ReadWriteOnly
+      - ReadWriteOnce
     resources:
       requests:
         storage: 1Gi
@@ -165,7 +165,7 @@ objects:
     name: peer1-pvc
   spec:
     accessModes:
-      - ReadWriteOnly
+      - ReadWriteOnce
     resources:
       requests:
         storage: 1Gi
@@ -249,7 +249,7 @@ objects:
     name: peer2-pvc
   spec:
     accessModes:
-      - ReadWriteOnly
+      - ReadWriteOnce
     resources:
       requests:
         storage: 1Gi
@@ -334,7 +334,7 @@ objects:
     name: peer3-pvc
   spec:
     accessModes:
-      - ReadWriteOnly
+      - ReadWriteOnce
     resources:
       requests:
         storage: 1Gi
