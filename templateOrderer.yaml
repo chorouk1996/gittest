@@ -83,8 +83,8 @@ objects:
     name: orderer-pvc
   spec:
     accessModes:
-      - ReadWriteOnly
+      - ReadWriteOnce
     resources:
       requests:
-        storage: 1Gi
-    storageClassName: ibmc-block-gold 
+        storage: 10Gi
+    storageClassName: ibmc-block-silver
