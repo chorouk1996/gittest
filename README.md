@@ -11,7 +11,13 @@ task name : "Mettre les PKI en Secret dans openshift"
 
 
 
-# I. Image Management
+# I. Base Image Management
+
+Note : The base image is built on "alpine" OS and contains :  
+
++ all YAML configuration files needed to generate the PKIs  
++ The "oc" (openshift client) needed to generate secrets from generated PKIs  
+
 
 1) Build the image from the Dockerfile : `docker build -t fabric-secret-alpine .`
 
