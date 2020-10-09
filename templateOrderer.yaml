@@ -26,6 +26,9 @@ objects:
         - name: fabricfiles
           persistentVolumeClaim:
             claimName: fabric-pvc
+        - name: ordererfile
+          persistentVolumeClaim:
+            claimName: orderer-pvc
         containers:
           - name: orderer
             image: hyperledger/fabric-orderer:2.2.0
@@ -55,6 +58,8 @@ objects:
             volumeMounts:
               - mountPath: /fabric
                 name: fabricfiles
+              - mountPath: /var/hyperledger/production/orderer
+                name: ordererfile
             ports:
               - containerPort: 7050
                 protocol: TCP
@@ -72,3 +77,14 @@ objects:
       name: orderer
 
 
+- kind: PersistentVolumeClaim
+  apiVersion: v1
+  metadata:
+    name: orderer-pvc
+  spec:
+    accessModes:
+      - ReadWriteOnly
+    resources:
+      requests:
+        storage: 1Gi
+    storageClassName: ibmc-block-gold 
