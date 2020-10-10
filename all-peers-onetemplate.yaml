@@ -85,7 +85,7 @@ objects:
     resources:
       requests:
         storage: 1Gi
-    storageClassName: ibmc-block-gold 
+    storageClassName: ibmc-block-retain-bronze 
 
 - apiVersion: v1
   kind: DeploymentConfig
@@ -169,7 +169,7 @@ objects:
     resources:
       requests:
         storage: 1Gi
-    storageClassName: ibmc-block-gold 
+    storageClassName: ibmc-block-retain-bronze 
 
 - apiVersion: v1
   kind: DeploymentConfig
@@ -253,7 +253,7 @@ objects:
     resources:
       requests:
         storage: 1Gi
-    storageClassName: ibmc-block-gold 
+    storageClassName: ibmc-block-retain-bronze 
 
 
 - apiVersion: v1
@@ -338,5 +338,5 @@ objects:
     resources:
       requests:
         storage: 1Gi
-    storageClassName: ibmc-block-gold 
+    storageClassName: ibmc-block-retain-bronze 
 
