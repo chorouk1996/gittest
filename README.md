@@ -10,12 +10,12 @@ oc apply -f all-peers-onetemplate.yaml
 ### Process and create template entities
 
 ```sh
-oc process all-peers-onetemplate | oc create -f -
+oc process all-peers-template | oc create -f -
 ``` 
 ### RESULT
 ![all-peers-template error](./doc/all_peers.png) 
 ### IMPORTANT
-En essaynt de déployer les peers sous forms des containers dans le même pod (template : all-peers-one-pod-template), j'ai eu une erreur liée aux ports malgré la définittions des services à l'image de ce qui est fait dans les fichiers yaml de docker-compose .
+En essayant de déployer les peers sous forms des containers dans le même pod (template : all-peers-one-pod-template), j'ai eu une erreur liée aux ports malgré la définittions des services à l'image de ce qui est fait dans les fichiers yaml de docker-compose .
 ![all-peers-one-pod-template error](./doc/app-peers-template-error.png) 
 
 Et pour débuger J'ai crée un simple template (tow-peers-template) avec deux containers et les mêmes paramètres que ceux implementés dans les fichiers yaml de docker-compose :
