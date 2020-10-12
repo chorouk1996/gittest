@@ -54,8 +54,8 @@ function generateOrg1Secret(){
 	--from-file=peerorg.orgdomain1.peers.${PEER1}.msp.admincerts=${ROOTPATH_ORG1}/users/Admin@${ORG1_DOMAIN}/msp/signcerts/Admin@${ORG1_DOMAIN}-cert.pem \
 	--from-file=peerorg.orgdomain1.users.admin.msp.admincerts=${ROOTPATH_ORG1}/users/Admin@${ORG1_DOMAIN}/msp/signcerts/Admin@${ORG1_DOMAIN}-cert.pem \
 	--from-file=peerorg.orgdomain1.users.admin.msp.signcerts=${ROOTPATH_ORG1}/users/Admin@${ORG1_DOMAIN}/msp/signcerts/Admin@${ORG1_DOMAIN}-cert.pem \
-	--from-file=peerorg.orgdomain1.users.${USER1}.msp.admincerts=${ROOTPATH_ORG1}/users/${USER1}@${ORG1_DOMAIN}/msp/signcerts/${USER1}@${ORG1_DOMAIN}-cert.pem \
-	--from-file=peerorg.orgdomain1.users.${USER1}.msp.signcerts=${ROOTPATH_ORG1}/users/${USER1}@${ORG1_DOMAIN}/msp/signcerts/${USER1}@${ORG1_DOMAIN}-cert.pem \
+	--from-file=peerorg.orgdomain1.users.${USER1}.msp.admincerts=${ROOTPATH_ORG1}/users/${USER1_UP}@${ORG1_DOMAIN}/msp/signcerts/${USER1_UP}@${ORG1_DOMAIN}-cert.pem \
+	--from-file=peerorg.orgdomain1.users.${USER1}.msp.signcerts=${ROOTPATH_ORG1}/users/${USER1_UP}@${ORG1_DOMAIN}/msp/signcerts/${USER1_UP}@${ORG1_DOMAIN}-cert.pem \
 	--from-file=peerorg.orgdomain1.ca.priv=${ROOTPATH_ORG1}/ca/priv_sk \
 	--from-file=peerorg.orgdomain1.ca.pem=${ROOTPATH_ORG1}/ca/ca.${ORG1_DOMAIN}-cert.pem \
 	--from-file=peerorg.orgdomain1.tlsca.priv=${ROOTPATH_ORG1}/tlsca/priv_sk \
@@ -110,8 +110,8 @@ function generateOrg2Secret(){
 	--from-file=peerorg.orgdomain2.peers.${PEER3}.msp.admincerts=${ROOTPATH_ORG2}/users/Admin@${ORG2_DOMAIN}/msp/signcerts/Admin@${ORG2_DOMAIN}-cert.pem \
 	--from-file=peerorg.orgdomain2.users.admin.msp.admincerts=${ROOTPATH_ORG2}/users/Admin@${ORG2_DOMAIN}/msp/signcerts/Admin@${ORG2_DOMAIN}-cert.pem \
 	--from-file=peerorg.orgdomain2.users.admin.msp.signcerts=${ROOTPATH_ORG2}/users/Admin@${ORG2_DOMAIN}/msp/signcerts/Admin@${ORG2_DOMAIN}-cert.pem \
-	--from-file=peerorg.orgdomain2.users.${USER1}.msp.admincerts=${ROOTPATH_ORG2}/users/${USER1_UP}@${ORG2_DOMAIN}/msp/signcerts/${USER1}@${ORG2_DOMAIN}-cert.pem \
-	--from-file=peerorg.orgdomain2.users.${USER1}.msp.signcerts=${ROOTPATH_ORG2}/users/${USER1_UP}@${ORG2_DOMAIN}/msp/signcerts/${USER1}@${ORG2_DOMAIN}-cert.pem \
+	--from-file=peerorg.orgdomain2.users.${USER1}.msp.admincerts=${ROOTPATH_ORG2}/users/${USER1_UP}@${ORG2_DOMAIN}/msp/signcerts/${USER1_UP}@${ORG2_DOMAIN}-cert.pem \
+	--from-file=peerorg.orgdomain2.users.${USER1}.msp.signcerts=${ROOTPATH_ORG2}/users/${USER1_UP}@${ORG2_DOMAIN}/msp/signcerts/${USER1_UP}@${ORG2_DOMAIN}-cert.pem \
 	--from-file=peerorg.orgdomain2.ca.priv=${ROOTPATH_ORG2}/ca/priv_sk \
 	--from-file=peerorg.orgdomain2.ca.pem=${ROOTPATH_ORG2}/ca/ca.${ORG2_DOMAIN}-cert.pem \
 	--from-file=peerorg.orgdomain2.tlsca.priv=${ROOTPATH_ORG2}/tlsca/priv_sk \
@@ -120,14 +120,14 @@ function generateOrg2Secret(){
 	--from-file=peerorg.orgdomain2.msp.tlscacerts.pem=${ROOTPATH_ORG2}/msp/tlscacerts/tlsca.${ORG2_DOMAIN}-cert.pem \
 	--from-file=peerorg.orgdomain2.peers.${PEER2}.msp.cacerts.priv=${ROOTPATH_ORG2}/peers/${PEER2}.${ORG2_DOMAIN}/msp/cacerts/ca.${ORG2_DOMAIN}-cert.pem \
 	--from-file=peerorg.orgdomain2.peers.${PEER2}.msp.keystore.priv=${ROOTPATH_ORG2}/peers/${PEER2}.${ORG2_DOMAIN}/msp/keystore/priv_sk \
-	--from-file=peerorg.orgdomain2.peers.${PEER2}.msp.signcerts.pem=${ROOTPATH_ORG2}/peers/${PEER2}.${ORG2_DOMAIN}/msp/signcerts/${PEER0}.${ORG2_DOMAIN}-cert.pem \
+	--from-file=peerorg.orgdomain2.peers.${PEER2}.msp.signcerts.pem=${ROOTPATH_ORG2}/peers/${PEER2}.${ORG2_DOMAIN}/msp/signcerts/${PEER2}.${ORG2_DOMAIN}-cert.pem \
 	--from-file=peerorg.orgdomain2.peers.${PEER2}.msp.tlscacerts.pem=${ROOTPATH_ORG2}/peers/${PEER2}.${ORG2_DOMAIN}/msp/tlscacerts/tlsca.${ORG2_DOMAIN}-cert.pem \
 	--from-file=peerorg.orgdomain2.peers.${PEER2}.tls.cacrt=${ROOTPATH_ORG2}/peers/${PEER2}.${ORG2_DOMAIN}/tls/ca.crt \
 	--from-file=peerorg.orgdomain2.peers.${PEER2}.tls.servercrt=${ROOTPATH_ORG2}/peers/${PEER2}.${ORG2_DOMAIN}/tls/server.crt \
 	--from-file=peerorg.orgdomain2.peers.${PEER2}.tls.serverkey=${ROOTPATH_ORG2}/peers/${PEER2}.${ORG2_DOMAIN}/tls/server.key \
 	--from-file=peerorg.orgdomain2.peers.${PEER3}.msp.cacerts.priv=${ROOTPATH_ORG2}/peers/${PEER3}.${ORG2_DOMAIN}/msp/cacerts/ca.${ORG2_DOMAIN}-cert.pem \
 	--from-file=peerorg.orgdomain2.peers.${PEER3}.msp.keystore.priv=${ROOTPATH_ORG2}/peers/${PEER3}.${ORG2_DOMAIN}/msp/keystore/priv_sk \
-	--from-file=peerorg.orgdomain2.peers.${PEER3}.msp.signcerts.pem=${ROOTPATH_ORG2}/peers/${PEER3}.${ORG2_DOMAIN}/msp/signcerts/${PEER1}.${ORG2_DOMAIN}-cert.pem \
+	--from-file=peerorg.orgdomain2.peers.${PEER3}.msp.signcerts.pem=${ROOTPATH_ORG2}/peers/${PEER3}.${ORG2_DOMAIN}/msp/signcerts/${PEER3}.${ORG2_DOMAIN}-cert.pem \
 	--from-file=peerorg.orgdomain2.peers.${PEER3}.msp.tlscacerts.pem=${ROOTPATH_ORG2}/peers/${PEER3}.${ORG2_DOMAIN}/msp/tlscacerts/tlsca.${ORG2_DOMAIN}-cert.pem \
 	--from-file=peerorg.orgdomain2.peers.${PEER3}.tls.cacrt=${ROOTPATH_ORG2}/peers/${PEER3}.${ORG2_DOMAIN}/tls/ca.crt \
 	--from-file=peerorg.orgdomain2.peers.${PEER3}.tls.servercrt=${ROOTPATH_ORG2}/peers/${PEER3}.${ORG2_DOMAIN}/tls/server.crt \
