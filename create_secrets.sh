@@ -59,16 +59,16 @@ function generateOrg2Secret(){
   echo "root:" ${ROOTPATH_ORG2}
   
   oc create secret generic secret-blockchain-org2-solution2 \
-	--from-file=peerorg.orgdomain1.ca.priv=${ROOTPATH_ORG2}/ca/priv_sk \
-	--from-file=peerorg.orgdomain1.tlsca.priv=${ROOTPATH_ORG2}/tlsca/priv_sk \
-	--from-file=peerorg.orgdomain1.peers.${PEER2}.msp.keystore.priv=${ROOTPATH_ORG2}/peers/${PEER2}.${ORG2_DOMAIN}/msp/keystore/priv_sk \
-	--from-file=peerorg.orgdomain1.peers.${PEER2}.tls.serverkey=${ROOTPATH_ORG2}/peers/${PEER2}.${ORG2_DOMAIN}/tls/server.key \
-	--from-file=peerorg.orgdomain1.peers.${PEER3}.msp.keystore.priv=${ROOTPATH_ORG2}/peers/${PEER3}.${ORG2_DOMAIN}/msp/keystore/priv_sk \
-	--from-file=peerorg.orgdomain1.peers.${PEER3}.tls.serverkey=${ROOTPATH_ORG2}/peers/${PEER3}.${ORG2_DOMAIN}/tls/server.key \
-	--from-file=peerorg.orgdomain1.users.admin.msp.keystore.priv=${ROOTPATH_ORG2}/users/Admin@${ORG2_DOMAIN}/msp/keystore/priv_sk \
-	--from-file=peerorg.orgdomain1.users.admin.tls.clientkey=${ROOTPATH_ORG2}/users/Admin@${ORG2_DOMAIN}/tls/client.key \
-	--from-file=peerorg.orgdomain1.users.${USER1}.msp.keystore.priv=${ROOTPATH_ORG2}/users/${USER1_UP}@${ORG2_DOMAIN}/msp/keystore/priv_sk \
-	--from-file=peerorg.orgdomain1.users.${USER1}.tls.clientkey=${ROOTPATH_ORG2}/users/${USER1_UP}@${ORG2_DOMAIN}/tls/client.key
+	--from-file=peerorg.orgdomain2.ca.priv=${ROOTPATH_ORG2}/ca/priv_sk \
+	--from-file=peerorg.orgdomain2.tlsca.priv=${ROOTPATH_ORG2}/tlsca/priv_sk \
+	--from-file=peerorg.orgdomain2.peers.${PEER2}.msp.keystore.priv=${ROOTPATH_ORG2}/peers/${PEER2}.${ORG2_DOMAIN}/msp/keystore/priv_sk \
+	--from-file=peerorg.orgdomain2.peers.${PEER2}.tls.serverkey=${ROOTPATH_ORG2}/peers/${PEER2}.${ORG2_DOMAIN}/tls/server.key \
+	--from-file=peerorg.orgdomain2.peers.${PEER3}.msp.keystore.priv=${ROOTPATH_ORG2}/peers/${PEER3}.${ORG2_DOMAIN}/msp/keystore/priv_sk \
+	--from-file=peerorg.orgdomain2.peers.${PEER3}.tls.serverkey=${ROOTPATH_ORG2}/peers/${PEER3}.${ORG2_DOMAIN}/tls/server.key \
+	--from-file=peerorg.orgdomain2.users.admin.msp.keystore.priv=${ROOTPATH_ORG2}/users/Admin@${ORG2_DOMAIN}/msp/keystore/priv_sk \
+	--from-file=peerorg.orgdomain2.users.admin.tls.clientkey=${ROOTPATH_ORG2}/users/Admin@${ORG2_DOMAIN}/tls/client.key \
+	--from-file=peerorg.orgdomain2.users.${USER1}.msp.keystore.priv=${ROOTPATH_ORG2}/users/${USER1_UP}@${ORG2_DOMAIN}/msp/keystore/priv_sk \
+	--from-file=peerorg.orgdomain2.users.${USER1}.tls.clientkey=${ROOTPATH_ORG2}/users/${USER1_UP}@${ORG2_DOMAIN}/tls/client.key
 	
   
     echo "Org2 creation finished successfully"
