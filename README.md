@@ -90,7 +90,7 @@ NOTE : Change parameters if needed in the `param.env` file.
 
 1) connect on the pod that was generated : `oc rsh <podName>`
 
-2) login in openshift <i>inside the container</i> : `oc login --token=<generatedToken> --server=https://c103-e.us-south.containers.cloud.ibm.com:31319`
+2) login in openshift <i>inside the container</i> : `oc login --token=<generatedToken> --server=https://c103-e.us-south.containers.cloud.ibm.com:31319 --insecure-skip-tls-verify`
 
 Note : As reminder, login procedure is explained in the very bottom of [this wiki](https://github.ibm.com/OpenshiftEverywhere-POCs-FR/global-knewledge/wiki/Tools)
 To sum up : go to RHOCP > open the dropdown menu of our login (top-right corner) > select "Copy Login Command" > "Display Token"
