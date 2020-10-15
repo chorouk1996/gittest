@@ -24,7 +24,7 @@ objects:
               claimName: fabric-pvc
         containers:
           - name: clibank2
-            image: hyperledger/fabric-tools:2.2.0
+            image: hyperledger/fabric-tools:2.2.1
             imagePullPolicy: Always
             command: ["sh", "-c","cd ../fabric &&  chmod +x ../fabric/channelclibank2.sh && ../fabric/channelclibank2.sh && sleep 24h"]
             env:
