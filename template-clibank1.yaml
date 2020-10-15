@@ -3,7 +3,7 @@ kind: Template
 labels:
   template: fabric-template
 metadata:
-  name: tpl-clibank
+  name: tpl-clibank1
 objects:
 - apiVersion: v1
   kind: DeploymentConfig
