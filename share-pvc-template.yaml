@@ -1,0 +1,60 @@
+
+kind: Template
+apiVersion: v1
+metadata:
+  name: "share-pvc-template"
+## PARAMETRES
+parameters:
+  - name: PVCNAME
+    description: Name of pvc to share.
+    required: true
+objects:
+## POD
+  - apiVersion: v1
+    kind: Pod
+    metadata:
+      name: task-pv-pod
+      labels:
+        name: task-pv-pod
+        docker-registry: default
+    spec:
+      volumes:
+        - name: ${PVCNAME}
+          persistentVolumeClaim:
+            claimName: ${PVCNAME}
+      containers:
+        - name: task-pv-container
+          image: nginx
+          ports:
+            - containerPort: 80
+              name: "http-server"
+          volumeMounts:
+            - mountPath: "/usr/share/nginx/html"
+              name: ${PVCNAME}
+## Service
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: task-pv-pod-service
+      labels:
+        run: task-pv-pod
+    spec:
+      type: NodePort
+      ports:
+      - port: 8080
+        targetPort: 80
+        protocol: TCP
+        name: http
+      selector:
+        docker-registry: default
+  ## Route
+  - apiVersion: v1
+    kind: Route
+    metadata:
+      name: task-pv-pod-route
+    spec:
+      to:
+        kind: Service
+        name: task-pv-pod-service
+      tls:
+        termination: edge
