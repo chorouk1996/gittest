@@ -27,7 +27,7 @@ objects:
             claimName: peer0-pvc
         containers:
           - name: peer0-bank1-banksco-com
-            image: hyperledger/fabric-peer:2.2.0
+            image: hyperledger/fabric-peer:2.2.1
             imagePullPolicy: Always
             command: ["sh","-c","peer node start"]
             env:
@@ -109,7 +109,7 @@ objects:
             claimName: peer1-pvc
         containers:
           - name: peer1-bank1-banksco-com
-            image: hyperledger/fabric-peer:2.2.0
+            image: hyperledger/fabric-peer:2.2.1
             imagePullPolicy: Always
             command: ["sh","-c","peer node start"]
             env:
@@ -193,7 +193,7 @@ objects:
             claimName: peer2-pvc
         containers:
           - name: peer0-bank2-banksco-com
-            image: hyperledger/fabric-peer:2.2.0
+            image: hyperledger/fabric-peer:2.2.1
             imagePullPolicy: Always
             command: ["sh","-c","peer node start"]
             env:
@@ -278,7 +278,7 @@ objects:
             claimName: peer3-pvc
         containers:
           - name: peer1-bank2-banksco-com
-            image: hyperledger/fabric-peer:2.2.0
+            image: hyperledger/fabric-peer:2.2.1
             imagePullPolicy: Always
             command: ["sh","-c","peer node start"]
             env:
