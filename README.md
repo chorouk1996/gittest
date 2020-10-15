@@ -102,3 +102,42 @@ To sum up : go to RHOCP > open the dropdown menu of our login (top-right corner)
 Note : the script generates the secrets in Openshift platform.
 
 
+
+
+# IV. Link Secrets with Orderer
+
+This part is an adaptation of the branch [feature-orderer-yaml](https://eu-de.git.cloud.ibm.com/gbs-rh/devops/refimps/g4sam1/bouygues-bloc/bouygues-blockchain/bouygues-poc/-/tree/feature-orderer-yaml)
+
+1) Apply template : `oc apply -f templateOrdererSecret.yaml`
+
+2) Process and create template entities : `oc process  tpl-orderer-secret | oc create -f -`
+
+
+
+# V. Link Secrets with Peers
+
+This part is an adaptation of the branch [feature-allPeersOneTemplate](https://eu-de.git.cloud.ibm.com/gbs-rh/devops/refimps/g4sam1/bouygues-bloc/bouygues-blockchain/bouygues-poc/-/tree/feature-allPeersOneTemplate)
+
+1) Apply template : `oc apply -f all-peers-secret-onetemplate.yaml`
+
+2) Process and create template entities : `oc process  all-peers-secret-template | oc create -f -`
+
+
+
+# VI. Start cliBank
+
+This part is an adaptation of the branch [feature-clibank-yaml](https://eu-de.git.cloud.ibm.com/gbs-rh/devops/refimps/g4sam1/bouygues-bloc/bouygues-blockchain/bouygues-poc/-/tree/feature-clibank-yaml)
+
+1) Apply templates :  
+
+`oc apply -f template-clibank1-secret.yaml` 
+
+`oc apply -f template-clibank2-secret.yaml`
+
+2) Process and create template entities : 
+
+`oc process  tpl-clibank1-secret  | oc create -f -`
+
+`oc process  tpl-clibank2-secret  | oc create -f -`
+
+
