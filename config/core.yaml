@@ -207,7 +207,7 @@ chaincode:
 
     externalBuilders:
     # path points to the buildpack location INSIDE the peer
-      - path: /opt/exchangecc/buildpack
+      - path: /fabric/buildpack
         name: exchangecc-builder
         #   propagateEnvironment:
         #      - ENVVAR_NAME_TO_PROPAGATE_FROM_PEER
