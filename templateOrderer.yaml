@@ -31,7 +31,7 @@ objects:
             claimName: orderer-pvc
         containers:
           - name: orderer
-            image: hyperledger/fabric-orderer:2.2.0
+            image: hyperledger/fabric-orderer:2.2.1
             imagePullPolicy: Always
             command: ["sh", "-c","orderer"]
             env:
