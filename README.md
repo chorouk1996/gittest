@@ -1,19 +1,19 @@
-### roblématique
+### Problématique
 
 L'equipe IBM  Blockchain voudrait partager un volume de données (des clés, et des configurations) entre 2 namespaces.
 ![problématique](./img/challeng.gif) 
 
 ### Solution I
 
-Partager un volume via un serveur http enginx.
+Partager un volume via un serveur http (enginx).
 Le volume sera accessible via une route depuis tous les namespaces
 ### Deployment
 
-Pour déployer la solution, il suffit de vous rendre sur votre cluster openshift, vous loger_in puis charger et executer la template ci-joint (share-pvc-template.yaml).
+Pour déployer cette solution, il suffit de vous rendre sur votre cluster openshift, vous vous connectez puis charger et executer le template ci-joint (share-pvc-template.yaml).
 
-Le template requis un param PVCNAME pour ddéfinir le nom de volume claim à monter et partager.
+Le template nécessite un param "PVCNAME" pour ddéfinir le nom de volume claim à monter et partager.
 
-Si vous n'avez pas de nom de volume vous pouvez utilisere fabric_pvc crée dans le poc suivant :
+Si vous n'avez pas de nom de volume vous pouvez utiliser fabric_pvc celui crée dans le poc suivant :
 
 [./feature-generationPKI-initNetwork/README.md](https://eu-de.git.cloud.ibm.com/gbs-rh/devops/refimps/g4sam1/bouygues-bloc/bouygues-blockchain/bouygues-poc/-/blob/feature-generationPKI-initNetwork/README.md)
 
