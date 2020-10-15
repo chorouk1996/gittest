@@ -72,17 +72,19 @@ The base image is built on "ubuntu" OS and contains :
 
 (in my case `${project}` = `adrienmarchal-iscfrance-fr`)
 
-NOTE : For intermediate tests purpose only (to check the files structues, etc...) :   
+
+5) Apply template (Deployer le template) : `oc apply -f fabric-get-secret-template.yaml`
+
+6) Instanciate template : `oc process tpl-fabric-get-secret --param-file=param.env | oc create -f -`
+  
+  
+NOTES : Change parameters if needed in the `param.env` file.  
+For intermediate tests purpose only (to check the files structues, etc...) :   
 
 ​    a. create a pod : `oc apply -f pod-fabric-get-secret-test-1.yaml`
 
 ​    b. enter the creaded pod and make the checks  : `oc rsh <podName>`
 
-5) Apply template (Deployer le template) : `oc apply -f fabric-get-secret-template.yaml`
-
-6) Instanciate template : `oc process tpl-fabric-get-secret --param-file=param.env | oc create -f -`
-
-NOTE : Change parameters if needed in the `param.env` file.
 
 
 
