@@ -2,152 +2,124 @@
 
 bouygues poc
 
+# TASK
 
+task name : "Mettre les PKI en Secret dans openshift".
+[issue#16](https://eu-de.git.cloud.ibm.com/gbs-rh/devops/refimps/g4sam1/bouygues-bloc/bouygues-blockchain/bouygues-poc/-/issues/16)
 
-# TASK :  
-
-task name : "Mettre les PKI en Secret dans openshift" 
-[lien](https://eu-de.git.cloud.ibm.com/gbs-rh/devops/refimps/g4sam1/bouygues-bloc/bouygues-blockchain/bouygues-poc/-/issues/16)
-
-
-
-# I. Instanciate Image that generates PKIs
+# PREREQUISITE : LOGIN
 
 Note : This step aims at doing some steps of the [feature-generationPKI-initNetwork](https://eu-de.git.cloud.ibm.com/gbs-rh/devops/refimps/g4sam1/bouygues-bloc/bouygues-blockchain/bouygues-poc/-/tree/feature-generationPKI-initNetwork) branch.
 
-1) login in openshift : `oc login --token=<generatedToken> --server=https://c103-e.us-south.containers.cloud.ibm.com:31319`
+1. login in openshift : `oc login --token=<generatedToken> --server=https://c103-e.us-south.containers.cloud.ibm.com:31319`
 
-Note : As reminder, login procedure is explained in the very bottom of [this wiki](https://github.ibm.com/OpenshiftEverywhere-POCs-FR/global-knewledge/wiki/Tools)
-To sum up : go to RHOCP > open the dropdown menu of our login (top-right corner) > select "Copy Login Command" > "Display Token"
+    Note : As reminder, login procedure is explained in the very bottom of [this wiki](https://github.ibm.com/OpenshiftEverywhere-POCs-FR/global-knewledge/wiki/Tools)
+    To sum up : go to RHOCP > open the dropdown menu of our login (top-right corner) > select "Copy Login Command" > "Display Token"
 
-2) Check that the current active project is the right one, via the command line: `oc status`
+2. Check that the current active project is the right one, via the command line: `oc status`
 
-(if the project is not the right one, activate the project `oc project ${PROJECT}`, or Create the project if needed  `oc new-project ${PROJECT}`)
+    (if the project is not the right one, activate the project `oc project ${PROJECT}`, or Create the project if needed  `oc new-project ${PROJECT}`)
 
-3) ***!!!WARNING!!! (VERY IMPORTANT STEP)*** allow to write in the PVC to be created : 
+3. ***!!!WARNING!!! (VERY IMPORTANT STEP)*** allow to write in the PVC to be created :
 
-a. Add a role to pull image in the project
+    a. Add a role to pull image in the project : `oc policy add-role-to-user system:image-puller system:serviceaccount:${PROJECT}:default  --namespace=${PROJECT}`
 
-```
-oc policy add-role-to-user system:image-puller system:serviceaccount:${PROJECT}:default  --namespace=${PROJECT}
-```
+    b. Add a rule to write in the volume : `oc adm policy add-scc-to-user anyuid -z default`
 
-b. Add a rule to write in the volume
+# I. Instanciate Image that generates PKIs
 
-```
-oc adm policy add-scc-to-user anyuid -z default
-```
+1) Deploy template : `oc apply -f template-init.yaml`
 
-4) Deploy template : `oc apply -f template-init.yaml`
+2) Instanciate template : `oc process  tpl-fabric  --param-file=param-template-init.env | oc create -f -`
 
-5) Instanciate template : `oc process  tpl-fabric  --param-file=param-template-init.env | oc create -f -`
+    (this will create the PVC, the DeploymentConfig and the ImageStream)
 
-(this will create the PVC, the DeploymentConfig and the ImageStream)
-
-NOTES : 
+NOTES :
 
 + Change parameters if needed in the `param-template-init.env` file.
 
 + generatation of PKI and Genesis block, and network initialisation are automatically done when the POD is stared (config/commands.sh)
 
-
-
 # II. Instanciate Image that reads PKIs and generates secrets
 
-The base image is built on "ubuntu" OS and contains : 
+The base image is built on "ubuntu" OS and contains :
 
 + The "oc" (openshift client) needed to generate secrets from generated PKIs
 + A shell script used to generate the secrets
 
+&nbsp;
 
+1. Build the image from the Dockerfile (Create the image locally) : `docker build -t fabric-get-secret-ubuntu .`
 
-1) Build the image from the Dockerfile (Create the image locally) : `docker build -t fabric-get-secret-ubuntu .`
+    (use `--no-cache` option if needed and `RUN ls` for debugging)
 
-(use `--no-cache` option if needed and `RUN ls` for debugging)
+2. Tag the image (Create the image in the registry) : `docker tag fabric-get-secret-ubuntu us.icr.io/bouygues-bloc-1600085663464/fabric-get-secret-ubuntu:latest`
 
-2) Tag the image (Create the image in the registry) : `docker tag fabric-get-secret-ubuntu us.icr.io/bouygues-bloc-1600085663464/fabric-get-secret-ubuntu:latest`
+3. Push the image to the the container registry : `docker push us.icr.io/bouygues-bloc-1600085663464/fabric-get-secret-ubuntu:latest`
+4. Tag the image in order to operate on image streams : `oc tag us.icr.io/bouygues-bloc-1600085663464/fabric-get-secret-ubuntu:latest ${PROJECT}/fabric-get-secret-ubuntu:latest --reference-policy=local`
 
-3) Push the image to the the container registry : `docker push us.icr.io/bouygues-bloc-1600085663464/fabric-get-secret-ubuntu:latest`
-4) Tag the image in order to operate on image streams : `oc tag us.icr.io/bouygues-bloc-1600085663464/fabric-get-secret-ubuntu:latest ${PROJECT}/fabric-get-secret-ubuntu:latest --reference-policy=local`
+    (in my case `${project}` = `adrienmarchal-iscfrance-fr`)
 
-(in my case `${project}` = `adrienmarchal-iscfrance-fr`)
+5. Apply template (Deployer le template) : `oc apply -f fabric-get-secret-template.yaml`
 
-
-5) Apply template (Deployer le template) : `oc apply -f fabric-get-secret-template.yaml`
-
-6) Instanciate template : `oc process tpl-fabric-get-secret --param-file=param.env | oc create -f -`
-  
-  
-NOTES : Change parameters if needed in the `param.env` file.  
-For intermediate tests purpose only (to check the files structues, etc...) :   
-
-​    a. create a pod : `oc apply -f pod-fabric-get-secret-test-1.yaml`
-
-​    b. enter the creaded pod and make the checks  : `oc rsh <podName>`
-
-
-
+6. Instanciate template : `oc process tpl-fabric-get-secret --param-file=param.env | oc create -f -`
+    NOTES : Change parameters if needed in the `param.env` file.  
 
 # III. Generate secrets
 
-1) connect on the pod that was generated : `oc rsh <podName>`
+1. connect on the pod that was generated : `oc rsh <podName>`
 
-2) login in openshift <i>inside the container</i> : `oc login --token=<generatedToken> --server=https://c103-e.us-south.containers.cloud.ibm.com:31319 --insecure-skip-tls-verify`
+2. login in openshift <i>inside the container</i> : `oc login --token=<generatedToken> --server=https://c103-e.us-south.containers.cloud.ibm.com:31319 --insecure-skip-tls-verify`
 
-Note : As reminder, login procedure is explained in the very bottom of [this wiki](https://github.ibm.com/OpenshiftEverywhere-POCs-FR/global-knewledge/wiki/Tools)
-To sum up : go to RHOCP > open the dropdown menu of our login (top-right corner) > select "Copy Login Command" > "Display Token"
+    Note : As reminder, login procedure is explained in the very bottom of [this wiki](https://github.ibm.com/OpenshiftEverywhere-POCs-FR/global-knewledge/wiki/Tools)
+    To sum up : go to RHOCP > open the dropdown menu of our login (top-right corner) > select "Copy Login Command" > "Display Token"
 
-3) execute script :`cd /sources`, then `./create_secrets.sh`
+3. execute script :`cd /sources`, then `./create_secrets.sh`
 
-Note : the script generates the secrets in Openshift platform.
-
-
-
+    Note : the script generates the secrets in Openshift platform.
 
 # IV. Link Secrets with Orderer
 
 This part is an adaptation of the branch [feature-orderer-yaml](https://eu-de.git.cloud.ibm.com/gbs-rh/devops/refimps/g4sam1/bouygues-bloc/bouygues-blockchain/bouygues-poc/-/tree/feature-orderer-yaml)
 
-1) Apply template : `oc apply -f templateOrdererSecret.yaml`
+1. Apply template : `oc apply -f templateOrdererSecret.yaml`
 
-2) Process and create template entities : `oc process  tpl-orderer-secret | oc create -f -`
-
-
+2. Process and create template entities : `oc process  tpl-orderer-secret | oc create -f -`
 
 # V. Link Secrets with Peers
 
 This part is an adaptation of the branch [feature-allPeersOneTemplate](https://eu-de.git.cloud.ibm.com/gbs-rh/devops/refimps/g4sam1/bouygues-bloc/bouygues-blockchain/bouygues-poc/-/tree/feature-allPeersOneTemplate)
 
-1) Apply template : `oc apply -f all-peers-secret-onetemplate.yaml`
+1. Apply template : `oc apply -f all-peers-secret-onetemplate.yaml`
 
-2) Process and create template entities : `oc process  all-peers-secret-template | oc create -f -`
-
-
+2. Process and create template entities : `oc process  all-peers-secret-template | oc create -f -`
 
 # VI. Start cliBank
 
 This part is an adaptation of the branch [feature-clibank-yaml](https://eu-de.git.cloud.ibm.com/gbs-rh/devops/refimps/g4sam1/bouygues-bloc/bouygues-blockchain/bouygues-poc/-/tree/feature-clibank-yaml)
 
-1) Apply templates :  
+1. Apply templates :  
 
-`oc apply -f template-clibank1-secret.yaml` 
+    `oc apply -f template-clibank1-secret.yaml`
 
-`oc apply -f template-clibank2-secret.yaml`
+    `oc apply -f template-clibank2-secret.yaml`
 
-2) Process and create template entities : 
+    &nbsp;
+2. Process and create template entities :
 
-`oc process  tpl-clibank1-secret  | oc create -f -`
+    `oc process  tpl-clibank1-secret  | oc create -f -`
 
-NOTE : When the POD is starting, the call of the `channel.sh` script executes the following actions : 
+    NOTE : When the POD is starting, the call of the `channel.sh` script executes the following actions :
 
-+ Creation of the HLF Blockchain channel `bankscochannel`
-+ Connections to the channel of the peers of the organization 1 (Peer0 & Peer1)
-+ Update of the channel via peers ancre definition
+   + Creation of the HLF Blockchain channel `bankscochannel`
+   + Connections to the channel of the peers of the organization 1 (Peer0 & Peer1)
+   + Update of the channel via peers ancre definition
 
-`oc process  tpl-clibank2-secret  | oc create -f -`
+    &nbsp;
+    `oc process  tpl-clibank2-secret  | oc create -f -`
 
-NOTE : When the POD is starting, the call of the `channelclibank2.sh` script executes the following actions : 
+    NOTE : When the POD is starting, the call of the `channelclibank2.sh` script executes the following actions :
 
-+ Update/Fetch of the HLF Blockchain channel `bankscochannel`
-+ Connections to the channel of the peers of the organization 2 (Peer2 & Peer3)
-+ Update of the channel via peers ancre definition
+   + Update/Fetch of the HLF Blockchain channel `bankscochannel`
+   + Connections to the channel of the peers of the organization 2 (Peer2 & Peer3)
+   + Update of the channel via peers ancre definition
