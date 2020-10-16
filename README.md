@@ -138,6 +138,16 @@ This part is an adaptation of the branch [feature-clibank-yaml](https://eu-de.gi
 
 `oc process  tpl-clibank1-secret  | oc create -f -`
 
+NOTE : When the POD is starting, the call of the `channel.sh` script executes the following actions : 
+
++ Creation of the HLF Blockchain channel `bankscochannel`
++ Connections to the channel of the peers of the organization 1 (Peer0 & Peer1)
++ Update of the channel via peers ancre definition
+
 `oc process  tpl-clibank2-secret  | oc create -f -`
 
+NOTE : When the POD is starting, the call of the `channelclibank2.sh` script executes the following actions : 
 
++ Update/Fetch of the HLF Blockchain channel `bankscochannel`
++ Connections to the channel of the peers of the organization 2 (Peer2 & Peer3)
++ Update of the channel via peers ancre definition
