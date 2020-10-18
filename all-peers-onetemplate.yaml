@@ -40,6 +40,8 @@ objects:
             imagePullPolicy: Always
             command: ["sh","-c","rm /etc/hyperledger/fabric/core.yaml && cp /fabric/core.yaml /etc/hyperledger/fabric && peer node start  "]
             env:
+              - name: CORE_PEER_ADDRESS
+                value: "peer0:7051"
               - name: FABRIC_CFG_PATH
                 value: /fabric/
               - name: CORE_LEDGER_STATE_STATEDATABASE
@@ -144,6 +146,8 @@ objects:
             imagePullPolicy: Always
             command: ["sh","-c","rm /etc/hyperledger/fabric/core.yaml && cp /fabric/core.yaml /etc/hyperledger/fabric && peer node start  "]
             env:
+              - name: CORE_PEER_ADDRESS
+                value: "peer1:7051"            
               - name: FABRIC_CFG_PATH
                 value: /fabric/    
               - name: CORE_LEDGER_STATE_STATEDATABASE
@@ -247,6 +251,8 @@ objects:
             imagePullPolicy: Always
             command: ["sh","-c","rm /etc/hyperledger/fabric/core.yaml && cp /fabric/core.yaml /etc/hyperledger/fabric && peer node start  "]
             env:
+              - name: CORE_PEER_ADDRESS
+                value: "peer2:7051"            
               - name: FABRIC_CFG_PATH
                 value: /fabric/          
               - name: CORE_LEDGER_STATE_STATEDATABASE
@@ -350,7 +356,9 @@ objects:
             image: hyperledger/fabric-peer:2.2.1
             imagePullPolicy: Always
             command: ["sh","-c","rm /etc/hyperledger/fabric/core.yaml && cp /fabric/core.yaml /etc/hyperledger/fabric && peer node start"]
-            env:      
+            env: 
+              - name: CORE_PEER_ADDRESS
+                value: "peer3:7051"                 
               - name: CORE_LEDGER_STATE_STATEDATABASE
                 value: "CouchDB"
               - name: CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME
