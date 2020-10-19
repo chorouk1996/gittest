@@ -26,10 +26,12 @@ objects:
           - name: clibank2
             image: hyperledger/fabric-tools:2.2.1
             imagePullPolicy: Always
+<<<<<<< HEAD
             command: ["sh", "-c","cd ../fabric &&  chmod +x ../fabric/channelclibank2.sh && ../fabric/channelclibank2.sh && cp /fabric/core.yaml /etc/hyperledger/fabric/core.yaml && sleep 24h"]
+=======
+            command: ["sh", "-c","rm /etc/hyperledger/fabric/core.yaml && cp /fabric/core.yaml /etc/hyperledger/fabric && cd ../fabric &&  chmod +x ../fabric/channelclibank2.sh && ../fabric/channelclibank2.sh && sleep 24h"]
+>>>>>>> b488a0af1a5112fc27026a79b2fb3b6434efb146
             env:
-            - name: FABRIC_CFG_PATH
-              value: /fabric/   
             - name: FABRIC_LOGGING_SPEC
               value: "DEBUG"
             - name: CORE_PEER_ID
