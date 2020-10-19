@@ -38,10 +38,10 @@ objects:
           - name: peer0-bank1-banksco-com
             image: hyperledger/fabric-peer:2.2.1
             imagePullPolicy: Always
-            command: ["sh","-c","rm /etc/hyperledger/fabric/core.yaml && cp /fabric/core.yaml /etc/hyperledger/fabric && peer node start  "]
+            command: ["sh","-c","peer node start  "]
             env:
               - name: CORE_PEER_ADDRESS
-                value: "peer0:7051"
+                value: "0.0.0.0:7051"
               - name: FABRIC_CFG_PATH
                 value: /fabric/
               - name: CORE_LEDGER_STATE_STATEDATABASE
@@ -144,10 +144,10 @@ objects:
           - name: peer1-bank1-banksco-com
             image: hyperledger/fabric-peer:2.2.1
             imagePullPolicy: Always
-            command: ["sh","-c","rm /etc/hyperledger/fabric/core.yaml && cp /fabric/core.yaml /etc/hyperledger/fabric && peer node start  "]
+            command: ["sh","-c","peer node start "]
             env:
               - name: CORE_PEER_ADDRESS
-                value: "peer1:7051"            
+                value: "0.0.0.0:7051"            
               - name: FABRIC_CFG_PATH
                 value: /fabric/    
               - name: CORE_LEDGER_STATE_STATEDATABASE
@@ -249,12 +249,12 @@ objects:
           - name: peer0-bank2-banksco-com
             image: hyperledger/fabric-peer:2.2.1
             imagePullPolicy: Always
-            command: ["sh","-c","rm /etc/hyperledger/fabric/core.yaml && cp /fabric/core.yaml /etc/hyperledger/fabric && peer node start  "]
+            command: ["sh","-c"," peer node start  "]
             env:
               - name: CORE_PEER_ADDRESS
-                value: "peer2:7051"            
+                value: "0.0.0.0:7051"            
               - name: FABRIC_CFG_PATH
-                value: /fabric/          
+                value: /fabric/           
               - name: CORE_LEDGER_STATE_STATEDATABASE
                 value: "CouchDB"
               - name: CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME
@@ -355,10 +355,12 @@ objects:
           - name: peer1-bank2-banksco-com
             image: hyperledger/fabric-peer:2.2.1
             imagePullPolicy: Always
-            command: ["sh","-c","rm /etc/hyperledger/fabric/core.yaml && cp /fabric/core.yaml /etc/hyperledger/fabric && peer node start"]
+            command: ["sh","-c","peer node start"]
             env: 
               - name: CORE_PEER_ADDRESS
-                value: "peer3:7051"                 
+                value: "0.0.0.0:7051"            
+              - name: FABRIC_CFG_PATH
+                value: /fabric/                   
               - name: CORE_LEDGER_STATE_STATEDATABASE
                 value: "CouchDB"
               - name: CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME
