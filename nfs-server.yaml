@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nfs-server
+spec:
+  containers:
+  - name: nfs-server
+    image: itsthenetwork/nfs-server-alpine:latest
+    volumeMounts:
+    - name: nfs-storage
+      mountPath: /data
+    env:
+      - name: SHARED_DIRECTORY
+        value: /data
+    securityContext:
+        privileged: true
+  volumes:
+  - name: nfs-storage
