@@ -28,8 +28,6 @@ objects:
             imagePullPolicy: Always
             command: ["sh", "-c","rm /etc/hyperledger/fabric/core.yaml && cp /fabric/core.yaml /etc/hyperledger/fabric && cd ../fabric &&  chmod +x ../fabric/channelclibank2.sh && ../fabric/channelclibank2.sh && sleep 24h"]
             env:
-            - name: GOPATH
-              value: "/opt/gopath"
             - name: FABRIC_LOGGING_SPEC
               value: "DEBUG"
             - name: CORE_PEER_ID
