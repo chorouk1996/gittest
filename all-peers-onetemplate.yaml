@@ -42,8 +42,6 @@ objects:
             env:
               - name: CORE_PEER_ADDRESS
                 value: "peer0:7051"
-              - name: FABRIC_CFG_PATH
-                value: /fabric/
               - name: CORE_LEDGER_STATE_STATEDATABASE
                 value: "CouchDB"
               - name: CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME
@@ -147,9 +145,7 @@ objects:
             command: ["sh","-c","rm /etc/hyperledger/fabric/core.yaml && cp /fabric/core.yaml /etc/hyperledger/fabric && peer node start  "]
             env:
               - name: CORE_PEER_ADDRESS
-                value: "peer1:7051"            
-              - name: FABRIC_CFG_PATH
-                value: /fabric/    
+                value: "peer1:7051"             
               - name: CORE_LEDGER_STATE_STATEDATABASE
                 value: "CouchDB"
               - name: CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME
@@ -252,9 +248,7 @@ objects:
             command: ["sh","-c","rm /etc/hyperledger/fabric/core.yaml && cp /fabric/core.yaml /etc/hyperledger/fabric && peer node start  "]
             env:
               - name: CORE_PEER_ADDRESS
-                value: "peer2:7051"            
-              - name: FABRIC_CFG_PATH
-                value: /fabric/          
+                value: "peer2:7051"     
               - name: CORE_LEDGER_STATE_STATEDATABASE
                 value: "CouchDB"
               - name: CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME
