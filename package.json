@@ -1,8 +1,0 @@
-{
-  "name": "bttest-app",
-  "version": "1.0.0",
-  "description": "BT test app",
-  "main": "server.js",
-  "author": "Michel Morat",
-  "license": "ASL"
-}
