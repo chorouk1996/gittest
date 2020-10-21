@@ -1,0 +1,72 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  name: "copy-pvc-template"
+## PARAMETRES
+parameters:
+  - name: CURLFILE
+    description: URL of files to copy.
+    required: true
+objects:
+## DeploymentConfig
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: copy-pvc
+  spec:
+    replicas: 1
+    selector:
+      app: copy-pvc
+    template:
+      metadata:
+        labels:
+          app: copy-pvc
+      spec:
+        volumes: 
+        - name: workdir-pvc
+          persistentVolumeClaim: 
+            claimName: workdir-pvc
+        containers:
+        - name: copy-pvc
+          image: radial/busyboxplus:curl
+          command:
+          - sh
+          - -c
+          - cd ../workdir-pvc-storage &&  chmod +x ../workdir-pvc-storage && ${CURLFILE} &&  while true; do sleep 1; done
+          resources:
+            limits:
+              cpu: 1
+              memory: 3Gi
+          ports:
+          - name: web
+            port: 8080
+            containerPort: 8080
+          selector: 
+            name: copy-pvc
+          volumeMounts:
+          - mountPath: /workdir-pvc-storage
+            name: workdir-pvc
+  ## Service
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: copy-pvc
+  spec:
+    selector:
+      app: copy-pvc
+    ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+
+- kind: PersistentVolumeClaim
+  apiVersion: v1
+  metadata:
+    name: workdir-pvc
+  spec:
+    accessModes:
+      - ReadWriteMany
+    resources:
+      requests:
+        storage: 1Gi
+    storageClassName: ibmc-file-retain-bronze 
