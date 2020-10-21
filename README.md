@@ -7,7 +7,7 @@ L'equipe IBM  Blockchain voudrait partager un volume de données (des clés, et 
 
 Partager un volume via un serveur http (enginx).
 Le volume sera accessible via une route depuis tous les namespaces
-### Deployment : Namespace B
+### Deployment : Namespace A
 
 Pour déployer cette solution, il suffit de vous rendre sur votre cluster openshift, vous vous connectez puis charger et executer le template ci-joint (share-pvc-template.yaml).
 
