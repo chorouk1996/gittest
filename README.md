@@ -51,10 +51,10 @@ oc process  copy-pvc-template  --param-file=param.env | oc create -f -
 ### Génerer un ordrer en se basant sur le nouveau pvc
 ### Apply template
 ```sh 
-oc apply -f ordrer-pvc-template.yaml
+oc apply -f ordrer-pvc-http-template.yaml
 ```
 #### Process and create template entities
 
 ```sh
-oc process  ordrer-pvc-template | oc create -f -
+oc process  tpl-orderer | oc create -f -
 
