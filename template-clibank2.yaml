@@ -52,6 +52,10 @@ objects:
               value: "bankscochannel"
             - name: ORDERER_TLS_CA
               value: "/fabric/crypto-config/ordererOrganizations/banksco.com/orderers/orderer.banksco.com/msp/tlscacerts/tlsca.banksco.com-cert.pem"
+            - name : PEER0_BANK1_PRADDR
+              value: peer0:7051          
+            - name: PEER0_BANK1_TLS_CA
+              value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer0.bank1.banksco.com/tls/ca.crt"
             - name: PEER2_BANK2_TLS_CA
               value: "/fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer2.bank2.banksco.com/tls/ca.crt"
             - name: PEER2_BANK2_PRADDR
