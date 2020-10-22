@@ -1,0 +1,18 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: nfs-reader-pod
+spec:
+  volumes:
+    - name: nfs-volume
+      nfs:
+        server: 172.30.22.66
+        path: /
+  containers:
+    - name: nfs-reader-container
+      image: us.icr.io/bouygues-bloc-1600085663464/michelmorat-fr/nfs-client
+      volumeMounts:
+        - name: nfs-volume
+          mountPath: /mnt
+      command: ["/bin/sh"]
+      args: ["-c", "while true; do tail -1 /mnt/dates.txt ; sleep 60; done"]
