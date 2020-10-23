@@ -1,13 +1,13 @@
-### Problématique
+### The request
 
-L'equipe IBM  Blockchain voudrait partager un volume de données (des clés, et des configurations) entre 2 namespaces.
+L'equipe IBM  Blockchain voudrait partager un volume de données (des clés, et des configurations) entre plusieurs namespaces.
 ![problématique](./img/challeng.gif) 
 
-### Solution I : Partage d'un volume PVC via un serveur https (Enginx)
+### Solution 1 : Sharing the PVC in namespace via Https Nginx server
 
-Cette solution consisite à monter un volume (PVC) et le mettre en ligne via une route Openshift et un serveur (Enginx).
+This solution consist of create a route through the Nginx server
 
-Le volume de namespcae A sera accessible depuis tous les autres namespaces via une adresse URL.
+The volume of the namespace A is available via an URL address.
 ![Solution](./img/share-pvc-solution.png) 
 ### Deployment : Namespace A
 
@@ -23,17 +23,19 @@ Pour tester cette solution nous allons utiliser le nom de volume Claim "fabric_p
 ```sh 
 oc apply -f share-pvc-template.yaml
 ```
+
 ### Process and create template entities
 
 ```sh
  oc process  share-pvc-template -p PVCNAME=fabric-pvc | oc create -f -
 ``` 
+
 ### RESULT
 https://task-pv-pod-route-mbarekrayad-ma.bouygues-bloc-160008566-f72ef11f3ab089a8c677044eb28292cd-0000.sjc03.containers.appdomain.cloud/crypto-config/ordererOrganizations/banksco.com/orderers/orderer.banksco.com/tls/ca.crt
 ![result](./img/result.png)
 
 
-### USECASE => Déployement d'un ordrer dans un autre Namespace (B)
+### Use case => Deployment of the orderer in the new namespace (B)
 ![USECASE](./img/share-pvc-solution-orderer.png) 
 
 ### Copier les fichiers à partir du serveur Enginx vers un nouveau PVC local
@@ -45,6 +47,11 @@ Pour copier ces fichiers il suffit de déployer le template "copy-pvc-from-http-
 PS1: vous pouvez modifier le template et utiliser un fichier command.sh 
 PS2: j'ai essayé de copier tout un répértoire en utilisant wget mais ça n'a pas marché, du coup j'ai opté pour cette solution basée sur curl.
 
+Set the param.env file
+* *`route=$(oc get routes share-pvc-pod-route -o jsonpath='{.spec.host}')`*
+* *`sed -i -e "s/default/$route/g" param.env`*
+
+Create template resource for the orderer
 ```sh 
 oc apply -f copy-pvc-from-http-template.yaml
 ```
@@ -53,8 +60,9 @@ oc apply -f copy-pvc-from-http-template.yaml
 ```sh
 oc process  copy-pvc-template  --param-file=param.env | oc create -f -
 ```
+
 ### Génerer un ordrer en se basant sur le nouveau pvc
-### Apply template
+Create the orederer pod using the pvc in the namespace A
 ```sh 
 oc apply -f ordrer-pvc-http-template.yaml
 ```
