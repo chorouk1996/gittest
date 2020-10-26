@@ -6,7 +6,7 @@ To apply the solution we will begin to deploy the pods containing PKI from the b
 
 The data in the PVC (fabric-pvc) will be shared with another pods in the different projects.
 
-When the pods are deployed, a yaml file is used to create a server Nginx with a Https URL. The file is lacated in the branch: feature-share-pvc-via-http
+When the pods deployed, a yaml file is used to create a server Nginx with a Https URL. The file is located in the branch **feature-share-pvc-via-http**
 * *`git checkout feature-share-pvc-via-http`*
 * *`git checkout -b feature-share-pvc-via-http_deploy`*
 
@@ -14,12 +14,17 @@ Create the template resource for deploying components. Use the yaml file: **shar
 * *`oc apply -f share-pvc-template.yaml`*
 
 Create all components defined in the template resource
-The value for the variable PVCNAME is set to **fabric-pvc** when deploying the Nginx pod.
+
+>The value for the variable PVCNAME is set to **fabric-pvc** when deploying the Nginx server.
+
 * *`oc process share-pvc-template -p PVCNAME=fabric-pvc | oc create -f -`*
 
 > **Note**: The value of the variable PVCNAME is the name of the PVC used to store data.
 
 # Copy all files from the fabric-pvc to the persistent volume claim located in the project B
+
+Activate the project B
+* *`oc project <project B>`*
 
 Set the param.env file
 * *`route=$(oc get routes share-pvc-pod-route -o jsonpath='{.spec.host}')`*
