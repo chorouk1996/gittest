@@ -52,4 +52,4 @@ Create all components defined in the template resource
 * *`oc process  tpl-orderer | oc create -f -`*
 
 # Result
-![result](.img/Screenshot_2020-10-26_205134.png) 
+![result](./img/Screenshot_2020-10-26_205134.png) 
