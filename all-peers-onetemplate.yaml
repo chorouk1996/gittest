@@ -54,10 +54,8 @@ objects:
                 value: "127.0.0.1:5984"
               - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
                 value: "peer0:7051"
-              - name: CORE_PEER_GOSSIP_ORGLEADER
-                value: "false"
-              - name: CORE_PEER_GOSSIP_USELEADERELECTION
-                value: "true"
+              - name: CORE_PEER_GOSSIP_BOOTSTRAP
+                value: "peer0:7051"
               - name: CORE_PEER_ID
                 value: "peer0"
               - name: FABRIC_LOGGING_SPEC
@@ -162,10 +160,6 @@ objects:
                 value: "peer0:7051"
               - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
                 value: "peer1:7051"
-              - name: CORE_PEER_GOSSIP_ORGLEADER
-                value: "false"
-              - name: CORE_PEER_GOSSIP_USELEADERELECTION
-                value: "true"
               - name: CORE_PEER_ID
                 value: "peer1"
               - name: FABRIC_LOGGING_SPEC
@@ -267,10 +261,6 @@ objects:
                 value: "peer2:7051"
               - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
                 value: "peer2:7051"
-              - name: CORE_PEER_GOSSIP_ORGLEADER
-                value: "false"
-              - name: CORE_PEER_GOSSIP_USELEADERELECTION
-                value: "true"
               - name: CORE_PEER_ID
                 value: "peer2"
               - name: FABRIC_LOGGING_SPEC
@@ -360,7 +350,7 @@ objects:
               - name: CORE_PEER_ADDRESS
                 value: "0.0.0.0:7051"            
               - name: FABRIC_CFG_PATH
-                value: /fabric/                   
+                value: /fabric/     
               - name: CORE_LEDGER_STATE_STATEDATABASE
                 value: "CouchDB"
               - name: CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME
@@ -368,17 +358,13 @@ objects:
               - name: CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD
                 value: "password"
               - name: CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS
-                value: "127.0.0.1:5984"
-              - name: CORE_PEER_GOSSIP_BOOTSTRAP
-                value: "peer3:7051"
-              - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
-                value: "peer3:7051"
-              - name: CORE_PEER_GOSSIP_ORGLEADER
-                value: "false"
-              - name: CORE_PEER_GOSSIP_USELEADERELECTION
-                value: "true"
+                value: "127.0.0.1:5984"                             
               - name: CORE_PEER_ID
                 value: "peer3"
+              - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
+                value: "peer3:7051"
+              - name: CORE_PEER_GOSSIP_BOOTSTRAP
+                value: "peer3:7051"
               - name: FABRIC_LOGGING_SPEC
                 value: "DEBUG"
               - name: CORE_PEER_LOCALMSPID
@@ -424,6 +410,6 @@ objects:
       - ReadWriteOnce
     resources:
       requests:
-        storage: 1Gi
+        storage: 10Gi
     storageClassName: ibmc-block-retain-gold 
 
