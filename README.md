@@ -19,7 +19,7 @@ The value for the variable PVCNAME is set to **fabric-pvc** when deploying the N
 
 > **Note**: The value of the variable PVCNAME is the name of the PVC used to store data.
 
-# Copy all files from the fabric-pvc to the persistent volume claim in the project B
+# Copy all files from the fabric-pvc to the persistent volume claim located in the project B
 
 Set the param.env file
 * *`route=$(oc get routes share-pvc-pod-route -o jsonpath='{.spec.host}')`*
@@ -36,7 +36,7 @@ Create all components defined in the template resource
 
 # Deploy the orderer using all files copies (KPIs) in the local pvc
 Create the template resource for deploying components. Use the yaml file: **ordrer-pvc-http-template.yaml**
-oc apply -f ordrer-pvc-http-template.yaml
+* *`oc apply -f ordrer-pvc-http-template.yaml`*
 
 Create all components defined in the template resource
 * *`oc process  tpl-orderer | oc create -f -`*
