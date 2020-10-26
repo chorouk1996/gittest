@@ -1,7 +1,7 @@
 apiVersion: template.openshift.io/v1
 kind: Template
 metadata:
-  name: "copy-pvc-template"
+  name: "busy-dc-template"
 ## PARAMETRES
 parameters:
   - name: CURLFILE
@@ -12,22 +12,22 @@ objects:
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
-    name: copy-pvc
+    name: busy-dc
   spec:
     replicas: 1
     selector:
-      app: copy-pvc
+      app: busy-dc
     template:
       metadata:
         labels:
-          app: copy-pvc
+          app: busy-dc
       spec:
         volumes: 
         - name: workdir-pvc
           persistentVolumeClaim: 
             claimName: workdir-pvc
         containers:
-        - name: copy-pvc
+        - name: busy-dc
           image: radial/busyboxplus:curl
           command:
           - sh
@@ -42,7 +42,7 @@ objects:
             port: 8080
             containerPort: 8080
           selector: 
-            name: copy-pvc
+            name: busy-dc
           volumeMounts:
           - mountPath: /workdir-pvc-storage
             name: workdir-pvc
@@ -50,10 +50,10 @@ objects:
 - apiVersion: v1
   kind: Service
   metadata:
-    name: copy-pvc
+    name: busy-dc
   spec:
     selector:
-      app: copy-pvc
+      app: busy-dc
     ports:
     - protocol: TCP
       port: 80
