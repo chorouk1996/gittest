@@ -22,10 +22,8 @@ Create all components defined in the template resource
 * *`oc process share-pvc-template -p PVCNAME=fabric-pvc | oc create -f -`*
 
 > **Note**: 
-
-> The value of the variable PVCNAME is the name of the PVC used to store data
-
-> The Https URL is define in the route
+> - The value of the variable PVCNAME is the name of the PVC used to store data
+> - The Https URL is define in the route
 
 # Deployment of the orderer in the project B using the data (PKI, Genisis block, ...) copied
 
