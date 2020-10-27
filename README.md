@@ -8,6 +8,7 @@ To apply the solution we will begin to deploy the pods containing PKI from the b
 The data in the PVC (fabric-pvc) will be shared with another pods in the different projects.
 
 **Create the Nginx server**
+
 When the pods deployed, a yaml file is used to create a server Nginx with a Https URL. The file is located in the branch **feature-share-pvc-via-http**
 * *`git checkout feature-share-pvc-via-http`*
 * *`git checkout -b feature-share-pvc-via-http_deploy`*
