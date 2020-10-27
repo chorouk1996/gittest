@@ -1,5 +1,6 @@
 For the use case, we will deploy the pod for generating PKIs in the project A and the orderer in the project B. The persistent volume claim in the project A will provide the PKIs to the ordererer in the project B.
 
+
 # Deployment of the pods with data (PKI, Genisis block, ...) stored in pvc in the project A
 
 **Generating PKI, Genisis block,... in the pod**
@@ -19,7 +20,7 @@ Create the template resource for deploying components. Use the yaml file: **shar
 
 Create all components defined in the template resource
 
->The value for the variable PVCNAME is set to **fabric-pvc** when deploying the Nginx server.
+> The value for the variable PVCNAME is set to **fabric-pvc** when deploying the Nginx server.
 
 * *`oc process share-pvc-template -p PVCNAME=fabric-pvc | oc create -f -`*
 
@@ -27,9 +28,11 @@ Create all components defined in the template resource
 
 > The Https URL is defined in the route.
 
+
 # Deployment of the orderer in the project B using the data (PKI, Genisis block, ...) copied
 
 **Copy all files from the fabric-pvc to the persistent volume claim located in the project B**
+
 Activate the project B
 * *`oc project <project B>`*
 
@@ -47,6 +50,7 @@ Create all components defined in the template resource
 * *`oc process  copy-pvc-template --param-file=param.env | oc create -f -`*
 
 **Deploy the orderer using all files copies (KPIs) in the local pvc**
+
 Create the template resource for deploying components. Use the yaml file: **ordrer-pvc-http-template.yaml**
 * *`oc apply -f ordrer-pvc-http-template.yaml`*
 
