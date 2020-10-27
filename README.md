@@ -3,6 +3,7 @@ For the use case, we will deploy the pod for generating PKIs in the project A an
 # Deployment of the pods with data (PKI, Genisis block, ...) stored in pvc in the project A
 
 **Generating PKI, Genisis block,... in the pod**
+
 To apply the solution we will begin to deploy the pods containing PKI from the branch: feature-generationPKI-initNetwork. See the chapter [Generating PKI Genesis block and Exchange network transactions initialization](Generating-PKI-Genesis-block-and-Exchange-network-transactions-initialization).
 
 The data in the PVC (fabric-pvc) will be shared with another pods in the different projects.
