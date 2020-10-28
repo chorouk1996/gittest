@@ -63,7 +63,12 @@ objects:
             - name: PEER3_BANK2_TLS_CA
               value: "/fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer3.bank2.banksco.com/tls/ca.crt"
             - name: PEER3_BANK2_PRADDR
-              value: "peer3:7051"           
+              value: "peer3:7051"    
+            - name : PEER1_BANK1_PRADDR
+              value: peer1:7051          
+            - name: PEER1_BANK1_TLS_CA
+              value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer1.bank1.banksco.com/tls/ca.crt"
+
             volumeMounts:
               - mountPath: /fabric
                 name: fabricfiles
