@@ -54,10 +54,6 @@ objects:
                 value: "127.0.0.1:5984"
               - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
                 value: "peer0:7051"
-              - name: CORE_PEER_GOSSIP_ORGLEADER
-                value: "false"
-              - name: CORE_PEER_GOSSIP_USELEADERELECTION
-                value: "true"
               - name: CORE_PEER_ID
                 value: "peer0"
               - name: FABRIC_LOGGING_SPEC
@@ -66,8 +62,6 @@ objects:
                 value: "Bank1MSP"
               - name: CORE_PEER_MSPCONFIGPATH
                 value: /fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer0.bank1.banksco.com/msp/
-              - name: CORE_PEER_PROFILE_ENABLED
-                value: "true"
               - name: CORE_PEER_TLS_ENABLED
                 value: "true"                
               - name: CORE_PEER_TLS_CERT_FILE
@@ -158,14 +152,10 @@ objects:
                 value: "password"
               - name: CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS
                 value: "127.0.0.1:5984"            
-              - name: CCORE_PEER_GOSSIP_BOOTSTRAP
+              - name: CORE_PEER_GOSSIP_BOOTSTRAP
                 value: "peer0:7051"
               - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
                 value: "peer1:7051"
-              - name: CORE_PEER_GOSSIP_ORGLEADER
-                value: "false"
-              - name: CORE_PEER_GOSSIP_USELEADERELECTION
-                value: "true"
               - name: CORE_PEER_ID
                 value: "peer1"
               - name: FABRIC_LOGGING_SPEC
@@ -174,8 +164,6 @@ objects:
                 value: "Bank1MSP"
               - name: CORE_PEER_MSPCONFIGPATH
                 value: /fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer1.bank1.banksco.com/msp/                
-              - name: CORE_PEER_PROFILE_ENABLED
-                value: "true"
               - name: CORE_PEER_TLS_ENABLED
                 value: "true"                
               - name: CORE_PEER_TLS_CERT_FILE
@@ -267,10 +255,6 @@ objects:
                 value: "peer2:7051"
               - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
                 value: "peer2:7051"
-              - name: CORE_PEER_GOSSIP_ORGLEADER
-                value: "false"
-              - name: CORE_PEER_GOSSIP_USELEADERELECTION
-                value: "true"
               - name: CORE_PEER_ID
                 value: "peer2"
               - name: FABRIC_LOGGING_SPEC
@@ -279,8 +263,6 @@ objects:
                 value: "Bank2MSP"
               - name: CORE_PEER_MSPCONFIGPATH
                 value: /fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer2.bank2.banksco.com/msp/               
-              - name: CORE_PEER_PROFILE_ENABLED
-                value: "true"
               - name: CORE_PEER_TLS_ENABLED
                 value: "true"                
               - name: CORE_PEER_TLS_CERT_FILE
@@ -373,10 +355,6 @@ objects:
                 value: "peer3:7051"
               - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
                 value: "peer3:7051"
-              - name: CORE_PEER_GOSSIP_ORGLEADER
-                value: "false"
-              - name: CORE_PEER_GOSSIP_USELEADERELECTION
-                value: "true"
               - name: CORE_PEER_ID
                 value: "peer3"
               - name: FABRIC_LOGGING_SPEC
@@ -385,8 +363,6 @@ objects:
                 value: "Bank2MSP"
               - name: CORE_PEER_MSPCONFIGPATH
                 value: /fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer3.bank2.banksco.com/msp/              
-              - name: CORE_PEER_PROFILE_ENABLED
-                value: "true"
               - name: CORE_PEER_TLS_ENABLED
                 value: "true" 
               - name: CORE_PEER_TLS_CERT_FILE
