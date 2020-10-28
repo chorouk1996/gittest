@@ -21,10 +21,10 @@ objects:
         containers:
           - name: exchangecc
             image: image-registry.openshift-image-registry.svc:5000/choroukamahri/exchangecc:latest
-            imagePullPolicy: Always            
+            imagePullPolicy: Always    
             env:
               - name: CHAINCODE_ID
-                value: "exchangecc:85433bd624c03d1331f9ea8702ea3405fb487796ceb982f6b95b4844ca3a2057"
+                value: "exchangecc:420a85e6fdd4abfac055197e4a142308694aa7135b41887a4272856bab3ab924"
               - name: CHAINCODE_SERVER_ADDRESS
                 value: "0.0.0.0:9999"       
             ports:
@@ -34,12 +34,10 @@ objects:
 - apiVersion: v1
   kind: Service
   metadata:
-    annotations: null
-    labels: null
     name: exchangecc
   spec:
     ports:
-    - name: "9999"
+    - name: "exchangecc"
       port: 9999
       targetPort: 9999
     selector:
@@ -61,10 +59,10 @@ objects:
         containers:
           - name: exchangecc2
             image: image-registry.openshift-image-registry.svc:5000/choroukamahri/exchangecc:latest
-            imagePullPolicy: Always            
+            imagePullPolicy: Always   
             env:
               - name: CHAINCODE_ID
-                value: "exchangecc:16dd9632e6492b75655e328a9cf4fcb6e62a4cee3be4ae4fa909f5318cb432ea"
+                value: "exchangecc:cc01e67418062f9b5779d957b95ec6d36cbdb1afd0d1f3a5378728a0ecb6323b"
               - name: CHAINCODE_SERVER_ADDRESS
                 value: "0.0.0.0:9999"       
             ports:
@@ -74,13 +72,12 @@ objects:
 - apiVersion: v1
   kind: Service
   metadata:
-    annotations: null
-    labels: null
     name: exchangecc2
   spec:
     ports:
-    - name: "9999"
+    - name: "exchangecc"
       port: 9999
       targetPort: 9999
     selector:
       name: exchangecc2
+
