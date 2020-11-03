@@ -16,7 +16,7 @@ objects:
     template:
       metadata:
         labels:
-          name: peer0
+          name: peer0-bank1
       spec:
         volumes:
         - name: fabricfiles
@@ -24,8 +24,8 @@ objects:
             claimName: fabric-pvc
         - name: peer0file
           persistentVolumeClaim:
-            claimName: peer0-pvc
-        containers:
+            claimName: peer0-pvc              
+        containers: 
           - name: couchdb
             image: hyperledger/fabric-couchdb:latest
             env:
@@ -34,16 +34,14 @@ objects:
             - name: COUCHDB_PASSWORD
               value: "password"        
             ports:
-              - containerPort: 5984              
+              - containerPort: 5984                    
           - name: peer0-bank1-banksco-com
             image: hyperledger/fabric-peer:2.2.1
             imagePullPolicy: Always
-            command: ["sh","-c","peer node start  "]
-            env:
+            command: ["sh","-c","rm  /etc/hyperledger/fabric/core.yaml && cp  /fabric/core.yaml /etc/hyperledger/fabric/ && peer node start  "]
+            env:            
               - name: CORE_PEER_ADDRESS
-                value: "0.0.0.0:7051"
-              - name: FABRIC_CFG_PATH
-                value: /fabric/
+                value: "peer0-bank1:7051"
               - name: CORE_LEDGER_STATE_STATEDATABASE
                 value: "CouchDB"
               - name: CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME
@@ -51,27 +49,28 @@ objects:
               - name: CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD
                 value: "password"
               - name: CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS
-                value: "127.0.0.1:5984"
+                value: "127.0.0.1:5984"                
+              - name: CORE_PEER_CHAINCODELISTENADDRESS
+                value: "localhost:7052"                   
               - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
-                value: "peer0:7051"
-              - name: CORE_PEER_GOSSIP_BOOTSTRAP
-                value: "peer0:7051"
+                value: "peer0-bank1:7051"
               - name: CORE_PEER_ID
-                value: "peer0"
+                value: "peer0-bank1"
               - name: FABRIC_LOGGING_SPEC
-                value: "DEBUG"
+                value: "info"
               - name: CORE_PEER_LOCALMSPID
                 value: "Bank1MSP"
               - name: CORE_PEER_MSPCONFIGPATH
-                value: /fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer0.bank1.banksco.com/msp/
+                value: /fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer0-bank1/msp/                     
               - name: CORE_PEER_TLS_ENABLED
                 value: "true"                
               - name: CORE_PEER_TLS_CERT_FILE
-                value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer0.bank1.banksco.com/tls/server.crt"
+                value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer0-bank1/tls/server.crt"
               - name: CORE_PEER_TLS_KEY_FILE
-                value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer0.bank1.banksco.com/tls/server.key"
+                value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer0-bank1/tls/server.key"
               - name: CORE_PEER_TLS_ROOTCERT_FILE
-                value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer0.bank1.banksco.com/tls/ca.crt"
+                value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer0-bank1/tls/ca.crt"
+           
             volumeMounts:
               - mountPath: /fabric
                 name: fabricfiles
@@ -84,17 +83,14 @@ objects:
   metadata:
     annotations: null
     labels: null
-    name: peer0
+    name: peer0-bank1
   spec:
     ports:
     - name: "7051"
       port: 7051
       targetPort: 7051
-    - name: "5984"
-      port: 5984
-      targetPort: 5984      
     selector:
-      name: peer0
+      name: peer0-bank1
 - kind: PersistentVolumeClaim
   apiVersion: v1
   metadata:
@@ -118,7 +114,7 @@ objects:
     template:
       metadata:
         labels:
-          name: peer1
+          name: peer1-bank1
       spec:
         volumes:
         - name: fabricfiles
@@ -126,7 +122,7 @@ objects:
             claimName: fabric-pvc
         - name: peer1file
           persistentVolumeClaim:
-            claimName: peer1-pvc
+            claimName: peer1-pvc              
         containers:
           - name: couchdb
             image: hyperledger/fabric-couchdb:latest
@@ -136,16 +132,14 @@ objects:
             - name: COUCHDB_PASSWORD
               value: "password"        
             ports:
-              - containerPort: 5984    
+              - containerPort: 5984          
           - name: peer1-bank1-banksco-com
             image: hyperledger/fabric-peer:2.2.1
             imagePullPolicy: Always
-            command: ["sh","-c","peer node start "]
+            command: ["sh","-c","rm  /etc/hyperledger/fabric/core.yaml && cp  /fabric/core.yaml /etc/hyperledger/fabric/ && peer node start "]
             env:
               - name: CORE_PEER_ADDRESS
-                value: "0.0.0.0:7051"            
-              - name: FABRIC_CFG_PATH
-                value: /fabric/    
+                value: "peer1-bank1:7051"   
               - name: CORE_LEDGER_STATE_STATEDATABASE
                 value: "CouchDB"
               - name: CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME
@@ -153,27 +147,30 @@ objects:
               - name: CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD
                 value: "password"
               - name: CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS
-                value: "127.0.0.1:5984"            
-              - name: CORE_PEER_GOSSIP_BOOTSTRAP
-                value: "peer0:7051"
+                value: "127.0.0.1:5984"                 
+              - name: CORE_PEER_CHAINCODELISTENADDRESS
+                value: "localhost:7052" 
               - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
-                value: "peer1:7051"
+                value: "peer1-bank1:7051"
+              - name: CORE_PEER_GOSSIP_BOOTSTRAP
+                value: "peer0:7051"                          
               - name: CORE_PEER_ID
-                value: "peer1"
+                value: "peer1-bank1"
               - name: FABRIC_LOGGING_SPEC
-                value: "DEBUG"
+                value: "info"
               - name: CORE_PEER_LOCALMSPID
                 value: "Bank1MSP"
               - name: CORE_PEER_MSPCONFIGPATH
-                value: /fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer1.bank1.banksco.com/msp/                
+                value: /fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer1-bank1/msp/                              
               - name: CORE_PEER_TLS_ENABLED
                 value: "true"                
               - name: CORE_PEER_TLS_CERT_FILE
-                value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer1.bank1.banksco.com/tls/server.crt"
+                value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer1-bank1/tls/server.crt"
               - name: CORE_PEER_TLS_KEY_FILE
-                value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer1.bank1.banksco.com/tls/server.key"
+                value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer1-bank1/tls/server.key"
               - name: CORE_PEER_TLS_ROOTCERT_FILE
-                value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer1.bank1.banksco.com/tls/ca.crt"
+                value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer1-bank1/tls/ca.crt"
+
             volumeMounts:
               - mountPath: /fabric
                 name: fabricfiles
@@ -186,14 +183,14 @@ objects:
   metadata:
     annotations: null
     labels: null
-    name: peer1
+    name: peer1-bank1
   spec:
     ports:
     - name: "7051"
       port: 7051
       targetPort: 7051
     selector:
-      name: peer1
+      name: peer1-bank1
 - kind: PersistentVolumeClaim
   apiVersion: v1
   metadata:
@@ -217,7 +214,7 @@ objects:
     template:
       metadata:
         labels:
-          name: peer2
+          name: peer2-bank2
       spec:
         volumes:
         - name: fabricfiles
@@ -225,8 +222,8 @@ objects:
             claimName: fabric-pvc
         - name: peer2file
           persistentVolumeClaim:
-            claimName: peer2-pvc
-        containers:
+            claimName: peer2-pvc               
+        containers:   
           - name: couchdb
             image: hyperledger/fabric-couchdb:latest
             env:
@@ -235,16 +232,14 @@ objects:
             - name: COUCHDB_PASSWORD
               value: "password"        
             ports:
-              - containerPort: 5984    
+              - containerPort: 5984          
           - name: peer0-bank2-banksco-com
             image: hyperledger/fabric-peer:2.2.1
             imagePullPolicy: Always
-            command: ["sh","-c"," peer node start  "]
+            command: ["sh","-c","rm  /etc/hyperledger/fabric/core.yaml && cp  /fabric/core.yaml /etc/hyperledger/fabric/ && peer node start  "]
             env:
               - name: CORE_PEER_ADDRESS
-                value: "0.0.0.0:7051"            
-              - name: FABRIC_CFG_PATH
-                value: /fabric/           
+                value: "peer2-bank2:7051"      
               - name: CORE_LEDGER_STATE_STATEDATABASE
                 value: "CouchDB"
               - name: CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME
@@ -252,27 +247,30 @@ objects:
               - name: CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD
                 value: "password"
               - name: CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS
-                value: "127.0.0.1:5984"            
-              - name: CORE_PEER_GOSSIP_BOOTSTRAP
-                value: "peer2:7051"
+                value: "127.0.0.1:5984"                
+              - name: CORE_PEER_CHAINCODELISTENADDRESS
+                value: "localhost:7052"                    
               - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
-                value: "peer2:7051"
+                value: "peer2-bank2:7051"
+              - name: CORE_PEER_GOSSIP_BOOTSTRAP
+                value: "peer2-bank2:7051"                         
               - name: CORE_PEER_ID
-                value: "peer2"
+                value: "peer2-bank2"
               - name: FABRIC_LOGGING_SPEC
-                value: "DEBUG"
+                value: "info"
               - name: CORE_PEER_LOCALMSPID
                 value: "Bank2MSP"
               - name: CORE_PEER_MSPCONFIGPATH
-                value: /fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer2.bank2.banksco.com/msp/               
+                value: /fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer2-bank2/msp/                              
               - name: CORE_PEER_TLS_ENABLED
                 value: "true"                
               - name: CORE_PEER_TLS_CERT_FILE
-                value: "/fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer2.bank2.banksco.com/tls/server.crt"
+                value: "/fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer2-bank2/tls/server.crt"
               - name: CORE_PEER_TLS_KEY_FILE
-                value: "/fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer2.bank2.banksco.com/tls/server.key"
+                value: "/fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer2-bank2/tls/server.key"
               - name: CORE_PEER_TLS_ROOTCERT_FILE
-                value: "/fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer2.bank2.banksco.com/tls/ca.crt"
+                value: "/fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer2-bank2/tls/ca.crt"
+
             volumeMounts:
               - mountPath: /fabric
                 name: fabricfiles
@@ -285,14 +283,14 @@ objects:
   metadata:
     annotations: null
     labels: null
-    name: peer2
+    name: peer2-bank2
   spec:
     ports:
     - name: "7051"
       port: 7051
       targetPort: 7051
     selector:
-      name: peer2
+      name: peer2-bank2
 - kind: PersistentVolumeClaim
   apiVersion: v1
   metadata:
@@ -317,7 +315,7 @@ objects:
     template:
       metadata:
         labels:
-          name: peer3
+          name: peer3-bank2
       spec:
         volumes:
         - name: fabricfiles
@@ -325,8 +323,8 @@ objects:
             claimName: fabric-pvc
         - name: peer3file
           persistentVolumeClaim:
-            claimName: peer3-pvc
-        containers:
+            claimName: peer3-pvc        
+        containers:        
           - name: couchdb
             image: hyperledger/fabric-couchdb:latest
             env:
@@ -335,16 +333,14 @@ objects:
             - name: COUCHDB_PASSWORD
               value: "password"        
             ports:
-              - containerPort: 5984            
+              - containerPort: 5984          
           - name: peer1-bank2-banksco-com
             image: hyperledger/fabric-peer:2.2.1
             imagePullPolicy: Always
-            command: ["sh","-c","peer node start"]
+            command: ["sh","-c","rm  /etc/hyperledger/fabric/core.yaml && cp  /fabric/core.yaml /etc/hyperledger/fabric/ && peer node start"]
             env: 
               - name: CORE_PEER_ADDRESS
-                value: "0.0.0.0:7051"            
-              - name: FABRIC_CFG_PATH
-                value: /fabric/     
+                value: "peer3:7051"       
               - name: CORE_LEDGER_STATE_STATEDATABASE
                 value: "CouchDB"
               - name: CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME
@@ -352,27 +348,30 @@ objects:
               - name: CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD
                 value: "password"
               - name: CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS
-                value: "127.0.0.1:5984"
-              - name: CORE_PEER_GOSSIP_BOOTSTRAP
-                value: "peer3:7051"
-              - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
-                value: "peer3:7051"
+                value: "127.0.0.1:5984"                     
+              - name: CORE_PEER_CHAINCODELISTENADDRESS
+                value: "localhost:7052"                                        
               - name: CORE_PEER_ID
                 value: "peer3"
+              - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
+                value: "peer3:7051"
+              - name: CORE_PEER_GOSSIP_BOOTSTRAP
+                value: "peer3:7051"                
               - name: FABRIC_LOGGING_SPEC
-                value: "DEBUG"
+                value: "info"
               - name: CORE_PEER_LOCALMSPID
                 value: "Bank2MSP"
               - name: CORE_PEER_MSPCONFIGPATH
-                value: /fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer3.bank2.banksco.com/msp/              
+                value: /fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer3-bank2/msp/              
               - name: CORE_PEER_TLS_ENABLED
                 value: "true" 
               - name: CORE_PEER_TLS_CERT_FILE
-                value: "/fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer3.bank2.banksco.com/tls/server.crt"
+                value: "/fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer3-bank2/tls/server.crt"
               - name: CORE_PEER_TLS_KEY_FILE
-                value: "/fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer3.bank2.banksco.com/tls/server.key"
+                value: "/fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer3-bank2/tls/server.key"
               - name: CORE_PEER_TLS_ROOTCERT_FILE
-                value: "/fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer3.bank2.banksco.com/tls/ca.crt"
+                value: "/fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer3-bank2/tls/ca.crt"
+
             volumeMounts:
               - mountPath: /fabric
                 name: fabricfiles
@@ -385,14 +384,14 @@ objects:
   metadata:
     annotations: null
     labels: null
-    name: peer3
+    name: peer3-bank2
   spec:
     ports:
     - name: "7051"
       port: 7051
       targetPort: 7051
     selector:
-      name: peer3
+      name: peer3-bank2
 - kind: PersistentVolumeClaim
   apiVersion: v1
   metadata:
