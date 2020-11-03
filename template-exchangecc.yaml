@@ -24,7 +24,7 @@ objects:
             imagePullPolicy: Always    
             env:
               - name: CHAINCODE_ID
-                value: "exchangecc:420a85e6fdd4abfac055197e4a142308694aa7135b41887a4272856bab3ab924"
+                value: "exchangecc:1843cb71d30a6e004b7f009297b928aaa668ab2a600981fc5b73f25434dd782b"
               - name: CHAINCODE_SERVER_ADDRESS
                 value: "0.0.0.0:9999"       
             ports:
@@ -62,7 +62,7 @@ objects:
             imagePullPolicy: Always   
             env:
               - name: CHAINCODE_ID
-                value: "exchangecc:cc01e67418062f9b5779d957b95ec6d36cbdb1afd0d1f3a5378728a0ecb6323b"
+                value: "exchangecc:2b34d9001550eaaa078277408edeaab8ffd2fd3be85698f12c91933df7d57ac1"
               - name: CHAINCODE_SERVER_ADDRESS
                 value: "0.0.0.0:9999"       
             ports:
