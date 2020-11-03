@@ -13,10 +13,6 @@ OrdererOrgs:
   - Name: Orderer
     Domain: banksco.com
     EnableNodeOUs: true
-    CA:
-        Country: FR
-        Province: IDF
-        Locality: Paris
     # ---------------------------------------------------------------------------
     # "Specs" - See PeerOrgs below for complete description
     # ---------------------------------------------------------------------------
@@ -32,10 +28,11 @@ PeerOrgs:
   - Name: Bank1
     Domain: bank1.banksco.com
     EnableNodeOUs: true
-    CA:
-        Country: FR
-        Province: IDF
-        Locality: Paris
+    Specs:
+      - Hostname: peer0  
+        CommonName: peer0-bank1      
+      - Hostname: peer1 
+        CommonName: peer1-bank1                   
     # ---------------------------------------------------------------------------
     # "Specs"
     # ---------------------------------------------------------------------------
@@ -86,13 +83,13 @@ PeerOrgs:
   - Name: Bank2
     Domain: bank2.banksco.com
     EnableNodeOUs: true
-    CA:
-        Country: FR
-        Province: IDF
-        Locality: Paris
     Template:
       Count: 2
       Start: 2
-
+    Specs:
+      - Hostname: peer2  
+        CommonName: peer2-bank2      
+      - Hostname: peer3 
+        CommonName: peer3-bank2     
     Users:
       Count: 1
