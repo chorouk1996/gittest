@@ -1,6 +1,8 @@
 #!/bin/sh
 #peer channel fetch newest $CHANNEL_NAME.block -o orderer:7050 -c $CHANNEL_NAME --tls --cafile $ORDERER_TLS_CA
 
+rm  /etc/hyperledger/fabric/core.yaml 
+cp  /fabric/core.yaml /etc/hyperledger/fabric/
 peer channel fetch 0 $CHANNEL_NAME.block -c $CHANNEL_NAME --orderer orderer:7050 --tls --cafile $ORDERER_TLS_CA
 
 export CORE_PEER_TLS_ROOTCERT_FILE=$PEER2_BANK2_TLS_CA
