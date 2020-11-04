@@ -87,4 +87,4 @@ objects:
     resources:
       requests:
         storage: 10Gi
-    storageClassName: ibmc-block-retain-bronze
+    storageClassName: ibmc-block-bronze
