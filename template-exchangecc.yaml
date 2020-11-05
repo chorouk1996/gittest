@@ -20,7 +20,7 @@ objects:
       spec:
         containers:
           - name: exchangecc
-            image: image-registry.openshift-image-registry.svc:5000/choroukamahri/exchangecc:latest
+            image: image-registry.openshift-image-registry.svc:5000/${PROJECT}/exchangecc:latest
             imagePullPolicy: Always    
             env:
               - name: CHAINCODE_ID
@@ -58,7 +58,7 @@ objects:
       spec:
         containers:
           - name: exchangecc2
-            image: image-registry.openshift-image-registry.svc:5000/choroukamahri/exchangecc:latest
+            image: image-registry.openshift-image-registry.svc:5000/${PROJECT}/exchangecc:latest
             imagePullPolicy: Always   
             env:
               - name: CHAINCODE_ID
@@ -67,8 +67,6 @@ objects:
                 value: "0.0.0.0:9999"       
             ports:
               - containerPort: 9999              
-
-
 - apiVersion: v1
   kind: Service
   metadata:
@@ -81,3 +79,8 @@ objects:
     selector:
       name: exchangecc2
 
+parameters:
+- description: Value for project
+  displayName: project
+  name: PROJECT
+  required: true
