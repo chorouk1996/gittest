@@ -1,0 +1,30 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: nfs-pvc
+spec:
+  storageClassName: nfs-client
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: reader-pod
+spec:
+  containers:
+  - name: reader-container
+    image: gcr.io/google_containers/busybox:1.24
+    command: ["/bin/sh"]
+    args: ["-c", "while true; do ls -ls /mnt ; sleep 60; done"]
+    volumeMounts:
+      - name: nfs-volume
+        mountPath: "/mnt"
+  restartPolicy: "Never"
+  volumes:
+    - name: nfs-volume
+      persistentVolumeClaim:
+        claimName: nfs-pvc
