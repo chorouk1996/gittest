@@ -1,0 +1,95 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+labels:
+  template: fabric-template
+metadata:
+  name: tpl-clibank1
+objects:
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: fabric-clibank1-dc
+  spec:
+    strategy:
+      type: Recreate
+    replicas: 1
+    template:
+      metadata:
+        labels:
+          name: clibank1
+      spec:
+        volumes:
+          - name: fabricfiles
+            persistentVolumeClaim:
+              claimName: fabric-pvc
+        containers:
+          - name: clibank1
+            image: hyperledger/fabric-tools:2.2.1
+            imagePullPolicy: Always
+            command: ["sh", "-c","cd ../fabric &&  chmod +x ../fabric/channel.sh && ../fabric/channel.sh  && cp /fabric/core.yaml /etc/hyperledger/fabric/core.yaml && sleep 24h"]
+            env:    
+            - name: FABRIC_LOGGING_SPEC
+              value: "DEBUG"
+            - name: CORE_PEER_ID
+              value: "cliBank1"             
+            - name: CORE_PEER_ADDRESS
+              value: "peer0-bank1:7051"
+            - name: CORE_PEER_LOCALMSPID
+              value: "Bank1MSP"
+            - name: CORE_PEER_TLS_ENABLED
+              value: "true"
+            - name: CORE_PEER_TLS_CERT_FILE
+              value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer0-bank1/tls/server.crt"
+            - name: CORE_PEER_TLS_KEY_FILE
+              value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer0-bank1/tls/server.key"
+            - name: CORE_PEER_TLS_ROOTCERT_FILE
+              value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer0-bank1/tls/ca.crt"
+            - name: CORE_PEER_MSPCONFIGPATH
+              value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/users/Admin@bank1.banksco.com/msp"
+            - name: CHANNEL_NAME
+              value: "bankscochannel"
+            - name: ORDERER_TLS_CA
+              value: "/fabric/crypto-config/ordererOrganizations/banksco.com/orderers/orderer.banksco.com/msp/tlscacerts/tlsca.banksco.com-cert.pem"
+            - name: PEER0_BANK1_TLS_CA
+              value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer0-bank1/tls/ca.crt"
+            - name: PEER0_BANK1_PRADDR
+              value: "peer0-bank1:7051"
+            - name: PEER1_BANK1_TLS_CA
+              value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer1-bank1/tls/ca.crt"
+            - name: PEER1_BANK1_PRADDR
+              value: "peer1-bank1:7051"   
+            - name: PEER1_BANK1_TLS_CA
+              value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer1-bank1/tls/ca.crt"
+            - name: PEER1_BANK1_PRADDR
+              value: "peer1-bank1:7051"  
+            - name: PEER2_BANK2_TLS_CA
+              value: "/fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer2-bank2/tls/ca.crt"  
+            - name: PEER2_BANK2_PRADDR
+              value: "peer2-bank2:7051"                
+            - name: PEER3_BANK2_TLS_CA
+              value: "/fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer3-bank2/tls/ca.crt"  
+            - name: PEER3_BANK2_PRADDR
+              value: "peer3-bank2:7051"
+                     
+            volumeMounts:
+              - mountPath: /fabric
+                name: fabricfiles
+            ports:
+              - containerPort: 7051
+                protocol: TCP
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations: null
+    labels: null
+    name: clibank1-svc
+  spec:
+    ports:
+    - name: clibank
+      port: 7051
+      protocol: TCP
+      targetPort: 7051
+    selector:
+      name: clibank1
+

@@ -1,0 +1,484 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+labels:
+  template: all-peers-template
+metadata:
+  name: all-peers-template
+objects:
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: peer0bank1dc
+  spec:
+    strategy:
+      type: Recreate
+    replicas: 1
+    template:
+      metadata:
+        labels:
+          name: peer0-bank1
+      spec:
+        volumes:
+        - name: fabricfiles
+          persistentVolumeClaim:
+            claimName: fabric-pvc
+        - name: peer0file
+          persistentVolumeClaim:
+            claimName: peer0-pvc        
+        - name: couch0file
+          persistentVolumeClaim:
+            claimName: couch0-pvc                     
+        containers: 
+          - name: couchdb
+            image: hyperledger/fabric-couchdb:latest
+            env:
+            - name: COUCHDB_USER
+              value: "admin"
+            - name: COUCHDB_PASSWORD
+              value: "password"        
+            ports:
+              - containerPort: 5984       
+            volumeMounts:
+              - mountPath: /opt/couchdb/data
+                name: couch0file                          
+          - name: peer0-bank1-banksco-com
+            image: hyperledger/fabric-peer:2.2.1
+            imagePullPolicy: Always
+            command: ["sh","-c","rm  /etc/hyperledger/fabric/core.yaml && cp  /fabric/core.yaml /etc/hyperledger/fabric/ && peer node start  "]
+            env:            
+              - name: CORE_PEER_ADDRESS
+                value: "peer0-bank1:7051"
+              - name: CORE_LEDGER_STATE_STATEDATABASE
+                value: "CouchDB"
+              - name: CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME
+                value: ${COUCHDB_USERNAME}
+              - name: CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD
+                value: ${COUCHDB_PASSWORD}
+              - name: CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS
+                value: "127.0.0.1:5984"                
+              - name: CORE_PEER_CHAINCODELISTENADDRESS
+                value: "localhost:7052"                   
+              - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
+                value: "peer0-bank1:7051"
+              - name: CORE_PEER_ID
+                value: "peer0-bank1"
+              - name: FABRIC_LOGGING_SPEC
+                value: "info"
+              - name: CORE_PEER_LOCALMSPID
+                value: "Bank1MSP"
+              - name: CORE_PEER_MSPCONFIGPATH
+                value: /fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer0-bank1/msp/                     
+              - name: CORE_PEER_TLS_ENABLED
+                value: "true"                
+              - name: CORE_PEER_TLS_CERT_FILE
+                value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer0-bank1/tls/server.crt"
+              - name: CORE_PEER_TLS_KEY_FILE
+                value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer0-bank1/tls/server.key"
+              - name: CORE_PEER_TLS_ROOTCERT_FILE
+                value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer0-bank1/tls/ca.crt"
+           
+            volumeMounts:
+              - mountPath: /fabric
+                name: fabricfiles
+              - mountPath: /var/hyperledger/production/
+                name: peer0file
+            ports:
+              - containerPort: 7051
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations: null
+    labels: null
+    name: peer0-bank1
+  spec:
+    ports:
+    - name: "7051"
+      port: 7051
+      targetPort: 7051
+    selector:
+      name: peer0-bank1
+- kind: PersistentVolumeClaim
+  apiVersion: v1
+  metadata:
+    name: peer0-pvc
+  spec:
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+    storageClassName: ${STORAGECLASS_NAME} 
+- kind: PersistentVolumeClaim
+  apiVersion: v1
+  metadata:
+    name: couch0-pvc 
+  spec:
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+    storageClassName: ${STORAGECLASS_NAME}  
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: peer1bank1dc
+  spec:
+    strategy:
+      type: Recreate
+    replicas: 1
+    template:
+      metadata:
+        labels:
+          name: peer1-bank1
+      spec:
+        volumes:
+        - name: fabricfiles
+          persistentVolumeClaim:
+            claimName: fabric-pvc
+        - name: peer1file
+          persistentVolumeClaim:
+            claimName: peer1-pvc   
+        - name: couch1file
+          persistentVolumeClaim:
+            claimName: couch1-pvc                          
+        containers:
+          - name: couchdb
+            image: hyperledger/fabric-couchdb:latest
+            env:
+            - name: COUCHDB_USER
+              value: "admin"
+            - name: COUCHDB_PASSWORD
+              value: "password"        
+            ports:
+              - containerPort: 5984          
+            volumeMounts:
+              - mountPath: /opt/couchdb/data
+                name: couch1file                     
+          - name: peer1-bank1-banksco-com
+            image: hyperledger/fabric-peer:2.2.1
+            imagePullPolicy: Always
+            command: ["sh","-c","rm  /etc/hyperledger/fabric/core.yaml && cp  /fabric/core.yaml /etc/hyperledger/fabric/ && peer node start "]
+            env:
+              - name: CORE_PEER_ADDRESS
+                value: "peer1-bank1:7051"   
+              - name: CORE_LEDGER_STATE_STATEDATABASE
+                value: "CouchDB"
+              - name: CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME
+                value: ${COUCHDB_USERNAME}
+              - name: CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD
+                value: ${COUCHDB_PASSWORD}
+              - name: CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS
+                value: "127.0.0.1:5984"                 
+              - name: CORE_PEER_CHAINCODELISTENADDRESS
+                value: "localhost:7052" 
+              - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
+                value: "peer1-bank1:7051"
+              - name: CORE_PEER_GOSSIP_BOOTSTRAP
+                value: "peer0:7051"                          
+              - name: CORE_PEER_ID
+                value: "peer1-bank1"
+              - name: FABRIC_LOGGING_SPEC
+                value: "info"
+              - name: CORE_PEER_LOCALMSPID
+                value: "Bank1MSP"
+              - name: CORE_PEER_MSPCONFIGPATH
+                value: /fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer1-bank1/msp/                              
+              - name: CORE_PEER_TLS_ENABLED
+                value: "true"                
+              - name: CORE_PEER_TLS_CERT_FILE
+                value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer1-bank1/tls/server.crt"
+              - name: CORE_PEER_TLS_KEY_FILE
+                value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer1-bank1/tls/server.key"
+              - name: CORE_PEER_TLS_ROOTCERT_FILE
+                value: "/fabric/crypto-config/peerOrganizations/bank1.banksco.com/peers/peer1-bank1/tls/ca.crt"
+
+            volumeMounts:
+              - mountPath: /fabric
+                name: fabricfiles
+              - mountPath: /var/hyperledger/production/
+                name: peer1file
+            ports:
+              - containerPort: 7051
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations: null
+    labels: null
+    name: peer1-bank1
+  spec:
+    ports:
+    - name: "7051"
+      port: 7051
+      targetPort: 7051
+    selector:
+      name: peer1-bank1
+- kind: PersistentVolumeClaim
+  apiVersion: v1
+  metadata:
+    name: peer1-pvc
+  spec:
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+    storageClassName: ${STORAGECLASS_NAME} 
+- kind: PersistentVolumeClaim
+  apiVersion: v1
+  metadata:
+    name: couch1-pvc 
+  spec:
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+    storageClassName: ${STORAGECLASS_NAME} 
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: peer0bank2dc
+  spec:
+    strategy:
+      type: Recreate
+    replicas: 1
+    template:
+      metadata:
+        labels:
+          name: peer2-bank2
+      spec:
+        volumes:
+        - name: fabricfiles
+          persistentVolumeClaim:
+            claimName: fabric-pvc
+        - name: peer2file
+          persistentVolumeClaim:
+            claimName: peer2-pvc   
+        - name: couch2file
+          persistentVolumeClaim:
+            claimName: couch2-pvc                           
+        containers:   
+          - name: couchdb
+            image: hyperledger/fabric-couchdb:latest
+            env:
+            - name: COUCHDB_USER
+              value: "admin"
+            - name: COUCHDB_PASSWORD
+              value: "password"        
+            ports:
+              - containerPort: 5984        
+            volumeMounts:
+              - mountPath: /opt/couchdb/data
+                name: couch2file                       
+          - name: peer0-bank2-banksco-com
+            image: hyperledger/fabric-peer:2.2.1
+            imagePullPolicy: Always
+            command: ["sh","-c","rm  /etc/hyperledger/fabric/core.yaml && cp  /fabric/core.yaml /etc/hyperledger/fabric/ && peer node start  "]
+            env:
+              - name: CORE_PEER_ADDRESS
+                value: "peer2-bank2:7051"      
+              - name: CORE_LEDGER_STATE_STATEDATABASE
+                value: "CouchDB"
+              - name: CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME
+                value: ${COUCHDB_USERNAME}
+              - name: CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD
+                value: ${COUCHDB_PASSWORD}
+              - name: CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS
+                value: "127.0.0.1:5984"                
+              - name: CORE_PEER_CHAINCODELISTENADDRESS
+                value: "localhost:7052"                    
+              - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
+                value: "peer2-bank2:7051"
+              - name: CORE_PEER_GOSSIP_BOOTSTRAP
+                value: "peer2-bank2:7051"                         
+              - name: CORE_PEER_ID
+                value: "peer2-bank2"
+              - name: FABRIC_LOGGING_SPEC
+                value: "info"
+              - name: CORE_PEER_LOCALMSPID
+                value: "Bank2MSP"
+              - name: CORE_PEER_MSPCONFIGPATH
+                value: /fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer2-bank2/msp/                              
+              - name: CORE_PEER_TLS_ENABLED
+                value: "true"                
+              - name: CORE_PEER_TLS_CERT_FILE
+                value: "/fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer2-bank2/tls/server.crt"
+              - name: CORE_PEER_TLS_KEY_FILE
+                value: "/fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer2-bank2/tls/server.key"
+              - name: CORE_PEER_TLS_ROOTCERT_FILE
+                value: "/fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer2-bank2/tls/ca.crt"
+
+            volumeMounts:
+              - mountPath: /fabric
+                name: fabricfiles
+              - mountPath: /var/hyperledger/production/
+                name: peer2file
+            ports:
+              - containerPort: 7051
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations: null
+    labels: null
+    name: peer2-bank2
+  spec:
+    ports:
+    - name: "7051"
+      port: 7051
+      targetPort: 7051
+    selector:
+      name: peer2-bank2
+- kind: PersistentVolumeClaim
+  apiVersion: v1
+  metadata:
+    name: peer2-pvc
+  spec:
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+    storageClassName: ${STORAGECLASS_NAME} 
+- kind: PersistentVolumeClaim
+  apiVersion: v1
+  metadata:
+    name: couch2-pvc 
+  spec:
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+    storageClassName: ${STORAGECLASS_NAME} 
+
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: peer1bank2dc
+  spec:
+    strategy:
+      type: Recreate
+    replicas: 1
+    template:
+      metadata:
+        labels:
+          name: peer3-bank2
+      spec:
+        volumes:
+        - name: fabricfiles
+          persistentVolumeClaim:
+            claimName: fabric-pvc
+        - name: peer3file
+          persistentVolumeClaim:
+            claimName: peer3-pvc        
+        - name: couch3file
+          persistentVolumeClaim:
+            claimName: couch3-pvc               
+        containers:        
+          - name: couchdb
+            image: hyperledger/fabric-couchdb:latest
+            env:
+            - name: COUCHDB_USER
+              value: "admin"
+            - name: COUCHDB_PASSWORD
+              value: "password"        
+            ports:
+              - containerPort: 5984       
+            volumeMounts:
+              - mountPath: /opt/couchdb/data
+                name: couch3file                        
+          - name: peer1-bank2-banksco-com
+            image: hyperledger/fabric-peer:2.2.1
+            imagePullPolicy: Always
+            command: ["sh","-c","rm  /etc/hyperledger/fabric/core.yaml && cp  /fabric/core.yaml /etc/hyperledger/fabric/ && peer node start"]
+            env: 
+              - name: CORE_PEER_ADDRESS
+                value: "peer3-bank2:7051"       
+              - name: CORE_LEDGER_STATE_STATEDATABASE
+                value: "CouchDB"
+              - name: CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME
+                value: ${COUCHDB_USERNAME} 
+              - name: CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD
+                value: ${COUCHDB_PASSWORD}
+              - name: CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS
+                value: "127.0.0.1:5984"                     
+              - name: CORE_PEER_CHAINCODELISTENADDRESS
+                value: "localhost:7052"                                        
+              - name: CORE_PEER_ID
+                value: "peer3-bank2"
+              - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
+                value: "peer3-bank2:7051"
+              - name: CORE_PEER_GOSSIP_BOOTSTRAP
+                value: "peer3-bank2:7051"                
+              - name: FABRIC_LOGGING_SPEC
+                value: "info"
+              - name: CORE_PEER_LOCALMSPID
+                value: "Bank2MSP"
+              - name: CORE_PEER_MSPCONFIGPATH
+                value: /fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer3-bank2/msp/              
+              - name: CORE_PEER_TLS_ENABLED
+                value: "true" 
+              - name: CORE_PEER_TLS_CERT_FILE
+                value: "/fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer3-bank2/tls/server.crt"
+              - name: CORE_PEER_TLS_KEY_FILE
+                value: "/fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer3-bank2/tls/server.key"
+              - name: CORE_PEER_TLS_ROOTCERT_FILE
+                value: "/fabric/crypto-config/peerOrganizations/bank2.banksco.com/peers/peer3-bank2/tls/ca.crt"
+
+            volumeMounts:
+              - mountPath: /fabric
+                name: fabricfiles
+              - mountPath: /var/hyperledger/production/
+                name: peer3file
+            ports:
+              - containerPort: 7051
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations: null
+    labels: null
+    name: peer3-bank2
+  spec:
+    ports:
+    - name: "7051"
+      port: 7051
+      targetPort: 7051
+    selector:
+      name: peer3-bank2
+- kind: PersistentVolumeClaim
+  apiVersion: v1
+  metadata:
+    name: peer3-pvc
+  spec:
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi
+    storageClassName: ${STORAGECLASS_NAME} 
+- kind: PersistentVolumeClaim
+  apiVersion: v1
+  metadata:
+    name: couch3-pvc 
+  spec:
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+    storageClassName: ${STORAGECLASS_NAME} 
+
+parameters:
+- description: Value for username
+  displayName: username_couchdb
+  name: COUCHDB_USERNAME
+  required: true
+- description: Value for password
+  displayName: password_couchdb
+  name: COUCHDB_PASSWORD
+  required: true  
+- description: Value for username
+  displayName: storage class name
+  name: STORAGECLASS_NAME
+  required: true  
