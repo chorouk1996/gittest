@@ -64,7 +64,7 @@ objects:
         annotations: null
         from:
           kind: DockerImage
-          name: 'us.icr.io/${NAMESPACE}/fabric-alpine:latest'
+          name: '${REGISTRY}/${NAMESPACE}/fabric-alpine:latest'
         generation: 2
         importPolicy: {}
         referencePolicy:
@@ -85,4 +85,8 @@ parameters:
 - description: namespace
   displayName: NameSpace
   name: NAMESPACE
+  required: true
+- description: nom du registre
+  displayName: REGISTRY
+  name: REGISTRY
   required: true
