@@ -190,7 +190,7 @@ the deploy the chaincodes :
 
 * `oc apply -f template-exchangecc.yaml`
 
-* `oc process  tpl-chaincode   | oc create -f -`
+* `oc process  tpl-chaincode  --param-file=param-cc.env | oc create -f -`
 
 ## Approval et commit
 
