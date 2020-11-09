@@ -28,7 +28,8 @@ Create all components defined in the template resource
 
 > The Https URL is defined in the route.
 
-> https://task-pv-pod-route-**<namespace A>**.bouygues-bloc-160008566-f72ef11f3ab089a8c677044eb28292cd-0000.sjc03.containers.appdomain.cloud/crypto-config/ordererOrganizations/banksco.com/orderers/orderer.banksco.com/tls/ca.crt
+> https://task-pv-pod-route-**(namespace A)**.bouygues-bloc-160008566-f72ef11f3ab089a8c677044eb28292cd-0000.sjc03.containers.appdomain.cloud/crypto-config/ordererOrganizations/banksco.com/orderers/orderer.banksco.com/tls/ca.crt
+
 > ![result](./img/result.png)
 
 # Deployment of the orderer in the project B using the data (PKI, Genisis block, ...) copied
