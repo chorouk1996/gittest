@@ -10,7 +10,7 @@ spec:
         path: /
   containers:
     - name: nfs-reader-container
-      image: us.icr.io/bouygues-bloc-1600085663464/michelmorat-fr/nfs-client
+      image: us.icr.io/bouygues-bloc-1600085663464/ns_r/nfs-client
       volumeMounts:
         - name: nfs-volume
           mountPath: /mnt
