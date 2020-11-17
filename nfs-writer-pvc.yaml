@@ -9,7 +9,7 @@ spec:
         claimName: nfs-pvc
   containers:
     - name: nfs-writer-container
-      image: us.icr.io/bouygues-bloc-1600085663464/michelmorat-us/nfs-client:latest
+      image: us.icr.io/bouygues-bloc-1600085663464/nfs-writer/nfs-client:latest
       volumeMounts:
         - name: nfs-volume
           mountPath: /mnt
