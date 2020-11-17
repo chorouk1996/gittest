@@ -1,4 +1,4 @@
-# **Create images stream in the projects**
+
 ## **Prerequisite**
 
 **Access to the branch**
@@ -7,6 +7,7 @@
   
 **Create new projects**
 * *`oc new-project nfs-reader`*
+
 * *`oc new-project nfs-writer`*
  
 **Declare variable**
@@ -17,44 +18,48 @@ ns_r=nfs-reader
 ns_w=nfs-writer
 ```
 ## **Create images in local**
-busybox used to deploy in nfs-r and nfs-w projects
+busybox image used to deploy in nfs-reader and nfs-writer projects
 * *`docker pull busybox`*
 
-NFS used to deploy the server in the nfs-r project
+NFS image used to deploy the server in the nfs-reader project
+* *`docker build -t ${registry}/${cluster}/${ns_r}/nfs-server .`*
 
-* *`docker build -t ${registry}/${cluster}/${ns_s}/nfs-server .`*
 ## **Create images stream in the projects**
 
-**Create images in container registry**
+**Push the local images to the container registry**
 * *`docker tag busybox ${registry}/${cluster}/${ns_r}/nfs-client`*
+
 * *`docker push ${registry}/${cluster}/${ns_r}/nfs-client:latest`*
 
 * *`docker tag busybox ${registry}/${cluster}/${ns_w}/nfs-client`*
+
 * *`docker push ${registry}/${cluster}/${ns_w}/nfs-client:latest`*
 
-**Create images stream in each project**
+**Create images stream in the projects**
 
-Image stream is created in the nfs-r project for reader client 
+Image stream is created in the nfs-reader project for reader client 
 * *`oc tag ${registry}/${cluster}/${ns_r}/nfs-client ${ns_r}/nfs-client:latest --reference-policy=local`*
 
-Image stream created in the nfs-w project for wrietr client 
+Image stream created in the nfs-writer project for writer client 
 * *`oc tag ${registry}/${cluster}/${ns_w}/nfs-client ${ns_w}/nfs-client:latest --reference-policy=local`*
 
-NFS images stream created in the nfs-r project
-
+NFS image stream created in the nfs-reader project
 * *`oc tag ${registry}/${cluster}/${ns_r}/nfs-server ${ns_r}/nfs-server:latest --reference-policy=local`*
 
 ## **Deploy reader and writer clients and the NFS server**
 
-**In the nfs-r project**
+**In the nfs-reader project**
+* *`oc project nfs-reader`*
 
-* *`oc project ${ns_r}`*
 * *`oc apply -nfs-pv.yaml`*
+
 * *`oc apply -nfs-pvc.yaml`*
+
 * *`oc apply -f nfs-server.yaml`*
+
 * *`oc apply -f nfs-reader.yaml`*
 
+**In the nfs-writer project**
+* *`oc project nfs-writer`*
 
-**In the nfs-w project**
-* *`oc project ${ns_w}`*
 * *`oc apply -f nfs-writer-pvc.yaml`*
