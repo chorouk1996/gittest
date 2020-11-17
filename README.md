@@ -48,12 +48,12 @@ NFS images stream created in the nfs-r project
 
 **In the nfs-r project**
 
-* *`oc project ${nfs-r}`*
+* *`oc project ${ns_r}`*
 * *`oc apply -nfs-pv.yaml`*
 * *`oc apply -nfs-pvc.yaml`*
 * *`oc apply -f nfs-server.yaml`*
 
 
 **In the nfs-w project**
-* *`oc project ${nfs-w}`*
+* *`oc project ${ns_w}`*
 * *`oc apply -f nfs-writer-pvc.yaml`*
