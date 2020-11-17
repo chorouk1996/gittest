@@ -33,10 +33,11 @@ NFS used to deploy the server in the nfs-r project
 * *`docker push ${registry}/${cluster}/${ns_w}/nfs-client:latest`*
 
 **Create images stream in each project**
-Images stream created in the nfs-r project
+
+Image stream is created in the nfs-r project for reader client 
 * *`oc tag ${registry}/${cluster}/${ns_r}/nfs-client ${ns_r}/nfs-client:latest --reference-policy=local`*
 
-Images stream created in the nfs-w project
+Image stream created in the nfs-w project for wrietr client 
 * *`oc tag ${registry}/${cluster}/${ns_w}/nfs-client ${ns_w}/nfs-client:latest --reference-policy=local`*
 
 NFS images stream created in the nfs-r project
