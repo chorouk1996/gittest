@@ -10,7 +10,7 @@ spec:
       emptyDir: {}
   containers:
     - name: nfs-server-container
-      image: us.icr.io/bouygues-bloc-1600085663464/michelmorat-fr/nfs-server
+      image: us.icr.io/bouygues-bloc-1600085663464/nfs_r/nfs-server
       securityContext:
         privileged: true
       volumeMounts:
