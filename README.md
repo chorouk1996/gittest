@@ -52,6 +52,7 @@ NFS images stream created in the nfs-r project
 * *`oc apply -nfs-pv.yaml`*
 * *`oc apply -nfs-pvc.yaml`*
 * *`oc apply -f nfs-server.yaml`*
+* *`oc apply -f nfs-reader.yaml`*
 
 
 **In the nfs-w project**
