@@ -3,7 +3,7 @@
 
 **Access to the branch**
 
-* *`git checkout feature-share-pvc-with nfs`*
+* *`git checkout feature-share-pvc-with-nfs`*
   
 **Create new projects**
 * *`oc new-project nfs-reader`*
