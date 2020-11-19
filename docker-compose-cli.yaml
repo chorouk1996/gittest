@@ -1,0 +1,165 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2.1'
+
+networks:
+  exchangeNtw:
+    name: exchangeNtw
+
+services:
+
+  orderer1.banksco.com:
+    hostname: orderer1
+    extends:
+      file:   base/docker-compose-base.yaml
+      service: orderer1.banksco.com
+    container_name: orderer1.banksco.com
+    networks:
+      - exchangeNtw
+
+  orderer2.banksco.com:
+    hostname: orderer2
+    extends:
+      file:   base/docker-compose-base.yaml
+      service: orderer2.banksco.com
+    container_name: orderer2.banksco.com
+    networks:
+      - exchangeNtw
+
+  orderer3.banksco.com:
+    hostname: orderer3
+    extends:
+      file:   base/docker-compose-base.yaml
+      service: orderer3.banksco.com
+    container_name: orderer3.banksco.com
+    networks:
+      - exchangeNtw
+
+  peer0.bank1.banksco.com:
+    hostname: peer0Bank1
+    container_name: peer0.bank1.banksco.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.bank1.banksco.com
+    networks:
+      - exchangeNtw
+
+  peer0.bank2.banksco.com:
+    hostname: peer0Bank2
+    container_name: peer0.bank2.banksco.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.bank2.banksco.com
+    networks:
+      - exchangeNtw
+
+  peer0.bank3.banksco.com:
+    hostname: peer0Bank3
+    container_name: peer0.bank3.banksco.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.bank3.banksco.com
+    networks:
+      - exchangeNtw
+
+  cliBank1:
+    hostname: cliBank1
+    container_name: cliBank1
+    image: hyperledger/fabric-tools:2.2.0
+    tty: true
+    environment:
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - FABRIC_LOGGING_SPEC=INFO
+      - CORE_PEER_ID=cliBank1
+      - CORE_PEER_ADDRESS=peer0.bank1.banksco.com:7051
+      - CORE_PEER_LOCALMSPID=Bank1MSP
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/opt/exchangentw/crypto/peerOrganizations/bank1.banksco.com/peers/peer0.bank1.banksco.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/exchangentw/crypto/peerOrganizations/bank1.banksco.com/peers/peer0.bank1.banksco.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/exchangentw/crypto/peerOrganizations/bank1.banksco.com/peers/peer0.bank1.banksco.com/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/exchangentw/crypto/peerOrganizations/bank1.banksco.com/users/Admin@bank1.banksco.com/msp
+      - CHANNEL_NAME=bankscochannel
+      - ORDERER_TLS_CA=/opt/exchangentw/crypto/ordererOrganizations/banksco.com/orderers/orderer1.banksco.com/msp/tlscacerts/tlsca.banksco.com-cert.pem
+      - PEER0_BANK1_TLS_CA=/opt/exchangentw/crypto/peerOrganizations/bank1.banksco.com/peers/peer0.bank1.banksco.com/tls/ca.crt
+      - PEER0_BANK1_PRADDR=peer0.bank1.banksco.com:7051
+    working_dir: /opt/exchangentw/
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./../../ExchangeCC/v1.0/:/opt/gopath/
+        - ./crypto-config:/opt/exchangentw/crypto
+        - ./channel-artifacts:/opt/exchangentw/channel-artifacts
+    depends_on:
+      - orderer1.banksco.com
+      - peer0.bank1.banksco.com
+    networks:
+      - exchangeNtw
+
+  cliBank2:
+    hostname: cliBank2
+    container_name: cliBank2
+    image: hyperledger/fabric-tools:2.2.0
+    tty: true
+    environment:
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - FABRIC_LOGGING_SPEC=INFO
+      - CORE_PEER_ID=cliBank2
+      - CORE_PEER_ADDRESS=peer0.bank2.banksco.com:7051
+      - CORE_PEER_LOCALMSPID=Bank2MSP
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/opt/exchangentw/crypto/peerOrganizations/bank2.banksco.com/peers/peer0.bank2.banksco.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/exchangentw/crypto/peerOrganizations/bank2.banksco.com/peers/peer0.bank2.banksco.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/exchangentw/crypto/peerOrganizations/bank2.banksco.com/peers/peer0.bank2.banksco.com/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/exchangentw/crypto/peerOrganizations/bank2.banksco.com/users/Admin@bank2.banksco.com/msp
+      - CHANNEL_NAME=bankscochannel
+      - ORDERER_TLS_CA=/opt/exchangentw/crypto/ordererOrganizations/banksco.com/orderers/orderer2.banksco.com/msp/tlscacerts/tlsca.banksco.com-cert.pem
+      - PEER0_BANK2_TLS_CA=/opt/exchangentw/crypto/peerOrganizations/bank2.banksco.com/peers/peer0.bank2.banksco.com/tls/ca.crt
+      - PEER0_BANK2_PRADDR=peer0.bank2.banksco.com:7051
+    working_dir: /opt/exchangentw/
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./../../ExchangeCC/v1.0/:/opt/gopath
+        - ./crypto-config:/opt/exchangentw/crypto
+        - ./channel-artifacts:/opt/exchangentw/channel-artifacts
+    depends_on:
+      - orderer2.banksco.com
+      - peer0.bank2.banksco.com
+    networks:
+      - exchangeNtw
+
+  cliBank3:
+    hostname: cliBank3
+    container_name: cliBank3
+    image: hyperledger/fabric-tools:2.2.0
+    tty: true
+    environment:
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - FABRIC_LOGGING_SPEC=INFO
+      - CORE_PEER_ID=cliBank3
+      - CORE_PEER_ADDRESS=peer0.bank3.banksco.com:7051
+      - CORE_PEER_LOCALMSPID=Bank3MSP
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/opt/exchangentw/crypto/peerOrganizations/bank3.banksco.com/peers/peer0.bank3.banksco.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/exchangentw/crypto/peerOrganizations/bank3.banksco.com/peers/peer0.bank3.banksco.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/exchangentw/crypto/peerOrganizations/bank3.banksco.com/peers/peer0.bank3.banksco.com/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/exchangentw/crypto/peerOrganizations/bank3.banksco.com/users/Admin@bank3.banksco.com/msp
+      - CHANNEL_NAME=bankscochannel
+      - ORDERER_TLS_CA=/opt/exchangentw/crypto/ordererOrganizations/banksco.com/orderers/orderer3.banksco.com/msp/tlscacerts/tlsca.banksco.com-cert.pem
+      - PEER0_BANK3_TLS_CA=/opt/exchangentw/crypto/peerOrganizations/bank3.banksco.com/peers/peer0.bank3.banksco.com/tls/ca.crt
+      - PEER0_BANK3_PRADDR=peer0.bank3.banksco.com:7051
+    working_dir: /opt/exchangentw/
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./../../ExchangeCC/v1.0/:/opt/gopath
+        - ./crypto-config:/opt/exchangentw/crypto
+        - ./channel-artifacts:/opt/exchangentw/channel-artifacts
+    depends_on:
+      - orderer3.banksco.com
+      - peer0.bank3.banksco.com
+    networks:
+      - exchangeNtw
