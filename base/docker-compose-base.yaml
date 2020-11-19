@@ -7,6 +7,30 @@ version: '2.1'
 
 services:
 
+  orderer0.banksco.com:
+    container_name: orderer0.banksco.com
+    image: hyperledger/fabric-orderer:2.2.0
+    environment:
+      - FABRIC_LOGGING_SPEC=info
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_GENESISMETHOD=file
+      - ORDERER_GENERAL_GENESISFILE=/var/hyperledger/orderer/orderer0.genesis.block
+      - ORDERER_GENERAL_LOCALMSPID=Orderer0MSP
+      - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/orderer/msp
+      # enabled TLS
+      - ORDERER_GENERAL_TLS_ENABLED=true
+      - ORDERER_GENERAL_TLS_PRIVATEKEY=/var/hyperledger/orderer/tls/server.key
+      - ORDERER_GENERAL_TLS_CERTIFICATE=/var/hyperledger/orderer/tls/server.crt
+      - ORDERER_GENERAL_TLS_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+    command: orderer
+    volumes:
+    - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer0.genesis.block
+    - ../crypto-config/ordererOrganizations/banksco.com/orderers/orderer0.banksco.com/msp:/var/hyperledger/orderer/msp
+    - ../crypto-config/ordererOrganizations/banksco.com/orderers/orderer0.banksco.com/tls/:/var/hyperledger/orderer/tls
+    ports:
+      - 7040:7050
+
   orderer1.banksco.com:
     container_name: orderer1.banksco.com
     image: hyperledger/fabric-orderer:2.2.0
@@ -54,30 +78,6 @@ services:
     - ../crypto-config/ordererOrganizations/banksco.com/orderers/orderer2.banksco.com/tls/:/var/hyperledger/orderer/tls
     ports:
       - 7042:7050
-
-  orderer3.banksco.com:
-    container_name: orderer3.banksco.com
-    image: hyperledger/fabric-orderer:2.2.0
-    environment:
-      - FABRIC_LOGGING_SPEC=info
-      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
-      - ORDERER_GENERAL_GENESISMETHOD=file
-      - ORDERER_GENERAL_GENESISFILE=/var/hyperledger/orderer/orderer3.genesis.block
-      - ORDERER_GENERAL_LOCALMSPID=Orderer3MSP
-      - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/orderer/msp
-      # enabled TLS
-      - ORDERER_GENERAL_TLS_ENABLED=true
-      - ORDERER_GENERAL_TLS_PRIVATEKEY=/var/hyperledger/orderer/tls/server.key
-      - ORDERER_GENERAL_TLS_CERTIFICATE=/var/hyperledger/orderer/tls/server.crt
-      - ORDERER_GENERAL_TLS_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
-    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
-    command: orderer
-    volumes:
-    - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer3.genesis.block
-    - ../crypto-config/ordererOrganizations/banksco.com/orderers/orderer3.banksco.com/msp:/var/hyperledger/orderer/msp
-    - ../crypto-config/ordererOrganizations/banksco.com/orderers/orderer3.banksco.com/tls/:/var/hyperledger/orderer/tls
-    ports:
-      - 7043:7050
 
   peer0.bank1.banksco.com:
     container_name: peer0.bank1.banksco.com
