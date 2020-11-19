@@ -1,0 +1,65 @@
+---
+- hosts: localhost
+  connection: local
+  vars:
+    project_name: "xxxxxxxxxxxx"
+    master_url: "https://master.example.com"
+  tasks:
+
+  - name: login Openshift
+    shell: "oc login --token=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx --server=https://c103-e.us-south.containers.cloud.ibm.com:31319"
+    
+  - name: Select project {{ project_name }}
+    shell: "oc project {{ project_name }}"
+
+  - name: Delete all deploymentConfig
+    shell: "oc delete dc {{ item }} -n {{ project_name }}"
+    with_items:
+       - fabric-dc
+       - fabric-orderer-dc
+       - peer0bank1dc
+       - peer1bank1dc
+       - peer0bank2dc
+       - peer1bank2dc
+       - fabric-clibank1-dc
+       - fabric-clibank2-dc
+    ignore_errors: true
+
+  - name: Delete all Services
+    shell: "oc delete svc {{ item }} -n {{ project_name }}"
+    with_items:
+       - clibank1-svc
+       - clibank2-svc
+       - peer0-bank1
+       - peer1-bank1
+       - peer2-bank2
+       - peer3-bank2
+       - orderer
+    ignore_errors: true
+
+  - name: Delete all imageStream
+    shell: "oc delete is {{ item }} -n {{ project_name }}"
+    with_items:
+       - fabric-alpine
+    ignore_errors: true
+
+  - name: Delete all imageStreamTag
+    shell: "oc delete istag {{ item }} -n {{ project_name }}"
+    with_items:
+       - fabric-alpine
+    ignore_errors: true
+
+  - name: Delete all persistentVolumeClaim
+    shell: "oc delete pvc {{ item }} -n {{ project_name }}"
+    with_items:
+       - peer2-pvc
+       - fabric-pvc
+       - orderer-pvc
+       - peer3-pvc
+       - peer0-pvc
+       - peer1-pvc
+       - couch3-pvc
+       - couch0-pvc
+       - couch2-pvc
+       - couch1-pvc
+    ignore_errors: true

@@ -1,0 +1,70 @@
+---
+- hosts: localhost
+  connection: local
+  vars:
+    project_name: "xxxxxxxxxxxx"
+    master_url: "https://master.example.com"
+  tasks:
+
+  - name: login Openshift
+    shell: "oc login --token=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx --server=https://c103-e.us-south.containers.cloud.ibm.com:31319"
+
+  - name: Select project {{ project_name }}
+    shell: "oc project {{ project_name }}"
+
+  - name: Add a role to pull image in the project
+    shell: "oc policy add-role-to-user system:image-puller system:serviceaccount:{{ project_name }}:default  --namespace={{ project_name }}"
+
+  - name: Add a rule to write  in the volume
+    shell: "oc adm policy add-scc-to-user anyuid -z default"
+
+  - name: Build the image from the Dockerfile
+    shell: "docker build -t fabric-alpine ."
+ 
+  - name: Tag the image
+    shell: "docker tag fabric-alpine us.icr.io/bouygues-bloc-1600085663464/fabric-alpine:latest"
+
+  - name: Push the image to the the container registry
+    shell: "docker push us.icr.io/bouygues-bloc-1600085663464/fabric-alpine:latest"
+
+  - name: Tag the image in order to operate on image streams
+    shell: "oc tag us.icr.io/bouygues-bloc-1600085663464/fabric-alpine:latest {{ project_name }}/fabric-alpine:latest --reference-policy=local"
+
+  - name: Deployer the fabricdc 
+    shell: "oc apply -f template-init.yaml -n {{ project_name }}"
+    
+
+  - name: Process and create template fabricdc
+    shell: "oc process  tpl-fabric  --param-file=param-init.env | oc create -f -"
+    ignore_errors: true
+
+  - name: Deploy the Orderer
+    shell: "oc apply -f templateOrderer.yaml -n {{ project_name }}"
+    ignore_errors: true
+
+  - name: Process and create template Orderer
+    shell: "oc process  tpl-orderer | oc create -f -"
+    ignore_errors: true
+
+  - name: Deploy the 4 peers
+    shell: "oc apply -f all-peers-onetemplate.yaml -n {{ project_name }}"
+    ignore_errors: true
+
+  - name: Process and create 4 peers
+    shell: "oc process all-peers-template --param-file=param-peer.env | oc create -f -"
+    ignore_errors: true
+
+  - name: Deployer les clibanks
+    shell: "oc apply -f {{ item }} -n {{ project_name }}"
+    with_items:
+       - template-clibank1.yaml
+       - template-clibank2.yaml
+    ignore_errors: true
+
+  - name: Process and create 2 clibanks
+    shell: "oc process {{ item }} | oc create -f -"
+    with_items:
+       - tpl-clibank1
+       - tpl-clibank2
+    ignore_errors: true
+

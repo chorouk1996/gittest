@@ -1,8 +1,12 @@
-# Génération de la PKI (public key infrastructure) + Generation du genesis block et des transactions d'initialisation du réseau Exchange Network
+# PRE-REQ
 
-## Log in
+    ibmcloud
+    docker
+    oc client
+    Ansible
 
-### IBM Cloud login
+# Step 1 : IBM Cloud login
+
 Log in to the Cloud IBM account 
 
 `ibmcloud login --sso`
@@ -12,109 +16,32 @@ Log in to the IBM Cloud Container Registry
 
 `ibmcloud cr login`
 
-### Log in to the Openshift Container Platform
-Use the command line provided by your cluster. The command line containing key token is available in the Openshift console.
+# Step 2 : Update openshift credentials  
 
+Remember to update install.yml and uninstall.yml using your openshift credentials (token and namespace).
+`project_name: "xxxxxxxxxxxx"`
 `oc login --token=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx --server=https://c103-e.us-south.containers.cloud.ibm.com:31319`
 
-## Use PVC to share files over an init container
+Remember to update param-cc.env, param-init.env  using your PROJECT (namespcae)
+`PROJECT=xxxxxxxxxxxx`
 
-### Create the alpine image in the container registry  
+# Step 3 : run ansible-playbook
 
-#### Activate the project
-Create the project if needed
+-------------------------------------------------BEGIN ACTION ANSIBLE---------------------------------------------
+to launch the deployment of all these components:
 
- `oc new-project ${PROJECT}`
-
-or activate the project
-
-`oc project ${PROJECT}`
-
-to check the active project run the command line: `oc status`
-
-Add a role to pull image in the project
-
-`oc policy add-role-to-user system:image-puller system:serviceaccount:${PROJECT}:default  --namespace=${PROJECT}`
-
-Add a rule to write  in the volume 
-
-`oc adm policy add-scc-to-user anyuid -z default`
-
-#### Create the image locally
-Build the image from the Dockerfile
-
-`docker build -t fabric-alpine .`
-
-#### Create the image in the registry 
-Tag the image
-
-`docker tag fabric-alpine us.icr.io/bouygues-bloc-1600085663464/fabric-alpine:latest`
-
-Push the image to the the container registry
-
-`docker push us.icr.io/bouygues-bloc-1600085663464/fabric-alpine:latest`
-
-Tag the image in order to operate on image streams
-
-`oc tag us.icr.io/bouygues-bloc-1600085663464/fabric-alpine:latest ${PROJECT}/fabric-alpine:latest --reference-policy=local`
-
-## Deployer le template 
-### Apply template
-
-`oc apply -f template-init.yaml`
-
-### Process and create template entities
-
-il faut changer les parametres sur le param-init.env en fonction de  l'environement
-
-`oc process  tpl-fabric  --param-file=param-init.env | oc create -f -`
+`ansible-playbook install.yml`
 
 ## Génération de la PKI (public key infrastructure) + Generation du genesis block et des transactions d'initialisation du réseau Exchange Network
-
-La génération de la PKI et du Genesis block ainsi que l'initialisation du réseau sont faite automatiquement lors du lancement du POD (config/commands.sh)
-  
-
-# Deploy the Orderer
-
-### Apply template
-
-`oc apply -f templateOrderer.yaml`
-
-### Process and create template entities
-`oc process  tpl-orderer | oc create -f -`
-
-## Template Orderer
-
-le template contient la configuration de déploiement pour déployer un pod qui contient un conteneur de type Orderer et les variables d'environnement nécessaires au bon fonctionnement, ainsi qu'un service pour y accéder,
-une fois le déploiement est fait , le serveur démarre
-
-
-# Deploy the peer
-
-### Apply template
-```sh 
-oc apply -f all-peers-onetemplate.yaml
-```
-### Process and create template entities
-
-```sh
-oc process all-peers-onetemplate  --param-file=param-peer.env | oc create -f -
-``` 
-
+## Deploy the Orderer
+## Deploy the peer
 ## Deployer les clibanks
 
-### Apply template
-```sh 
-oc apply -f template-clibank1.yaml
-oc apply -f template-clibank2.yaml
-```
-### Process and create template entities
+to delete all network components :
 
-```sh
-oc process  tpl-clibank1  | oc create -f -
-oc process  tpl-clibank2  | oc create -f -
-
-``` 
+`ansible-playbook uninstall.yml`
+-------------------------------------------------END ACTION ANSIBLE-----------------------------------------------
+# Step 4 : 
 ## install chaincode
 
 Let's start with the installation of the chaincode on peer0-bank1 , in the cliBank1 :
