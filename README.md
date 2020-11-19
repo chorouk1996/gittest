@@ -28,6 +28,7 @@ Remember to update param-cc.env, param-init.env  using your PROJECT (namespcae)
 # Step 3 : run ansible-playbook
 
 -------------------------------------------------BEGIN ACTION ANSIBLE---------------------------------------------
+
 to launch the deployment of all these components:
 
 `ansible-playbook install.yml`
