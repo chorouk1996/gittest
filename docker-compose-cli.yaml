@@ -11,6 +11,15 @@ networks:
 
 services:
 
+  orderer0.banksco.com:
+    hostname: orderer0
+    extends:
+      file:   base/docker-compose-base.yaml
+      service: orderer0.banksco.com
+    container_name: orderer0.banksco.com
+    networks:
+      - exchangeNtw
+
   orderer1.banksco.com:
     hostname: orderer1
     extends:
@@ -26,15 +35,6 @@ services:
       file:   base/docker-compose-base.yaml
       service: orderer2.banksco.com
     container_name: orderer2.banksco.com
-    networks:
-      - exchangeNtw
-
-  orderer3.banksco.com:
-    hostname: orderer3
-    extends:
-      file:   base/docker-compose-base.yaml
-      service: orderer3.banksco.com
-    container_name: orderer3.banksco.com
     networks:
       - exchangeNtw
 
