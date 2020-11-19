@@ -32,14 +32,15 @@ to launch the deployment of all these components:
 
 `ansible-playbook install.yml`
 
-## Génération de la PKI (public key infrastructure) + Generation du genesis block et des transactions d'initialisation du réseau Exchange Network
-## Deploy the Orderer
-## Deploy the peer
-## Deployer les clibanks
+### Génération de la PKI (public key infrastructure) + Generation du genesis block et des transactions d'initialisation du réseau Exchange Network
+### Deploy the Orderer
+### Deploy the peer
+### Deployer les clibanks
 
 to delete all network components :
 
 `ansible-playbook uninstall.yml`
+
 -------------------------------------------------END ACTION ANSIBLE-----------------------------------------------
 # Step 4 : 
 ## install chaincode
