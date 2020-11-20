@@ -11,57 +11,57 @@ networks:
 
 services:
 
-  orderer0.banksco.com:
-    hostname: orderer0
+  ordererTF1.banksco.com:
+    hostname: ordererTF1
     extends:
       file:   base/docker-compose-base.yaml
-      service: orderer0.banksco.com
-    container_name: orderer0.banksco.com
+      service: ordererTF1.banksco.com
+    container_name: ordererTF1.banksco.com
     networks:
       - exchangeNtw
 
-  orderer1.banksco.com:
-    hostname: orderer1
+  ordererMetier.banksco.com:
+    hostname: ordererMetier
     extends:
       file:   base/docker-compose-base.yaml
-      service: orderer1.banksco.com
-    container_name: orderer1.banksco.com
+      service: ordererMetier.banksco.com
+    container_name: ordererMetier.banksco.com
     networks:
       - exchangeNtw
 
-  orderer2.banksco.com:
-    hostname: orderer2
+  ordererJuridique.banksco.com:
+    hostname: ordererJuridique
     extends:
       file:   base/docker-compose-base.yaml
-      service: orderer2.banksco.com
-    container_name: orderer2.banksco.com
+      service: ordererJuridique.banksco.com
+    container_name: ordererJuridique.banksco.com
     networks:
       - exchangeNtw
 
-  peer0.bank1.banksco.com:
-    hostname: peer0Bank1
-    container_name: peer0.bank1.banksco.com
+  peerTF1.bank1.banksco.com:
+    hostname: peerTF1Bank1
+    container_name: peerTF1.bank1.banksco.com
     extends:
       file:  base/docker-compose-base.yaml
-      service: peer0.bank1.banksco.com
+      service: peerTF1.bank1.banksco.com
     networks:
       - exchangeNtw
 
-  peer0.bank2.banksco.com:
-    hostname: peer0Bank2
-    container_name: peer0.bank2.banksco.com
+  peerMetier.bank2.banksco.com:
+    hostname: peerMetierBank2
+    container_name: peerMetier.bank2.banksco.com
     extends:
       file:  base/docker-compose-base.yaml
-      service: peer0.bank2.banksco.com
+      service: peerMetier.bank2.banksco.com
     networks:
       - exchangeNtw
 
-  peer0.bank3.banksco.com:
-    hostname: peer0Bank3
-    container_name: peer0.bank3.banksco.com
+  peerJuridique.bank3.banksco.com:
+    hostname: peerJuridiqueBank3
+    container_name: peerJuridique.bank3.banksco.com
     extends:
       file:  base/docker-compose-base.yaml
-      service: peer0.bank3.banksco.com
+      service: peerJuridique.bank3.banksco.com
     networks:
       - exchangeNtw
 
@@ -75,17 +75,17 @@ services:
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_ID=cliBank1
-      - CORE_PEER_ADDRESS=peer0.bank1.banksco.com:7051
+      - CORE_PEER_ADDRESS=peerTF1.bank1.banksco.com:7051
       - CORE_PEER_LOCALMSPID=Bank1MSP
       - CORE_PEER_TLS_ENABLED=true
-      - CORE_PEER_TLS_CERT_FILE=/opt/exchangentw/crypto/peerOrganizations/bank1.banksco.com/peers/peer0.bank1.banksco.com/tls/server.crt
-      - CORE_PEER_TLS_KEY_FILE=/opt/exchangentw/crypto/peerOrganizations/bank1.banksco.com/peers/peer0.bank1.banksco.com/tls/server.key
-      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/exchangentw/crypto/peerOrganizations/bank1.banksco.com/peers/peer0.bank1.banksco.com/tls/ca.crt
+      - CORE_PEER_TLS_CERT_FILE=/opt/exchangentw/crypto/peerOrganizations/bank1.banksco.com/peers/peerTF1.bank1.banksco.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/exchangentw/crypto/peerOrganizations/bank1.banksco.com/peers/peerTF1.bank1.banksco.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/exchangentw/crypto/peerOrganizations/bank1.banksco.com/peers/peerTF1.bank1.banksco.com/tls/ca.crt
       - CORE_PEER_MSPCONFIGPATH=/opt/exchangentw/crypto/peerOrganizations/bank1.banksco.com/users/Admin@bank1.banksco.com/msp
       - CHANNEL_NAME=bankscochannel
-      - ORDERER_TLS_CA=/opt/exchangentw/crypto/ordererOrganizations/banksco.com/orderers/orderer0.banksco.com/msp/tlscacerts/tlsca.banksco.com-cert.pem
-      - PEER0_BANK1_TLS_CA=/opt/exchangentw/crypto/peerOrganizations/bank1.banksco.com/peers/peer0.bank1.banksco.com/tls/ca.crt
-      - PEER0_BANK1_PRADDR=peer0.bank1.banksco.com:7051
+      - ORDERER_TLS_CA=/opt/exchangentw/crypto/ordererOrganizations/banksco.com/orderers/ordererTF1.banksco.com/msp/tlscacerts/tlsca.banksco.com-cert.pem
+      - PEER0_BANK1_TLS_CA=/opt/exchangentw/crypto/peerOrganizations/bank1.banksco.com/peers/peerTF1.bank1.banksco.com/tls/ca.crt
+      - PEER0_BANK1_PRADDR=peerTF1.bank1.banksco.com:7051
     working_dir: /opt/exchangentw/
     volumes:
         - /var/run/:/host/var/run/
@@ -93,8 +93,8 @@ services:
         - ./crypto-config:/opt/exchangentw/crypto
         - ./channel-artifacts:/opt/exchangentw/channel-artifacts
     depends_on:
-      - orderer0.banksco.com
-      - peer0.bank1.banksco.com
+      - ordererTF1.banksco.com
+      - peerTF1.bank1.banksco.com
     networks:
       - exchangeNtw
 
@@ -108,17 +108,17 @@ services:
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_ID=cliBank2
-      - CORE_PEER_ADDRESS=peer0.bank2.banksco.com:7051
+      - CORE_PEER_ADDRESS=peerMetier.bank2.banksco.com:7051
       - CORE_PEER_LOCALMSPID=Bank2MSP
       - CORE_PEER_TLS_ENABLED=true
-      - CORE_PEER_TLS_CERT_FILE=/opt/exchangentw/crypto/peerOrganizations/bank2.banksco.com/peers/peer0.bank2.banksco.com/tls/server.crt
-      - CORE_PEER_TLS_KEY_FILE=/opt/exchangentw/crypto/peerOrganizations/bank2.banksco.com/peers/peer0.bank2.banksco.com/tls/server.key
-      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/exchangentw/crypto/peerOrganizations/bank2.banksco.com/peers/peer0.bank2.banksco.com/tls/ca.crt
+      - CORE_PEER_TLS_CERT_FILE=/opt/exchangentw/crypto/peerOrganizations/bank2.banksco.com/peers/peerMetier.bank2.banksco.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/exchangentw/crypto/peerOrganizations/bank2.banksco.com/peers/peerMetier.bank2.banksco.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/exchangentw/crypto/peerOrganizations/bank2.banksco.com/peers/peerMetier.bank2.banksco.com/tls/ca.crt
       - CORE_PEER_MSPCONFIGPATH=/opt/exchangentw/crypto/peerOrganizations/bank2.banksco.com/users/Admin@bank2.banksco.com/msp
       - CHANNEL_NAME=bankscochannel
-      - ORDERER_TLS_CA=/opt/exchangentw/crypto/ordererOrganizations/banksco.com/orderers/orderer1.banksco.com/msp/tlscacerts/tlsca.banksco.com-cert.pem
-      - PEER0_BANK2_TLS_CA=/opt/exchangentw/crypto/peerOrganizations/bank2.banksco.com/peers/peer0.bank2.banksco.com/tls/ca.crt
-      - PEER0_BANK2_PRADDR=peer0.bank2.banksco.com:7051
+      - ORDERER_TLS_CA=/opt/exchangentw/crypto/ordererOrganizations/banksco.com/orderers/ordererMetier.banksco.com/msp/tlscacerts/tlsca.banksco.com-cert.pem
+      - PEER0_BANK2_TLS_CA=/opt/exchangentw/crypto/peerOrganizations/bank2.banksco.com/peers/peerMetier.bank2.banksco.com/tls/ca.crt
+      - PEER0_BANK2_PRADDR=peerMetier.bank2.banksco.com:7051
     working_dir: /opt/exchangentw/
     volumes:
         - /var/run/:/host/var/run/
@@ -126,8 +126,8 @@ services:
         - ./crypto-config:/opt/exchangentw/crypto
         - ./channel-artifacts:/opt/exchangentw/channel-artifacts
     depends_on:
-      - orderer1.banksco.com
-      - peer0.bank2.banksco.com
+      - ordererMetier.banksco.com
+      - peerMetier.bank2.banksco.com
     networks:
       - exchangeNtw
 
@@ -141,17 +141,17 @@ services:
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_ID=cliBank3
-      - CORE_PEER_ADDRESS=peer0.bank3.banksco.com:7051
+      - CORE_PEER_ADDRESS=peerJuridique.bank3.banksco.com:7051
       - CORE_PEER_LOCALMSPID=Bank3MSP
       - CORE_PEER_TLS_ENABLED=true
-      - CORE_PEER_TLS_CERT_FILE=/opt/exchangentw/crypto/peerOrganizations/bank3.banksco.com/peers/peer0.bank3.banksco.com/tls/server.crt
-      - CORE_PEER_TLS_KEY_FILE=/opt/exchangentw/crypto/peerOrganizations/bank3.banksco.com/peers/peer0.bank3.banksco.com/tls/server.key
-      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/exchangentw/crypto/peerOrganizations/bank3.banksco.com/peers/peer0.bank3.banksco.com/tls/ca.crt
+      - CORE_PEER_TLS_CERT_FILE=/opt/exchangentw/crypto/peerOrganizations/bank3.banksco.com/peers/peerJuridique.bank3.banksco.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/exchangentw/crypto/peerOrganizations/bank3.banksco.com/peers/peerJuridique.bank3.banksco.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/exchangentw/crypto/peerOrganizations/bank3.banksco.com/peers/peerJuridique.bank3.banksco.com/tls/ca.crt
       - CORE_PEER_MSPCONFIGPATH=/opt/exchangentw/crypto/peerOrganizations/bank3.banksco.com/users/Admin@bank3.banksco.com/msp
       - CHANNEL_NAME=bankscochannel
       - ORDERER_TLS_CA=/opt/exchangentw/crypto/ordererOrganizations/banksco.com/orderers/orderer2.banksco.com/msp/tlscacerts/tlsca.banksco.com-cert.pem
-      - PEER0_BANK3_TLS_CA=/opt/exchangentw/crypto/peerOrganizations/bank3.banksco.com/peers/peer0.bank3.banksco.com/tls/ca.crt
-      - PEER0_BANK3_PRADDR=peer0.bank3.banksco.com:7051
+      - PEER0_BANK3_TLS_CA=/opt/exchangentw/crypto/peerOrganizations/bank3.banksco.com/peers/peerJuridique.bank3.banksco.com/tls/ca.crt
+      - PEER0_BANK3_PRADDR=peerJuridique.bank3.banksco.com:7051
     working_dir: /opt/exchangentw/
     volumes:
         - /var/run/:/host/var/run/
@@ -159,7 +159,7 @@ services:
         - ./crypto-config:/opt/exchangentw/crypto
         - ./channel-artifacts:/opt/exchangentw/channel-artifacts
     depends_on:
-      - orderer2.banksco.com
-      - peer0.bank3.banksco.com
+      - ordererJuridique.banksco.com
+      - peerJuridique.bank3.banksco.com
     networks:
       - exchangeNtw
