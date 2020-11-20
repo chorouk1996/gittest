@@ -42,9 +42,12 @@ function generateCerts (){
   # ordererorg.users.admin.msp.signcert.pem -> ordererorg.orderers.ordererdomain.msp.admincerts
   cp -R crypto-config/ordererOrganizations/banksco.com/users/Admin@banksco.com/msp/signcerts/* crypto-config/ordererOrganizations/banksco.com/msp/admincerts/
   cp -R crypto-config/ordererOrganizations/banksco.com/users/Admin@banksco.com/msp/signcerts/* crypto-config/ordererOrganizations/banksco.com/users/Admin@banksco.com/msp/admincerts/
-  cp -R crypto-config/ordererOrganizations/banksco.com/users/Admin@banksco.com/msp/signcerts/* crypto-config/ordererOrganizations/banksco.com/orderers/orderer0.banksco.com/msp/admincerts/
-  cp -R crypto-config/ordererOrganizations/banksco.com/users/Admin@banksco.com/msp/signcerts/* crypto-config/ordererOrganizations/banksco.com/orderers/orderer1.banksco.com/msp/admincerts/
-  cp -R crypto-config/ordererOrganizations/banksco.com/users/Admin@banksco.com/msp/signcerts/* crypto-config/ordererOrganizations/banksco.com/orderers/orderer2.banksco.com/msp/admincerts/
+  #cp -R crypto-config/ordererOrganizations/banksco.com/users/Admin@banksco.com/msp/signcerts/* crypto-config/ordererOrganizations/banksco.com/orderers/orderer0.banksco.com/msp/admincerts/
+  #cp -R crypto-config/ordererOrganizations/banksco.com/users/Admin@banksco.com/msp/signcerts/* crypto-config/ordererOrganizations/banksco.com/orderers/orderer1.banksco.com/msp/admincerts/
+  #cp -R crypto-config/ordererOrganizations/banksco.com/users/Admin@banksco.com/msp/signcerts/* crypto-config/ordererOrganizations/banksco.com/orderers/orderer2.banksco.com/msp/admincerts/
+  cp -R crypto-config/ordererOrganizations/banksco.com/users/Admin@banksco.com/msp/signcerts/* crypto-config/ordererOrganizations/banksco.com/orderers/ordererTF1.banksco.com/msp/admincerts/
+  cp -R crypto-config/ordererOrganizations/banksco.com/users/Admin@banksco.com/msp/signcerts/* crypto-config/ordererOrganizations/banksco.com/orderers/ordererMetier.banksco.com/msp/admincerts/
+  cp -R crypto-config/ordererOrganizations/banksco.com/users/Admin@banksco.com/msp/signcerts/* crypto-config/ordererOrganizations/banksco.com/orderers/ordererJuridique.banksco.com/msp/admincerts/
 
   # copying missing admincert in different MSP from admin signcert for bank1.banksco
   # peerorg.org1.users.admin.msp.signcert.pem
@@ -53,7 +56,8 @@ function generateCerts (){
   # peerorg.org1.users.admin.msp.signcert.pem -> peerorg.org1.peers.peer0.msp.admincerts
   cp -R crypto-config/peerOrganizations/bank1.banksco.com/users/Admin@bank1.banksco.com/msp/signcerts/* crypto-config/peerOrganizations/bank1.banksco.com/msp/admincerts/
   cp -R crypto-config/peerOrganizations/bank1.banksco.com/users/Admin@bank1.banksco.com/msp/signcerts/* crypto-config/peerOrganizations/bank1.banksco.com/users/Admin@bank1.banksco.com/msp/admincerts/
-  cp -R crypto-config/peerOrganizations/bank1.banksco.com/users/Admin@bank1.banksco.com/msp/signcerts/* crypto-config/peerOrganizations/bank1.banksco.com/peers/peer0.bank1.banksco.com/msp/admincerts/
+  #cp -R crypto-config/peerOrganizations/bank1.banksco.com/users/Admin@bank1.banksco.com/msp/signcerts/* crypto-config/peerOrganizations/bank1.banksco.com/peers/peer0.bank1.banksco.com/msp/admincerts/
+  cp -R crypto-config/peerOrganizations/bank1.banksco.com/users/Admin@bank1.banksco.com/msp/signcerts/* crypto-config/peerOrganizations/bank1.banksco.com/peers/peerTF1.bank1.banksco.com/msp/admincerts/
 
   # copying missing admincert in different MSP from admin signcert for bank2.banksco
   # peerorg.org2.users.admin.msp.signcert.pem
@@ -62,7 +66,8 @@ function generateCerts (){
   # peerorg.org2.users.admin.msp.signcert.pem -> peerorg.org2.peers.peer0.msp.admincerts
   cp -R crypto-config/peerOrganizations/bank2.banksco.com/users/Admin@bank2.banksco.com/msp/signcerts/* crypto-config/peerOrganizations/bank2.banksco.com/msp/admincerts/
   cp -R crypto-config/peerOrganizations/bank2.banksco.com/users/Admin@bank2.banksco.com/msp/signcerts/* crypto-config/peerOrganizations/bank2.banksco.com/users/Admin@bank2.banksco.com/msp/admincerts/
-  cp -R crypto-config/peerOrganizations/bank2.banksco.com/users/Admin@bank2.banksco.com/msp/signcerts/* crypto-config/peerOrganizations/bank2.banksco.com/peers/peer0.bank2.banksco.com/msp/admincerts/
+  #cp -R crypto-config/peerOrganizations/bank2.banksco.com/users/Admin@bank2.banksco.com/msp/signcerts/* crypto-config/peerOrganizations/bank2.banksco.com/peers/peer0.bank2.banksco.com/msp/admincerts/
+  cp -R crypto-config/peerOrganizations/bank2.banksco.com/users/Admin@bank2.banksco.com/msp/signcerts/* crypto-config/peerOrganizations/bank2.banksco.com/peers/peerMetier.bank2.banksco.com/msp/admincerts/
 
   # copying missing admincert in different MSP from admin signcert for bank3.banksco
   # peerorg.org3.users.admin.msp.signcert.pem
@@ -71,7 +76,8 @@ function generateCerts (){
   # peerorg.org3.users.admin.msp.signcert.pem -> peerorg.org3.peers.peer0.msp.admincerts
   cp -R crypto-config/peerOrganizations/bank3.banksco.com/users/Admin@bank3.banksco.com/msp/signcerts/* crypto-config/peerOrganizations/bank3.banksco.com/msp/admincerts/
   cp -R crypto-config/peerOrganizations/bank3.banksco.com/users/Admin@bank3.banksco.com/msp/signcerts/* crypto-config/peerOrganizations/bank3.banksco.com/users/Admin@bank3.banksco.com/msp/admincerts/
-  cp -R crypto-config/peerOrganizations/bank3.banksco.com/users/Admin@bank3.banksco.com/msp/signcerts/* crypto-config/peerOrganizations/bank3.banksco.com/peers/peer0.bank3.banksco.com/msp/admincerts/
+  #cp -R crypto-config/peerOrganizations/bank3.banksco.com/users/Admin@bank3.banksco.com/msp/signcerts/* crypto-config/peerOrganizations/bank3.banksco.com/peers/peer0.bank3.banksco.com/msp/admincerts/
+  cp -R crypto-config/peerOrganizations/bank3.banksco.com/users/Admin@bank3.banksco.com/msp/signcerts/* crypto-config/peerOrganizations/bank3.banksco.com/peers/peerJuridique.bank3.banksco.com/msp/admincerts/
 
 
   # sudo chown -R $UID crypto-config
