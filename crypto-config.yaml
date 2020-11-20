@@ -15,15 +15,18 @@ OrdererOrgs:
     EnableNodeOUs: true
     CA:
         Country: FR
-        Province: IDF
+        Province: IDFo
         Locality: Paris
     # ---------------------------------------------------------------------------
     # "Specs" - See PeerOrgs below for complete description
     # ---------------------------------------------------------------------------
-    #Specs:
-    #  - Hostname: orderer
-    Template:
-      Count: 3
+    #Template: #NOTE : We have to choose between "Template.Count" and "Specs.Hostname"
+    #  Count: 3
+    Specs:
+      - Hostname: ordererTF1
+      - Hostname: ordererMetier
+      - Hostname: ordererJuridique
+
 
 # ===========================================================================
 # "PeerOrgs" - Definition of organizations managing peer nodes
@@ -37,7 +40,7 @@ PeerOrgs:
     EnableNodeOUs: true
     CA:
         Country: FR
-        Province: IDF
+        Province: IDF1
         Locality: Paris
     # ---------------------------------------------------------------------------
     # "Specs"
@@ -72,8 +75,10 @@ PeerOrgs:
     # sections and the aggregate nodes will be created for you.  Take care with
     # name collisions
     # ---------------------------------------------------------------------------
-    Template:
-      Count: 1
+    #Template: #NOTE : We have to choose between "Template.Count" and "Specs.Hostname"
+    #  Count: 1
+    Specs:
+      - Hostname: peerTF1
       # Start: 5
       # Hostname: {{.Prefix}}{{.Index}} # default
     # ---------------------------------------------------------------------------
@@ -82,7 +87,7 @@ PeerOrgs:
     # Count: The number of user accounts _in addition_ to Admin
     # ---------------------------------------------------------------------------
     Users:
-      Count: 1
+      Count: 0
   
   
   # ===========================================================================
@@ -93,12 +98,14 @@ PeerOrgs:
     EnableNodeOUs: true
     CA:
         Country: FR
-        Province: IDF
+        Province: IDF2
         Locality: Paris
-    Template:
-      Count: 1
+    #Template: #NOTE : We have to choose between "Template.Count" and "Specs.Hostname"
+    #  Count: 1
+    Specs:
+      - Hostname: peerMetier
     Users:
-      Count: 1
+      Count: 0
   
   # ===========================================================================
   # Org3: See "Org1" for full specification
@@ -108,9 +115,11 @@ PeerOrgs:
     EnableNodeOUs: true
     CA:
         Country: FR
-        Province: IDF
+        Province: IDF3
         Locality: Paris
-    Template:
-      Count: 1
+    #Template: #NOTE : We have to choose between "Template.Count" and "Specs.Hostname"
+    #  Count: 1
+    Specs:
+      - Hostname: peerJuridique
     Users:
-      Count: 1
+      Count: 0
