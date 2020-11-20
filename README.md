@@ -2,15 +2,15 @@ bouygues poc
 
 ### BUILD IMAGE
 
-docker build -t fabric-newnet-alpine .
-docker tag fabric-newnet-alpine us.icr.io/bouygues-bloc-1600085663464/fabric-newnet-alpine:latest
-docker push us.icr.io/bouygues-bloc-1600085663464/fabric-newnet-alpine:latest
-(oc tag us.icr.io/bouygues-bloc-1600085663464/fabric-newnet-alpine:latest ${PROJECT}/fabric-newnet-alpine:latest --reference-policy=local)
-oc tag us.icr.io/bouygues-bloc-1600085663464/fabric-newnet-alpine:latest adrienmarchal-iscfrance-fr/fabric-newnet-alpine:latest --reference-policy=local
-oc apply -f template-newnet-init.yaml
-oc process  fabric-newnet-tpl  --param-file=param.env | oc create -f -
-
-
+docker build -t fabric-newnet-alpine .  
+docker tag fabric-newnet-alpine us.icr.io/bouygues-bloc-1600085663464/fabric-newnet-alpine:latest  
+docker push us.icr.io/bouygues-bloc-1600085663464/fabric-newnet-alpine:latest  
+(oc tag us.icr.io/bouygues-bloc-1600085663464/fabric-newnet-alpine:latest ${PROJECT}/fabric-newnet-alpine:latest --reference-policy=local)  
+oc tag us.icr.io/bouygues-bloc-1600085663464/fabric-newnet-alpine:latest adrienmarchal-iscfrance-fr/fabric-newnet-alpine:latest --reference-policy=local  
+oc apply -f template-newnet-init.yaml  
+oc process  fabric-newnet-tpl  --param-file=param.env | oc create -f -  
+  
+  
 ###Creation des channels (notes)
    
 docker exec -it cliBank1 sh   
