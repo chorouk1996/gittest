@@ -1,0 +1,94 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+labels:
+  template: fabric-newnet-template
+metadata:
+  name: fabric-newnet-tpl
+objects:
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: fabric-newnet-dc
+  spec:
+    strategy:
+      type: Recreate
+    replicas: 1
+    template:
+      metadata:
+        labels:
+          name: fabric-newnet
+      spec:
+        volumes:
+        - name: fabricfiles
+          persistentVolumeClaim:
+            claimName: fabric-newnet-pvc
+        initContainers:
+        - name: app-init
+          image: image-registry.openshift-image-registry.svc:5000/${PROJECT}/fabric-newnet-alpine:latest
+          volumeMounts:
+          - mountPath: /fabric
+            name: fabricfiles
+          selector:
+            name: fabric
+        containers:
+          - name: fabrictools
+            image: hyperledger/fabric-tools:2.2.1
+            imagePullPolicy: Always
+            command: ["sh", "-c","cd ../fabric &&  chmod +x ../fabric/commands_newNet.sh && ../fabric/commands_newNet.sh"]
+            env:
+            - name: FABRIC_CFG_PATH
+              value: "/fabric"
+            volumeMounts:
+              - mountPath: /fabric
+                name: fabricfiles
+
+- kind: PersistentVolumeClaim
+  apiVersion: v1
+  metadata:
+    name: fabric-newnet-pvc
+  spec:
+    accessModes:
+      - ReadWriteMany
+    resources:
+      requests:
+        storage: ${VOLUME_SIZE}
+    storageClassName: ${STORAGE_CLASS}
+
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: fabric-newnet-alpine
+  spec:
+    lookupPolicy:
+      local: false
+    tags:
+      - name: latest
+        annotations: null
+        from:
+          kind: DockerImage
+          name: '${REGISTRY}/${NAMESPACE}/fabric-newnet-alpine:latest'
+        generation: 2
+        importPolicy: {}
+        referencePolicy:
+          type: Local
+parameters:
+- description: Value for project
+  displayName: project
+  name: PROJECT
+  required: true
+- description: le size du storage
+  displayName: le size du storage
+  name: VOLUME_SIZE
+  required: true
+- description: storage Class Name
+  displayName: storageClassName
+  name: STORAGE_CLASS
+  required: true
+- description: namespace
+  displayName: NameSpace
+  name: NAMESPACE
+  required: true
+- description: nom du registre
+  displayName: REGISTRY
+  name: REGISTRY
+  required: true
