@@ -83,7 +83,7 @@ services:
       - CORE_PEER_TLS_ROOTCERT_FILE=/opt/exchangentw/crypto/peerOrganizations/bank1.banksco.com/peers/peer0.bank1.banksco.com/tls/ca.crt
       - CORE_PEER_MSPCONFIGPATH=/opt/exchangentw/crypto/peerOrganizations/bank1.banksco.com/users/Admin@bank1.banksco.com/msp
       - CHANNEL_NAME=bankscochannel
-      - ORDERER_TLS_CA=/opt/exchangentw/crypto/ordererOrganizations/banksco.com/orderers/orderer1.banksco.com/msp/tlscacerts/tlsca.banksco.com-cert.pem
+      - ORDERER_TLS_CA=/opt/exchangentw/crypto/ordererOrganizations/banksco.com/orderers/orderer0.banksco.com/msp/tlscacerts/tlsca.banksco.com-cert.pem
       - PEER0_BANK1_TLS_CA=/opt/exchangentw/crypto/peerOrganizations/bank1.banksco.com/peers/peer0.bank1.banksco.com/tls/ca.crt
       - PEER0_BANK1_PRADDR=peer0.bank1.banksco.com:7051
     working_dir: /opt/exchangentw/
@@ -116,7 +116,7 @@ services:
       - CORE_PEER_TLS_ROOTCERT_FILE=/opt/exchangentw/crypto/peerOrganizations/bank2.banksco.com/peers/peer0.bank2.banksco.com/tls/ca.crt
       - CORE_PEER_MSPCONFIGPATH=/opt/exchangentw/crypto/peerOrganizations/bank2.banksco.com/users/Admin@bank2.banksco.com/msp
       - CHANNEL_NAME=bankscochannel
-      - ORDERER_TLS_CA=/opt/exchangentw/crypto/ordererOrganizations/banksco.com/orderers/orderer2.banksco.com/msp/tlscacerts/tlsca.banksco.com-cert.pem
+      - ORDERER_TLS_CA=/opt/exchangentw/crypto/ordererOrganizations/banksco.com/orderers/orderer1.banksco.com/msp/tlscacerts/tlsca.banksco.com-cert.pem
       - PEER0_BANK2_TLS_CA=/opt/exchangentw/crypto/peerOrganizations/bank2.banksco.com/peers/peer0.bank2.banksco.com/tls/ca.crt
       - PEER0_BANK2_PRADDR=peer0.bank2.banksco.com:7051
     working_dir: /opt/exchangentw/
@@ -149,7 +149,7 @@ services:
       - CORE_PEER_TLS_ROOTCERT_FILE=/opt/exchangentw/crypto/peerOrganizations/bank3.banksco.com/peers/peer0.bank3.banksco.com/tls/ca.crt
       - CORE_PEER_MSPCONFIGPATH=/opt/exchangentw/crypto/peerOrganizations/bank3.banksco.com/users/Admin@bank3.banksco.com/msp
       - CHANNEL_NAME=bankscochannel
-      - ORDERER_TLS_CA=/opt/exchangentw/crypto/ordererOrganizations/banksco.com/orderers/orderer3.banksco.com/msp/tlscacerts/tlsca.banksco.com-cert.pem
+      - ORDERER_TLS_CA=/opt/exchangentw/crypto/ordererOrganizations/banksco.com/orderers/orderer2.banksco.com/msp/tlscacerts/tlsca.banksco.com-cert.pem
       - PEER0_BANK3_TLS_CA=/opt/exchangentw/crypto/peerOrganizations/bank3.banksco.com/peers/peer0.bank3.banksco.com/tls/ca.crt
       - PEER0_BANK3_PRADDR=peer0.bank3.banksco.com:7051
     working_dir: /opt/exchangentw/
