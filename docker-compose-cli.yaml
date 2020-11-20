@@ -149,7 +149,7 @@ services:
       - CORE_PEER_TLS_ROOTCERT_FILE=/opt/exchangentw/crypto/peerOrganizations/bank3.banksco.com/peers/peerJuridique.bank3.banksco.com/tls/ca.crt
       - CORE_PEER_MSPCONFIGPATH=/opt/exchangentw/crypto/peerOrganizations/bank3.banksco.com/users/Admin@bank3.banksco.com/msp
       - CHANNEL_NAME=bankscochannel
-      - ORDERER_TLS_CA=/opt/exchangentw/crypto/ordererOrganizations/banksco.com/orderers/orderer2.banksco.com/msp/tlscacerts/tlsca.banksco.com-cert.pem
+      - ORDERER_TLS_CA=/opt/exchangentw/crypto/ordererOrganizations/banksco.com/orderers/ordererJuridique.banksco.com/msp/tlscacerts/tlsca.banksco.com-cert.pem
       - PEER0_BANK3_TLS_CA=/opt/exchangentw/crypto/peerOrganizations/bank3.banksco.com/peers/peerJuridique.bank3.banksco.com/tls/ca.crt
       - PEER0_BANK3_PRADDR=peerJuridique.bank3.banksco.com:7051
     working_dir: /opt/exchangentw/
