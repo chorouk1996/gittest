@@ -61,7 +61,7 @@ Organizations:
             # AnchorPeers defines the location of peers which can be used
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
-            - Host: peer0.bank1.banksco.com
+            - Host: peerTF1.bank1.banksco.com
               Port: 7051
     - &Bank2
         # DefaultOrg defines the organization which is used in the sampleconfig
@@ -88,7 +88,7 @@ Organizations:
             # AnchorPeers defines the location of peers which can be used
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
-            - Host: peer0.bank2.banksco.com
+            - Host: peerMetier.bank2.banksco.com
               Port: 7051
 
     - &Bank3
@@ -116,7 +116,7 @@ Organizations:
             # AnchorPeers defines the location of peers which can be used
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
-            - Host: peer0.bank3.banksco.com
+            - Host: peerJuridique.bank3.banksco.com
               Port: 7051
 
 ################################################################################
@@ -234,9 +234,9 @@ Orderer: &OrdererDefaults
     # Available types are "solo" and "kafka"
     OrdererType: solo
     Addresses:
-        - orderer0.banksco.com:7050
-        - orderer1.banksco.com:7050
-        - orderer2.banksco.com:7050
+        - ordererTF1.banksco.com:7050
+        - ordererMetier.banksco.com:7050
+        - ordererJuridique.banksco.com:7050
     # Batch Timeout: The amount of time to wait before creating a batch
     BatchTimeout: 2s
     # Batch Size: Controls the number of messages batched into a block
