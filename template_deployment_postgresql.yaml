@@ -1,0 +1,144 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+labels:
+  template: postgresql-template
+metadata:
+  name: tpl-postgresql
+objects:
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: postgres-config
+    labels:
+      app: postgres
+  data:
+    POSTGRESQL_DATABASE: ${DATABASE_NAME}
+    POSTGRESQL_USER: ${DATABASE_USER}
+    POSTGRESQL_PASSWORD: ${DATABASE_PASSWORD}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations: null
+    labels: null
+    name: postgresql-svc
+    namespace: ${NAMESPACE}
+  spec:
+    ports:
+    - name: postgresql
+      port: 5432
+      protocol: TCP
+      targetPort: 5432
+    selector:
+      name: postgresql
+- apiVersion: v1 
+  kind: PersistentVolumeClaim
+  metadata:
+    name: postgresql-pvc
+    namespace: ${NAMESPACE}
+  spec:
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 50Mi
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: alpine-postgresql
+    namespace: ${NAMESPACE}
+  spec:
+    lookupPolicy:
+      local: false
+    tags:
+      - name: latest
+        annotations: null
+        from:
+          kind: DockerImage
+          name: 'us.icr.io/bouygues-bloc-1600085663464/alpine-postgresql:latest'
+        generation: 2
+        importPolicy: {}
+        referencePolicy:
+          type: Local
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: postgresql-dc
+    namespace: ${NAMESPACE}
+  spec:
+    strategy:
+      type: Recreate
+    replicas: 1
+    template:
+      metadata:
+        labels:
+          name: postgresql
+      spec:
+        volumes:
+          - name: postgresql-data
+            persistentVolumeClaim:
+              claimName: postgresql-pvc
+        initContainers:
+        - name: app-init
+          image: image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/alpine-postgresql:latest
+          volumeMounts:
+          - mountPath: /pvc/postgres
+            name: postgresql-data
+          selector:
+            name: postgresql
+        containers:
+          - name: postgresql
+            resources:
+              limits:
+                memory: 512Mi
+            readinessProbe:
+              exec:
+                command:
+                  - /usr/libexec/check-container
+              initialDelaySeconds: 5
+              timeoutSeconds: 1
+              periodSeconds: 10
+              successThreshold: 1
+              failureThreshold: 3
+            terminationMessagePath: /dev/termination-log
+            livenessProbe:
+              exec:
+                command:
+                  - /usr/libexec/check-container
+                  - '--live'
+              initialDelaySeconds: 120
+              timeoutSeconds: 10
+              periodSeconds: 10
+              successThreshold: 1
+              failureThreshold: 3
+            envFrom:
+            - configMapRef:
+                name: postgres-config
+            ports:
+              - containerPort: 5432
+                protocol: TCP
+            volumeMounts:
+              - name: postgresql-data
+                mountPath: /var/lib/psql/data
+            terminationMessagePolicy: File
+            image: registry.redhat.io/rhscl/postgresql-10-rhel7@sha256:4bee9cd41211f9bd50f48a1cfd173da25ec81f3c94707b9554f16668ebacde88
+parameters:
+- description: Value for namespace
+  displayName: Name
+  name: NAMESPACE
+  required: true
+- description: Value for displayname
+  displayName: Display Name
+  name: NAMESPACE_DISPLAY_NAME
+  required: true
+- description: Text
+  displayName: Description
+  name: NAMESPACE_DESCRIPTION
+- description: name of database
+  displayName: Database Name
+  name: DATABASE_NAME
+- description: name of user
+  displayName: User
+  name: DATABASE_USER
+- description: password
+  displayName: Password
+  name: DATABASE_PASSWORD
